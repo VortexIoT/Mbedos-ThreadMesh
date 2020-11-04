@@ -18,30 +18,27 @@
 #include "NanostackInterface.h"
 #include "mbed-trace/mbed_trace.h"
 #include "mesh_nvm.h"
+#include "Clicmd.h"
+#include "RH_TEMP.h"
+#include "CoAP.h"
+
 
 #if MBED_CONF_APP_ENABLE_LED_CONTROL_EXAMPLE
 #include "mesh_led_control_example.h"
 #endif
 
+//MeshInterface *mesh;
+static Mutex SerialOutMutex;
+extern mbed::RawSerial pc;
+extern volatile uint8_t flag;
+extern volatile char Rx_buff[256];
+//SocketAddress sockAddr;
+extern uint8_t UDP_WR_RD(char *hostdomain, uint16_t port,uint8_t *msg, uint16_t msglen);
+extern uint8_t Receive_buff_length;
+/********************************************  END of I2C Declarations   **********************/
 void trace_printer(const char* str) {
     printf("%s\n", str);
 }
-
-MeshInterface *mesh;
-
-static Mutex SerialOutMutex;
-
-void thread_eui64_trace()
-{
-#define LOWPAN 1
-#define THREAD 2
-#if MBED_CONF_NSAPI_DEFAULT_MESH_TYPE == THREAD && (MBED_VERSION >= MBED_ENCODE_VERSION(5,10,0))
-   uint8_t eui64[8] = {0};
-   static_cast<ThreadInterface*>(mesh)->device_eui64_get(eui64);
-   printf("Device EUI64 address = %02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x\n", eui64[0], eui64[1], eui64[2], eui64[3], eui64[4], eui64[5], eui64[6], eui64[7]);
-#endif
-}
-
 void serial_out_mutex_wait()
 {
     SerialOutMutex.lock();
@@ -51,55 +48,41 @@ void serial_out_mutex_release()
 {
     SerialOutMutex.unlock();
 }
-
 int main()
 {
+    int i=1;
+     uint8_t buff[]  = "time_to_test";
     mbed_trace_init();
     mbed_trace_print_function_set(trace_printer);
     mbed_trace_mutex_wait_function_set( serial_out_mutex_wait );
     mbed_trace_mutex_release_function_set( serial_out_mutex_release );
 
-    printf("Start mesh-minimal application\n");
+    printf("Start Thread - Mesh application\n");
 
-#define STR(s) #s
-    printf("Build: %s %s\nMesh type: %s\n", __DATE__, __TIME__, STR(MBED_CONF_NSAPI_DEFAULT_MESH_TYPE));
-#ifdef MBED_MAJOR_VERSION
-    printf("Mbed OS version: %d.%d.%d\n", MBED_MAJOR_VERSION, MBED_MINOR_VERSION, MBED_PATCH_VERSION);
-#endif
+    start_blinking();
+    pc.attach(&ISR_Rx);
+    while(1)
+    {
+        if(flag)
+        {
+            flag = 0;
+            printf("> %s\n", Rx_buff);
+            if(Receive_buff_length > 1)
+            {
+                
+                //This function conatains set of commands to establish mesh network connection,
+                //to update parameters also to get network details.
+                //Please first start with thread start command, it will establishes the network connection.
+                Clicmd_format_making((char *)Rx_buff);
+            }
 
-#if MBED_CONF_APP_ENABLE_LED_CONTROL_EXAMPLE
-    if (MBED_CONF_APP_BUTTON != NC && MBED_CONF_APP_LED != NC) {
-        start_blinking();
-    } else {
-        printf("pins not configured. Skipping the LED control.\n");
-    }
-#endif
-    mesh = MeshInterface::get_default_instance();
-    if (!mesh) {
-        printf("Error! MeshInterface not found!\n");
-        return -1;
-    }
+            if(Rx_buff[0] == '1')  //to read Temperature and Humidity
+            {
+                Humidity_Temp_Read();
+            }
+            if(Rx_buff[0] == '2') //to send and receive buff data on UDP
+                UDP_WR_RD("test", 1234 ,buff, sizeof(buff));         
 
-    thread_eui64_trace();
-    mesh_nvm_initialize();
-    printf("Connecting...\n");
-    int error = mesh->connect();
-    if (error) {
-        printf("Connection failed! %d\n", error);
-        return error;
-    }
-
-    SocketAddress sockAddr;
-    while (NSAPI_ERROR_OK != mesh->get_ip_address(&sockAddr))
-        ThisThread::sleep_for(500);
-
-    printf("Connected. IP = %s\n", sockAddr.get_ip_address());
-
-#if MBED_CONF_APP_ENABLE_LED_CONTROL_EXAMPLE
-    // Network found, start socket example
-    if (MBED_CONF_APP_BUTTON != NC && MBED_CONF_APP_LED != NC) {
-        cancel_blinking();
-        start_mesh_led_control_example((NetworkInterface *)mesh);
-    }
-#endif
+        }
+    } 
 }
