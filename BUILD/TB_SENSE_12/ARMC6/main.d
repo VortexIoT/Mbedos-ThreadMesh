@@ -257,13 +257,14 @@ BUILD\TB_SENSE_12\ARMC6\main.o: main.cpp \
   mbed-os\features\nanostack\mbed-mesh-api\mbed-mesh-api\MeshInterfaceNanostack.h \
   mbed-os\features\nanostack\mbed-mesh-api\mbed-mesh-api\WisunInterface.h \
   mbed-os\features\frameworks\mbed-trace\mbed-trace\mbed_trace.h \
-  mesh_nvm.h Clicmd.h \
+  mesh_nvm.h cli_cmd.h \
   mbed-os\features\nanostack\sal-stack-nanostack\nanostack\thread_management_if.h \
   mbed-os\features\nanostack\sal-stack-nanostack\nanostack\net_interface.h \
   mbed-os\features\nanostack\sal-stack-nanostack\nanostack\platform\arm_hal_phy.h \
   mbed-os\features\netsocket\InternetSocket.h \
   mbed-os\features\nanostack\sal-stack-nanostack\source\NWK_INTERFACE\Include\protocol_abstract.h \
-  mbed-os\drivers\RawSerial.h RH_TEMP.h mbed-os\drivers\I2C.h CoAP.h \
+  mbed-os\drivers\RawSerial.h temp_humidity_sensor.h \
+  mbed-os\drivers\I2C.h coap_protocol.h \
   mbed-os\features\netsocket\UDPSocket.h \
   mbed-os\features\frameworks\mbed-coap\mbed-coap\sn_coap_protocol.h \
   mbed-os\features\frameworks\mbed-coap\mbed-coap\sn_coap_header.h \

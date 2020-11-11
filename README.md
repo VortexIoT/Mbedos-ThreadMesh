@@ -2,9 +2,9 @@
 
 Below functionalities are implemeted in this application:
 
---In this application Mesh network configured as a Router.
+-- In this application Mesh network configured as a Router.
 
---Set of cli commands are added to update the network parameters to form a thread network.
+-- Set of cli commands are added to update the network parameters to form a thread network.
 
 -- Temperature sensor interfaced with the controller using I2C bus.
 
