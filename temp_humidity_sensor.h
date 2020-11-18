@@ -11,9 +11,7 @@
 #define LSB_BYTE        0xFC
 #define TEMPERATURE     0xE3
 
-
 //uint8_t Rh_Temp_sensor_cmdset[] = {0xE5,0xF5,0xE3,0xF3,0xE0,0xFE, 0xE6,0xE7,0x51,0x11,0xFA,0x0F,0xFC,0xC9,0x84,0xB8};
-
-void I2cinit(void);
-void Humidity_Temp_Read(void);
-void Temperature_Read(void);
+void i2cinit(void);
+void humidity_temp_read(void);
+void temperature_read(void);

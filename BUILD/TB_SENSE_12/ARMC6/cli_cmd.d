@@ -249,4 +249,8 @@ BUILD\TB_SENSE_12\ARMC6\cli_cmd.o: cli_cmd.cpp \
   mbed-os\features\nanostack\sal-stack-nanostack-eventloop\nanostack-event-loop\eventOS_event.h \
   mbed-os\features\frameworks\nanostack-libservice\mbed-client-libservice\ns_list.h \
   mbed-os\features\frameworks\nanostack-libservice\mbed-client-libservice\ns_types.h \
-  mbed-os\features\nanostack\mbed-mesh-api\mbed-mesh-api\mesh_interface_types.h
+  mbed-os\features\nanostack\mbed-mesh-api\mbed-mesh-api\mesh_interface_types.h \
+  coap_protocol.h mbed-os\features\netsocket\UDPSocket.h \
+  mbed-os\features\frameworks\mbed-coap\mbed-coap\sn_coap_protocol.h \
+  mbed-os\features\frameworks\mbed-coap\mbed-coap\sn_coap_header.h \
+  mbed-os\features\frameworks\mbed-coap\mbed-coap\sn_coap_header.h

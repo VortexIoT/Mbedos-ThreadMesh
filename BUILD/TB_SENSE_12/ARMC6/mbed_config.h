@@ -36,7 +36,7 @@
 #define MBED_CONF_APP_ISR                                                     1                                                                                                // set by application
 #define MBED_CONF_APP_LED                                                     LED0                                                                                             // set by application[TB_SENSE_12]
 #define MBED_CONF_APP_RELAY_CONTROL                                           PA8                                                                                              // set by application[TB_SENSE_12]
-#define MBED_CONF_APP_STORAGE_DEVICE                                          MESH_NVM_HEAP                                                                                    // set by application
+#define MBED_CONF_APP_STORAGE_DEVICE                                          MESH_NVM_NONE                                                                                    // set by application
 #define MBED_CONF_ATMEL_RF_ASSUME_SPACED_SPI                                  0                                                                                                // set by library:atmel-rf
 #define MBED_CONF_ATMEL_RF_FULL_SPI_SPEED                                     7500000                                                                                          // set by library:atmel-rf
 #define MBED_CONF_ATMEL_RF_FULL_SPI_SPEED_BYTE_SPACING                        250                                                                                              // set by library:atmel-rf
@@ -188,7 +188,7 @@
 #define MBED_CONF_MBED_MESH_API_6LOWPAN_ND_PSK_KEY_ID                         1                                                                                                // set by library:mbed-mesh-api
 #define MBED_CONF_MBED_MESH_API_6LOWPAN_ND_SECURITY_MODE                      NONE                                                                                             // set by library:mbed-mesh-api
 #define MBED_CONF_MBED_MESH_API_6LOWPAN_ND_SEC_LEVEL                          5                                                                                                // set by library:mbed-mesh-api
-#define MBED_CONF_MBED_MESH_API_HEAP_SIZE                                     60000                                                                                            // set by application[*]
+#define MBED_CONF_MBED_MESH_API_HEAP_SIZE                                     30000                                                                                            // set by application[*]
 #define MBED_CONF_MBED_MESH_API_HEAP_STAT_INFO                                NULL                                                                                             // set by library:mbed-mesh-api
 #define MBED_CONF_MBED_MESH_API_MAC_NEIGH_TABLE_SIZE                          32                                                                                               // set by library:mbed-mesh-api
 #define MBED_CONF_MBED_MESH_API_THREAD_CONFIG_CHANNEL                         22                                                                                               // set by library:mbed-mesh-api

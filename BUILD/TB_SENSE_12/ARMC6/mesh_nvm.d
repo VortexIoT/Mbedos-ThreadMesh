@@ -235,4 +235,9 @@ BUILD\TB_SENSE_12\ARMC6\mesh_nvm.o: mesh_nvm.cpp \
   mbed-os\features\nanostack\sal-stack-nanostack-eventloop\nanostack-event-loop\eventOS_event.h \
   mbed-os\features\frameworks\nanostack-libservice\mbed-client-libservice\ns_types.h \
   mbed-os\features\frameworks\nanostack-libservice\mbed-client-libservice\ns_list.h \
-  mbed-os\features\frameworks\nanostack-libservice\mbed-client-libservice\ns_types.h
+  mbed-os\features\frameworks\nanostack-libservice\mbed-client-libservice\ns_types.h \
+  mbed-os\features\storage\filesystem\littlefs\LittleFileSystem.h \
+  mbed-os\features\storage\filesystem\littlefs\littlefs\lfs.h \
+  mbed-os\features\storage\blockdevice\HeapBlockDevice.h \
+  mbed-os\features\nanostack\sal-stack-nanostack\nanostack\ns_file_system.h \
+  mbed-os\features\frameworks\mbed-trace\mbed-trace\mbed_trace.h
