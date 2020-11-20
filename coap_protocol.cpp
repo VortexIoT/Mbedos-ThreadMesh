@@ -17,8 +17,8 @@
 #include "ip6string.h"
 
 
-#define IPADDRESS1    "fd00:db8:0:0:0:ff:fe00:c000"
-#define IPADDRESS    "fd00:db8:0:0:92cf:7276:ce01:3271"
+#define IPADDRESS    "fd00:db8:0:0:0:ff:fe00:b000"
+#define IPADDRESS1    "fd00:db8:0:0:92cf:7276:ce01:3271"
 
 using namespace std;
 UDPSocket udpsock;           // Socket to talk CoAP over
@@ -27,6 +27,8 @@ coap_version_e coapVersion = COAP_VERSION_1;
 //extern SocketAddress sockAddr;
 extern MeshInterface *mesh;
 uint8_t destbuff[16] = {0};
+uint16_t queue1_handle=0;
+EventQueue queue1;
 //coapHandle = 
 
 void* coap_malloc(uint16_t size) {
@@ -48,7 +50,7 @@ int8_t coap_rx_cb(sn_coap_hdr_s *a, sn_nsdl_addr_s *b, void *c) {
     return 0;
 }
 
-void coap_init(uint8_t msg_Code, uint8_t msg_type,uint8_t *payload, uint16_t payload_len) 
+void coap_server_init(void) //(uint8_t msg_Code, uint8_t msg_type,uint8_t *payload, uint16_t payload_len) 
 {
     uint8_t *packet;
     uint8_t packet_len;
@@ -60,9 +62,69 @@ void coap_init(uint8_t msg_Code, uint8_t msg_type,uint8_t *payload, uint16_t pay
     coapHandle = sn_coap_protocol_init(&coap_malloc, &coap_free, &coap_tx_cb, &coap_rx_cb);
     stoip6(IPADDRESS, sizeof(IPADDRESS),destbuff);
     SocketAddress addr1(destbuff,NSAPI_IPv6,5683);
+    udpsock.sigio(callback(handle_socket));
+    // dispatch forever
+    queue1.dispatch();
   //  packet_len = Packet_builder(addr1,packet,msg_Code,msg_type,payload,payload_len);
 }
+void handle_socket(void)
+{
+    queue1_handle = queue1.call(receive_msg);
+}
+sn_coap_hdr_s* parsed;
+uint16_t portnumber;
+void receive_msg(void){
+    SocketAddress addr;
+     uint8_t* recv_buffer = (uint8_t*)malloc(1280); // Suggested is to keep packet size under 1280 bytes
+    nsapi_size_or_error_t ret1 = udpsock.recvfrom(&addr, recv_buffer, 1280); //reading back from server
+    
+    /*
+    OT 
+    get = 1
+    post = 2
+    put = 3
+    delete = 4
 
+    */
+    portnumber = addr.get_port();
+    printf("IP : %s    Port:%d\n",addr.get_ip_address(),portnumber);
+    if (ret1 > 0) {
+        printf("Received a message of length '%d'\n", ret1);
+     //   sn_coap_hdr_s* parsed;
+        parsed = sn_coap_parser(coapHandle, ret1, recv_buffer, &coapVersion);
+        std::string payload((const char*)parsed->payload_ptr, parsed->payload_len);// payload is a string
+        printf("msg_id:   %d\n", parsed->msg_id);
+        printf("msg_code %d\n",parsed->msg_code);
+        printf("payload_len:  %d\n", parsed->payload_len);
+        printf("payload:  %s\n", payload.c_str());
+        printf("content-format: %d\n", parsed->content_format);
+        printf("Response %d\n", parsed->msg_type);
+        printf("Uri-path : %s\n",parsed->uri_path_ptr);
+        printf("Uri-path_len : %d\n",parsed->uri_path_len);
+        if (parsed->options_list_ptr) {
+            printf("location_path_ptr: %s\n", parsed->options_list_ptr->location_path_ptr);
+            printf("location_path_len: %d\n", parsed->options_list_ptr->location_path_len);
+            printf("uri_host_ptr: %p\n", parsed->options_list_ptr->uri_host_ptr);
+        }
+        
+    } else {
+        printf("Failed to receive message (%d)\n", ret1);
+    }
+    free(recv_buffer);
+    queue1.cancel(queue1_handle);
+    queue1_handle = queue1.call_in(200,coapserver_response_builder);
+    
+    //create build response
+    
+//    queue1.break_dispatch();
+    //sn_coap_build_response(coapHandle, parsed, parsed->msg_code);
+  //  queue1_handle = queue1.call_in((60 * 1000), coapserver_response_builder(parsed));
+
+}
+void text(void)
+{
+   printf("calling send\n");    
+}
 SocketAddress coap_config(char *host_address)//uint8_t msg_Code, uint8_t msg_type,uint8_t *payload, uint16_t payload_len)
 {
   //  uint8_t *packet;
@@ -146,11 +208,11 @@ uint8_t Packet_builder(char *host_address, uint8_t *uri_path, uint8_t msg_code,u
 void Packet_parser(uint8_t ret,uint8_t *receive_buff_data,uint8_t method)
 {
     SocketAddress addr1;
-       uint8_t* recv_buffer = (uint8_t*)malloc(1280); // Suggested is to keep packet size under 1280 bytes
-    nsapi_size_or_error_t ret1 = udpsock.recvfrom(&addr1, receive_buff_data, 1280); //reading back from server
-    if (ret1 > 0) {
-        printf("Received a message of length '%d'\n", ret1);
-        sn_coap_hdr_s* parsed = sn_coap_parser(coapHandle, ret1, receive_buff_data, &coapVersion);
+   //    uint8_t* recv_buffer = (uint8_t*)malloc(1280); // Suggested is to keep packet size under 1280 bytes
+  //  nsapi_size_or_error_t ret1 = udpsock.recvfrom(&addr1, receive_buff_data, 1280); //reading back from server
+    if (ret > 0) {
+        printf("Received a message of length '%d'\n", ret);
+        sn_coap_hdr_s* parsed = sn_coap_parser(coapHandle, ret, receive_buff_data, &coapVersion);
         std::string payload((const char*)parsed->payload_ptr, parsed->payload_len);// payload is a string
         printf("\tmsg_id:   %d\n", parsed->msg_id);
         if (parsed->msg_code) {// to print 2.xx,4.xx format responses
@@ -172,15 +234,35 @@ void Packet_parser(uint8_t ret,uint8_t *receive_buff_data,uint8_t method)
         }
         
     } else {
-        printf("Failed to receive message (%d)\n", ret1);
+        printf("Failed to receive message (%d)\n", ret);
     }
     free(receive_buff_data);
 }
 
-void coapserver_response_builder(sn_coap_hdr_s* coap_res_ptr)
+void coapserver_response_builder()
 {
-   // coapHandle = sn_coap_protocol_init(&coap_malloc, &coap_free, &coap_tx_cb, &coap_rx_cb);
-    sn_coap_build_response(coapHandle,coap_res_ptr,coap_res_ptr->msg_code);
+   sn_coap_hdr_s* coap_res_ptr = parsed;
+  // SocketAddress addr;
+    uint8_t payload[] = "payload_frm_mbed";
+    uint8_t uri_path[] = "testing";
+    coapHandle = sn_coap_protocol_init(&coap_malloc, &coap_free, &coap_tx_cb, &coap_rx_cb);
+   // coap_res_ptr->msg_code = COAP_MSG_CODE_RESPONSE_CONTENT;
+   printf("response msgid %d\n", coap_res_ptr->msg_id);
+  //  coap_res_ptr->msg_type = COAP_MSG_TYPE_ACKNOWLEDGEMENT;
+    coap_res_ptr->payload_ptr = payload;
+    coap_res_ptr->payload_len = strlen((char *)payload);
+ //   coap_res_ptr->uri_path_ptr = uri_path;
+  //  coap_res_ptr->uri_path_len = 8;
+    coap_res_ptr = sn_coap_build_response(coapHandle,coap_res_ptr,coap_res_ptr->msg_code);
+    uint16_t message_len = sn_coap_builder_calc_needed_packet_data_size(coap_res_ptr);
+    printf("Calculated message length: %d bytes\n", message_len);
+    uint8_t* message_ptr = (uint8_t*)malloc(message_len);
+    sn_coap_builder(message_ptr, coap_res_ptr);
+    
+    stoip6(IPADDRESS, sizeof(IPADDRESS),destbuff);
+    SocketAddress addr1(destbuff, NSAPI_IPv6, portnumber);
+    int scount1 = udpsock.sendto(addr1, message_ptr, message_len);
+    printf("Sent %d bytes on UDP\n", scount1);
 }
 
 //This function implemented for test purpose not neccessary to keep it final code 

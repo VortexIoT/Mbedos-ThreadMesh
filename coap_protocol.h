@@ -14,3 +14,9 @@ void coap_init(uint8_t msg_Code, uint8_t msg_type,uint8_t *payload, uint16_t pay
 uint8_t getfunction(void);
 SocketAddress coap_init1(void);
 SocketAddress coap_config(char *host_address);
+void handle_socket(void);
+void receive_msg(void);
+void coap_server_init(void) ;
+void text(void);
+void coapserver_response_builder(void);
+//void coapserver_response_builder(void);

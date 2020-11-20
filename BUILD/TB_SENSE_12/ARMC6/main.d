@@ -269,8 +269,5 @@ BUILD\TB_SENSE_12\ARMC6\main.o: main.cpp \
   mbed-os\features\frameworks\mbed-coap\mbed-coap\sn_coap_protocol.h \
   mbed-os\features\frameworks\mbed-coap\mbed-coap\sn_coap_header.h \
   mbed-os\features\frameworks\mbed-coap\mbed-coap\sn_coap_header.h \
-  mbed-os\features\storage\blockdevice\BlockDevice.h \
-  mbed-os\features\storage\filesystem\littlefs\LittleFileSystem.h \
-  mbed-os\features\storage\filesystem\littlefs\littlefs\lfs.h \
   mesh_led_control_example.h \
   mbed-os\features\netsocket\NetworkInterface.h

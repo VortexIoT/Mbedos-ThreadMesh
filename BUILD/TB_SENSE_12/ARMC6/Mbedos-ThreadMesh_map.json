@@ -2,7 +2,7 @@
     {
         "module": "[lib]\\c_w.l",
         "size": {
-            ".text": 22009,
+            ".text": 23035,
             ".data": 16,
             ".bss": 348,
             ".text-delta": 0,
@@ -13,7 +13,7 @@
     {
         "module": "[lib]\\fz_wm.l",
         "size": {
-            ".text": 1312,
+            ".text": 2978,
             ".data": 0,
             ".bss": 0,
             ".text-delta": 0,
@@ -24,7 +24,7 @@
     {
         "module": "[lib]\\libcpp_w.l",
         "size": {
-            ".text": 65770,
+            ".text": 65844,
             ".data": 0,
             ".bss": 2920,
             ".text-delta": 0,
@@ -46,7 +46,7 @@
     {
         "module": "[lib]\\librail_efr32xg12_release.ar",
         "size": {
-            ".text": 37404,
+            ".text": 38218,
             ".data": 150,
             ".bss": 836,
             ".text-delta": 0,
@@ -79,9 +79,9 @@
     {
         "module": "cli_cmd.o",
         "size": {
-            ".text": 166,
-            ".data": 0,
-            ".bss": 257,
+            ".text": 4351,
+            ".data": 64,
+            ".bss": 547,
             ".text-delta": 0,
             ".data-delta": 0,
             ".bss-delta": 0
@@ -90,9 +90,9 @@
     {
         "module": "coap_protocol.o",
         "size": {
-            ".text": 98,
-            ".data": 0,
-            ".bss": 144,
+            ".text": 2495,
+            ".data": 1,
+            ".bss": 264,
             ".text-delta": 0,
             ".data-delta": 0,
             ".bss-delta": 0
@@ -101,9 +101,9 @@
     {
         "module": "main.o",
         "size": {
-            ".text": 1670,
+            ".text": 236,
             ".data": 0,
-            ".bss": 240,
+            ".bss": 36,
             ".text-delta": 0,
             ".data-delta": 0,
             ".bss-delta": 0
@@ -112,7 +112,7 @@
     {
         "module": "mbed-os\\components",
         "size": {
-            ".text": 415,
+            ".text": 1089,
             ".data": 0,
             ".bss": 0,
             ".text-delta": 0,
@@ -123,9 +123,9 @@
     {
         "module": "mbed-os\\drivers",
         "size": {
-            ".text": 2699,
+            ".text": 3015,
             ".data": 0,
-            ".bss": 84,
+            ".bss": 44,
             ".text-delta": 0,
             ".data-delta": 0,
             ".bss-delta": 0
@@ -134,9 +134,9 @@
     {
         "module": "mbed-os\\events",
         "size": {
-            ".text": 398,
+            ".text": 2566,
             ".data": 0,
-            ".bss": 0,
+            ".bss": 4680,
             ".text-delta": 0,
             ".data-delta": 0,
             ".bss-delta": 0
@@ -145,9 +145,9 @@
     {
         "module": "mbed-os\\features",
         "size": {
-            ".text": 22377,
-            ".data": 0,
-            ".bss": 257,
+            ".text": 431071,
+            ".data": 1039,
+            ".bss": 11025,
             ".text-delta": 0,
             ".data-delta": 0,
             ".bss-delta": 0
@@ -167,9 +167,9 @@
     {
         "module": "mbed-os\\platform",
         "size": {
-            ".text": 8333,
-            ".data": 64,
-            ".bss": 661,
+            ".text": 8061,
+            ".data": 80,
+            ".bss": 444,
             ".text-delta": 0,
             ".data-delta": 0,
             ".bss-delta": 0
@@ -178,7 +178,7 @@
     {
         "module": "mbed-os\\rtos",
         "size": {
-            ".text": 11778,
+            ".text": 14880,
             ".data": 168,
             ".bss": 6633,
             ".text-delta": 0,
@@ -189,9 +189,9 @@
     {
         "module": "mbed-os\\targets",
         "size": {
-            ".text": 17335,
+            ".text": 17377,
             ".data": 12,
-            ".bss": 288,
+            ".bss": 283,
             ".text-delta": 0,
             ".data-delta": 0,
             ".bss-delta": 0
@@ -203,6 +203,17 @@
             ".text": 288,
             ".data": 0,
             ".bss": 224,
+            ".text-delta": 0,
+            ".data-delta": 0,
+            ".bss-delta": 0
+        }
+    },
+    {
+        "module": "mesh_nvm.o",
+        "size": {
+            ".text": 2,
+            ".data": 0,
+            ".bss": 0,
             ".text-delta": 0,
             ".data-delta": 0,
             ".bss-delta": 0
@@ -221,9 +232,9 @@
     },
     {
         "summary": {
-            "static_ram": 14597,
+            "static_ram": 31109,
             "static_ram_delta": 0,
-            "total_flash": 198307,
+            "total_flash": 622881,
             "total_flash_delta": 0
         }
     }
