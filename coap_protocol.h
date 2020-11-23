@@ -3,6 +3,10 @@
 #include "sn_coap_protocol.h"
 #include "sn_coap_header.h"
 
+#define IPADDRESS2    "fd00:db8:0:0:0:ff:fe00:2000"
+#define IPADDRESS1    "fd00:db8:0:0:92cf:7276:ce01:3271" 
+#define IPADDRESS     "fd00:db8:0:0:a58a:2805:667e:9cef"
+
 
 int8_t coap_rx_cb(sn_coap_hdr_s *a, sn_nsdl_addr_s *b, void *c);
 uint8_t coap_tx_cb(uint8_t *a, uint16_t b, sn_nsdl_addr_s *c, void *d);
@@ -16,7 +20,7 @@ SocketAddress coap_init1(void);
 SocketAddress coap_config(char *host_address);
 void handle_socket(void);
 void receive_msg(void);
-void coap_server_init(void) ;
+void coap_server_init(char *ipaddr) ;
 void text(void);
-void coapserver_response_builder(void);
+void coapserver_response_builder(SocketAddress addr);
 //void coapserver_response_builder(void);

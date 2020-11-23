@@ -228,4 +228,5 @@ BUILD\TB_SENSE_12\ARMC6\coap_protocol.o: coap_protocol.cpp \
   mbed-os\platform\mbed_stats.h mbed-os\platform\Callback.h \
   mbed-os\platform\FunctionPointer.h mbed-os\platform\ScopedLock.h \
   mbed-os\features\frameworks\nanostack-libservice\mbed-client-libservice\ip6string.h \
-  mbed-os\features\frameworks\nanostack-libservice\mbed-client-libservice\ns_types.h
+  mbed-os\features\frameworks\nanostack-libservice\mbed-client-libservice\ns_types.h \
+  temp_humidity_sensor.h mbed-os\drivers\I2C.h

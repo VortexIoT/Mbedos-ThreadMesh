@@ -56,6 +56,8 @@ extern volatile uint8_t flag;
 extern volatile char Rx_buff[256];
 //SocketAddress sockAddr;
 extern uint8_t Receive_buff_length;
+extern EventQueue queue1;
+Thread thread;
 /********************************************  END of I2C Declarations   **********************/
 void trace_printer(const char* str) {
     printf("%s\n", str);
@@ -77,8 +79,9 @@ int main() {
     mbed_trace_mutex_release_function_set(serial_out_mutex_release);
     printf("Start Thread - Mesh application\n");
     start_blinking();
-
+thread.start(callback(&queue1, &EventQueue::dispatch_forever));
     pc.attach(&isr_rx);
+    i2cinit();
     while (1) {
         if (flag) {
             flag = 0;
@@ -92,7 +95,15 @@ int main() {
                 cli_cmds_Handler((char *)Rx_buff);
             }
             if(Rx_buff[0] == '1')
-                coap_server_init();
+            {
+                coap_server_init(IPADDRESS);
+                queue1.call(receive_msg);
+            }
+            if(Rx_buff[0] == '2')
+            {
+                coap_server_init(IPADDRESS1);
+                 queue1.call(receive_msg);
+            }
           //  socket->sigio(mbed::callback(nsapi_dns_query_async_socket_callback, query->socket_cb_data));
         /*    else
             {

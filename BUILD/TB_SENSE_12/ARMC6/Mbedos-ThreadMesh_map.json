@@ -90,7 +90,7 @@
     {
         "module": "coap_protocol.o",
         "size": {
-            ".text": 2495,
+            ".text": 2348,
             ".data": 1,
             ".bss": 264,
             ".text-delta": 0,
@@ -101,9 +101,9 @@
     {
         "module": "main.o",
         "size": {
-            ".text": 236,
+            ".text": 802,
             ".data": 0,
-            ".bss": 36,
+            ".bss": 228,
             ".text-delta": 0,
             ".data-delta": 0,
             ".bss-delta": 0
@@ -112,7 +112,7 @@
     {
         "module": "mbed-os\\components",
         "size": {
-            ".text": 1089,
+            ".text": 1015,
             ".data": 0,
             ".bss": 0,
             ".text-delta": 0,
@@ -123,7 +123,7 @@
     {
         "module": "mbed-os\\drivers",
         "size": {
-            ".text": 3015,
+            ".text": 2917,
             ".data": 0,
             ".bss": 44,
             ".text-delta": 0,
@@ -134,7 +134,7 @@
     {
         "module": "mbed-os\\events",
         "size": {
-            ".text": 2566,
+            ".text": 2324,
             ".data": 0,
             ".bss": 4680,
             ".text-delta": 0,
@@ -145,7 +145,7 @@
     {
         "module": "mbed-os\\features",
         "size": {
-            ".text": 431071,
+            ".text": 431135,
             ".data": 1039,
             ".bss": 11025,
             ".text-delta": 0,
@@ -189,7 +189,7 @@
     {
         "module": "mbed-os\\targets",
         "size": {
-            ".text": 17377,
+            ".text": 17471,
             ".data": 12,
             ".bss": 283,
             ".text-delta": 0,
@@ -222,7 +222,7 @@
     {
         "module": "temp_humidity_sensor.o",
         "size": {
-            ".text": 80,
+            ".text": 104,
             ".data": 0,
             ".bss": 132,
             ".text-delta": 0,
@@ -232,9 +232,9 @@
     },
     {
         "summary": {
-            "static_ram": 31109,
+            "static_ram": 31301,
             "static_ram_delta": 0,
-            "total_flash": 622881,
+            "total_flash": 623068,
             "total_flash_delta": 0
         }
     }
