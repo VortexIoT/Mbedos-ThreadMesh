@@ -1,4 +1,4 @@
-#include "cli_cmd.h"
+//#include "cli_cmd.h"
 #include "stdio.h"
 #include "socket_api.h"
 #include "mesh_nvm.h"
@@ -6,8 +6,8 @@
 #include "ThreadInterface.h"
 #include "string.h"
 #include <cstdint>
-#include <iostream>
-#include "coap_protocol.h"
+//#include <iostream>
+//#include "coap_protocol.h"
 
 mbed::RawSerial pc(USBTX, USBRX,115200);
 MeshInterface *mesh;
@@ -444,6 +444,8 @@ void get_keyword_cmds(char *networkparam,uint8_t param_len)
 }
 //Have to make it perfect, just implemented for test purpose
 // change later
+
+char *coap_server_ipaddr;
 void coap_request_cmds(char *str)
 {
     SocketAddress addr;
@@ -465,6 +467,7 @@ void coap_request_cmds(char *str)
     //    printf("hello\n");
     //    addr = coap_config(host_address);
    // } else
+   coap_server_ipaddr = request_method_type;
     if (strncmp((char *)request_method_type, "get",request_method_type_len) == 0) {
         if(strncmp((char *)msg_type, "con", msg_type_len-1) == 0) {
             msg_type_con_noncon = COAP_MSG_TYPE_CONFIRMABLE;

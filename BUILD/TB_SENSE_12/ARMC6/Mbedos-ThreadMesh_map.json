@@ -2,7 +2,7 @@
     {
         "module": "[lib]\\c_w.l",
         "size": {
-            ".text": 23035,
+            ".text": 14207,
             ".data": 16,
             ".bss": 348,
             ".text-delta": 0,
@@ -13,7 +13,7 @@
     {
         "module": "[lib]\\fz_wm.l",
         "size": {
-            ".text": 2978,
+            ".text": 2302,
             ".data": 0,
             ".bss": 0,
             ".text-delta": 0,
@@ -24,9 +24,9 @@
     {
         "module": "[lib]\\libcpp_w.l",
         "size": {
-            ".text": 65844,
+            ".text": 1,
             ".data": 0,
-            ".bss": 2920,
+            ".bss": 0,
             ".text-delta": 0,
             ".data-delta": 0,
             ".bss-delta": 0
@@ -35,7 +35,7 @@
     {
         "module": "[lib]\\libcppabi_w.l",
         "size": {
-            ".text": 2595,
+            ".text": 44,
             ".data": 0,
             ".bss": 0,
             ".text-delta": 0,
@@ -57,7 +57,7 @@
     {
         "module": "[lib]\\m_wm.l",
         "size": {
-            ".text": 794,
+            ".text": 48,
             ".data": 0,
             ".bss": 0,
             ".text-delta": 0,
@@ -79,20 +79,9 @@
     {
         "module": "cli_cmd.o",
         "size": {
-            ".text": 4351,
+            ".text": 4315,
             ".data": 64,
-            ".bss": 547,
-            ".text-delta": 0,
-            ".data-delta": 0,
-            ".bss-delta": 0
-        }
-    },
-    {
-        "module": "coap_protocol.o",
-        "size": {
-            ".text": 2348,
-            ".data": 1,
-            ".bss": 264,
+            ".bss": 550,
             ".text-delta": 0,
             ".data-delta": 0,
             ".bss-delta": 0
@@ -101,7 +90,7 @@
     {
         "module": "main.o",
         "size": {
-            ".text": 802,
+            ".text": 698,
             ".data": 0,
             ".bss": 228,
             ".text-delta": 0,
@@ -123,7 +112,7 @@
     {
         "module": "mbed-os\\drivers",
         "size": {
-            ".text": 2917,
+            ".text": 3121,
             ".data": 0,
             ".bss": 44,
             ".text-delta": 0,
@@ -145,7 +134,7 @@
     {
         "module": "mbed-os\\features",
         "size": {
-            ".text": 431135,
+            ".text": 431179,
             ".data": 1039,
             ".bss": 11025,
             ".text-delta": 0,
@@ -167,7 +156,7 @@
     {
         "module": "mbed-os\\platform",
         "size": {
-            ".text": 8061,
+            ".text": 8057,
             ".data": 80,
             ".bss": 444,
             ".text-delta": 0,
@@ -189,7 +178,7 @@
     {
         "module": "mbed-os\\targets",
         "size": {
-            ".text": 17471,
+            ".text": 17827,
             ".data": 12,
             ".bss": 283,
             ".text-delta": 0,
@@ -200,7 +189,7 @@
     {
         "module": "mesh_led_control_example.o",
         "size": {
-            ".text": 288,
+            ".text": 390,
             ".data": 0,
             ".bss": 224,
             ".text-delta": 0,
@@ -222,9 +211,20 @@
     {
         "module": "temp_humidity_sensor.o",
         "size": {
-            ".text": 104,
+            ".text": 434,
             ".data": 0,
-            ".bss": 132,
+            ".bss": 226,
+            ".text-delta": 0,
+            ".data-delta": 0,
+            ".bss-delta": 0
+        }
+    },
+    {
+        "module": "vmn_coap_protocol.o",
+        "size": {
+            ".text": 2329,
+            ".data": 2,
+            ".bss": 264,
             ".text-delta": 0,
             ".data-delta": 0,
             ".bss-delta": 0
@@ -232,9 +232,9 @@
     },
     {
         "summary": {
-            "static_ram": 31301,
+            "static_ram": 28479,
             "static_ram_delta": 0,
-            "total_flash": 623068,
+            "total_flash": 545298,
             "total_flash_delta": 0
         }
     }

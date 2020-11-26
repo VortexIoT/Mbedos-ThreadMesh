@@ -18,9 +18,9 @@
 #include "NanostackInterface.h"
 #include "mbed-trace/mbed_trace.h"
 #include "mesh_nvm.h"
-#include "cli_cmd.h"
-#include "temp_humidity_sensor.h"
-#include "coap_protocol.h"
+//#include "cli_cmd.h"
+//#include "temp_humidity_sensor.h"
+//#include "coap_protocol.h"
 #include <cstring>
 #include "string.h"
 
@@ -56,8 +56,8 @@ extern volatile uint8_t flag;
 extern volatile char Rx_buff[256];
 //SocketAddress sockAddr;
 extern uint8_t Receive_buff_length;
-extern EventQueue queue1;
-Thread thread;
+extern EventQueue coapserver_eventqueue; //
+Thread coapserver_thread;
 /********************************************  END of I2C Declarations   **********************/
 void trace_printer(const char* str) {
     printf("%s\n", str);
@@ -69,6 +69,7 @@ void serial_out_mutex_release() {
     SerialOutMutex.unlock();
 }
 uint8_t block[512] = "Hello World!\n";
+extern char *coap_server_ipaddr;
 int main() {
     uint8_t buff[]  = "time_to_test";
     uint8_t delete_buf[] = "abcd";
@@ -79,7 +80,7 @@ int main() {
     mbed_trace_mutex_release_function_set(serial_out_mutex_release);
     printf("Start Thread - Mesh application\n");
     start_blinking();
-thread.start(callback(&queue1, &EventQueue::dispatch_forever));
+    coapserver_thread.start(callback(&coapserver_eventqueue, &EventQueue::dispatch_forever));
     pc.attach(&isr_rx);
     i2cinit();
     while (1) {
@@ -96,13 +97,13 @@ thread.start(callback(&queue1, &EventQueue::dispatch_forever));
             }
             if(Rx_buff[0] == '1')
             {
-                coap_server_init(IPADDRESS);
-                queue1.call(receive_msg);
+            //    coap_server_init(IPADDRESS);
+           //     coapserver_eventqueue.call(receive_msg);
             }
             if(Rx_buff[0] == '2')
             {
-                coap_server_init(IPADDRESS1);
-                 queue1.call(receive_msg);
+                coap_server_init(coap_server_ipaddr);
+             //    coapserver_eventqueue.call(receive_msg);
             }
           //  socket->sigio(mbed::callback(nsapi_dns_query_async_socket_callback, query->socket_cb_data));
         /*    else

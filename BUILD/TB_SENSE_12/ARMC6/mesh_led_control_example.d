@@ -222,9 +222,21 @@ BUILD\TB_SENSE_12\ARMC6\mesh_led_control_example.o: \
   mbed-os\platform\ScopedRamExecutionLock.h \
   mbed-os\platform\mbed_stats.h mbed-os\platform\Callback.h \
   mbed-os\platform\FunctionPointer.h mbed-os\platform\ScopedLock.h \
+  cli_cmd.h \
+  mbed-os\features\nanostack\sal-stack-nanostack\nanostack\thread_management_if.h \
+  mbed-os\features\frameworks\nanostack-libservice\mbed-client-libservice\ns_types.h \
+  mbed-os\features\nanostack\sal-stack-nanostack\nanostack\net_interface.h \
+  mbed-os\features\nanostack\sal-stack-nanostack\nanostack\platform\arm_hal_phy.h \
+  mbed-os\features\netsocket\InternetSocket.h \
+  mbed-os\features\nanostack\sal-stack-nanostack\source\NWK_INTERFACE\Include\protocol_abstract.h \
+  mbed-os\drivers\RawSerial.h temp_humidity_sensor.h \
+  mbed-os\drivers\I2C.h vmn_coap_protocol.h \
+  mbed-os\features\netsocket\UDPSocket.h \
+  mbed-os\features\frameworks\mbed-coap\mbed-coap\sn_coap_protocol.h \
+  mbed-os\features\frameworks\mbed-coap\mbed-coap\sn_coap_header.h \
+  mbed-os\features\frameworks\mbed-coap\mbed-coap\sn_coap_header.h \
   mbed-os\features\nanostack\sal-stack-nanostack\nanostack\socket_api.h \
   mbed-os\features\nanostack\sal-stack-nanostack\nanostack\ns_address.h \
-  mbed-os\features\frameworks\nanostack-libservice\mbed-client-libservice\ns_types.h \
   mesh_led_control_example.h \
   mbed-os\features\netsocket\NetworkInterface.h \
   mbed-os\features\frameworks\nanostack-libservice\mbed-client-libservice\common_functions.h \
