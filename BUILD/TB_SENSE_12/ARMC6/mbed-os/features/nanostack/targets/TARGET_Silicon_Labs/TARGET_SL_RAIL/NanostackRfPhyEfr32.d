@@ -232,11 +232,12 @@ BUILD\TB_SENSE_12\ARMC6\mbed-os\features\nanostack\targets\TARGET_Silicon_Labs\T
   mbed-os\features\netsocket\InternetSocket.h \
   mbed-os\features\nanostack\sal-stack-nanostack\source\NWK_INTERFACE\Include\protocol_abstract.h \
   mbed-os\drivers\RawSerial.h temp_humidity_sensor.h \
-  mbed-os\drivers\I2C.h vmn_coap_protocol.h \
+  mbed-os\drivers\I2C.h vmn_coap_server.h \
   mbed-os\features\netsocket\UDPSocket.h \
   mbed-os\features\frameworks\mbed-coap\mbed-coap\sn_coap_protocol.h \
   mbed-os\features\frameworks\mbed-coap\mbed-coap\sn_coap_header.h \
   mbed-os\features\frameworks\mbed-coap\mbed-coap\sn_coap_header.h \
+  vmn_coap_client.h \
   mbed-os\features\nanostack\nanostack-interface\NanostackRfPhy.h \
   mbed-os\features\nanostack\nanostack-interface\NanostackMACPhy.h \
   mbed-os\features\nanostack\nanostack-interface\NanostackPhy.h \

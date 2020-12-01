@@ -2,7 +2,7 @@
     {
         "module": "[lib]\\c_w.l",
         "size": {
-            ".text": 14207,
+            ".text": 14233,
             ".data": 16,
             ".bss": 348,
             ".text-delta": 0,
@@ -79,7 +79,7 @@
     {
         "module": "cli_cmd.o",
         "size": {
-            ".text": 4315,
+            ".text": 4291,
             ".data": 64,
             ".bss": 550,
             ".text-delta": 0,
@@ -90,9 +90,9 @@
     {
         "module": "main.o",
         "size": {
-            ".text": 698,
+            ".text": 910,
             ".data": 0,
-            ".bss": 228,
+            ".bss": 612,
             ".text-delta": 0,
             ".data-delta": 0,
             ".bss-delta": 0
@@ -123,7 +123,7 @@
     {
         "module": "mbed-os\\events",
         "size": {
-            ".text": 2324,
+            ".text": 2572,
             ".data": 0,
             ".bss": 4680,
             ".text-delta": 0,
@@ -211,7 +211,7 @@
     {
         "module": "temp_humidity_sensor.o",
         "size": {
-            ".text": 434,
+            ".text": 536,
             ".data": 0,
             ".bss": 226,
             ".text-delta": 0,
@@ -220,11 +220,22 @@
         }
     },
     {
-        "module": "vmn_coap_protocol.o",
+        "module": "vmn_coap_client.o",
         "size": {
-            ".text": 2329,
+            ".text": 2190,
+            ".data": 3,
+            ".bss": 256,
+            ".text-delta": 0,
+            ".data-delta": 0,
+            ".bss-delta": 0
+        }
+    },
+    {
+        "module": "vmn_coap_server.o",
+        "size": {
+            ".text": 1812,
             ".data": 2,
-            ".bss": 264,
+            ".bss": 260,
             ".text-delta": 0,
             ".data-delta": 0,
             ".bss-delta": 0
@@ -232,9 +243,9 @@
     },
     {
         "summary": {
-            "static_ram": 28479,
+            "static_ram": 29118,
             "static_ram_delta": 0,
-            "total_flash": 545298,
+            "total_flash": 547538,
             "total_flash_delta": 0
         }
     }

@@ -10,24 +10,26 @@ mbed::I2C i2c(I2C_SDA,I2C_SCL);  //i2c init
 
 uint8_t RH_percentage;
 uint8_t Temp_centigrade;
-EventQueue sensorqueue;
+EventQueue sensor_eventqueue;
 /*#########################################  I2C Functions Body ###################***********/
 // Call this function to set i2c frequency
 void i2cinit(void) {
      i2c.frequency(100000);
 }
+
+void temp_hum_sensor_read_every_5min(void)
+{
+    sensor_eventqueue.call_every(60*1000, humidity_temp_read);
+}
+
   // Calling this function Reads indoor Rh %  and respective temperature
-void humidity_temp_read(uint8_t *percentage_buffer) {//Temp read with RH
-    char rhread = RH_READ;
+void humidity_temp_read(void) {//Temp read with RH
+    char rhread = HUMIDITY_READ;
     char readbuff[2];
-//    uint8_t percentage_buffer1[4];
     i2c.write(SENSOR_ADDR<<1,&rhread,1);
     i2c.read(SENSOR_ADDR<<1,readbuff,2);
     uint16_t Rh_reading = (((readbuff[0]<<8)|(readbuff[1]&0xFE)));
     RH_percentage = (((125*Rh_reading)/65536)-6);
-  //  percentage_buffer1[0]= RH_percentage;//(RH_percentage & 0xffff);
-  //  percentage_buffer1[1] = ' ';
-  //  percentage_buffer1[2] = ' ';
     printf("Rhread := %d\n",RH_percentage);
     rhread = TEMP_READ;
     i2c.write(SENSOR_ADDR<<1,&rhread,1);
@@ -35,21 +37,32 @@ void humidity_temp_read(uint8_t *percentage_buffer) {//Temp read with RH
     uint16_t temp_reading = (((readbuff[0]<<8)|(readbuff[1]&0xFC)));
     Temp_centigrade = (((175.72*temp_reading)/65536)-46.85);
     printf("Tempread := %d\n",Temp_centigrade);
-//    percentage_buffer1[3] = Temp_centigrade;
-//    percentage_buffer = percentage_buffer1;
-  //  return percentage_buffer;
+ //   sensor_eventqueue.call_every(60*1000,humidity_temp_read);
 }
-/*
+
  // Calling this function Reads indoor temperature
-void temperature_read(void) //Seperate temp read
+void temperature_sensor_read(void) //Seperate temp read
 {
-    char Temp = TEMPERATURE;
+    char Temp = TEMPERATURE_READ;
     char readbuff[2];
     i2c.write(SENSOR_ADDR<<1,&Temp,1);
     i2c.read(SENSOR_ADDR<<1,readbuff,2);
-
     uint16_t temp_reading = (((readbuff[0]<<8)|(readbuff[1]&0xFC)));
-    uint16_t Temp_centigrade = (((175.72*temp_reading)/65536)-46.85);
+    uint8_t Temp_centigrade = (((175.72*temp_reading)/65536)-46.85);
     printf("Temperature := %d\n",Temp_centigrade);
+   // return Temp_centigrade;
 }
-*/
+
+// Calling this function Reads humidity
+void humidity_sensor_read(void)
+{
+    char rhread = HUMIDITY_READ;
+    char readbuff[2];
+    i2c.write(SENSOR_ADDR<<1,&rhread,1);
+    i2c.read(SENSOR_ADDR<<1,readbuff,2);
+    uint16_t Rh_reading = (((readbuff[0]<<8)|(readbuff[1]&0xFE)));
+    uint8_t humidity_percentage = (((125*Rh_reading)/65536)-6);
+    printf("Rhread := %d\n",humidity_percentage);
+ //   return humidity_percentage;
+}
+

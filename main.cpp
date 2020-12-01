@@ -57,7 +57,11 @@ extern volatile char Rx_buff[256];
 //SocketAddress sockAddr;
 extern uint8_t Receive_buff_length;
 extern EventQueue coapserver_eventqueue; //
+extern EventQueue sensor_eventqueue;
+extern EventQueue coapclient_eventqueue;
 Thread coapserver_thread;
+Thread temp_hum_sensor_thread;
+Thread coapclient_thread;
 /********************************************  END of I2C Declarations   **********************/
 void trace_printer(const char* str) {
     printf("%s\n", str);
@@ -79,10 +83,14 @@ int main() {
     mbed_trace_mutex_wait_function_set(serial_out_mutex_wait);
     mbed_trace_mutex_release_function_set(serial_out_mutex_release);
     printf("Start Thread - Mesh application\n");
-    start_blinking();
-    coapserver_thread.start(callback(&coapserver_eventqueue, &EventQueue::dispatch_forever));
-    pc.attach(&isr_rx);
-    i2cinit();
+    coapserver_thread.start(callback(&coapserver_eventqueue, &EventQueue::dispatch_forever)); //coap server
+    temp_hum_sensor_thread.start(callback(&sensor_eventqueue, &EventQueue::dispatch_forever)); //sensor data
+    coapclient_thread.start(callback(&coapclient_eventqueue, &EventQueue::dispatch_forever)); //coapclient
+    start_blinking();   //led
+    temp_hum_sensor_read_every_5min(); //reading every 5min
+    pc.attach(&isr_rx); //receive interrupt
+    i2cinit();  //i2c frequency init
+    
     while (1) {
         if (flag) {
             flag = 0;

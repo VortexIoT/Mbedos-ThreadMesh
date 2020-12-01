@@ -403,7 +403,7 @@ void dataset_keyword_cmds(char *networkparameter, char *value,uint8_t netwrkpara
 {
     uint8_t donebyte = 0;
     if (netwrkparam_len > 0) {
-        printf("%s %s\n",networkparameter,value);
+     //   printf("%s %s\n",networkparameter,value);
         if (strncmp(networkparameter,"help",netwrkparam_len-1) == 0) { // to list the available commands to start with dataset
             if (value_len == 0)  //nothing is there in 3rd place
                 dataset_commands_List();
@@ -474,28 +474,28 @@ void coap_request_cmds(char *str)
         } else {
             msg_type_con_noncon = COAP_MSG_TYPE_NON_CONFIRMABLE;
         }
-            Packet_builder(host_address,(uint8_t *)uri_path, COAP_MSG_CODE_REQUEST_GET, msg_type_con_noncon, 0, 0);
+            client_requestpacket_build(host_address,(uint8_t *)uri_path, COAP_MSG_CODE_REQUEST_GET, msg_type_con_noncon, 0, 0);
     } else if (strncmp((char *)request_method_type, "put",request_method_type_len) == 0) {
         if(strncmp((char *)msg_type, "con", msg_type_len) == 0) {
             msg_type_con_noncon = COAP_MSG_TYPE_CONFIRMABLE;
         } else {
              msg_type_con_noncon = COAP_MSG_TYPE_NON_CONFIRMABLE;
         }
-            Packet_builder(host_address,(uint8_t *)uri_path, COAP_MSG_CODE_REQUEST_PUT, msg_type_con_noncon, (uint8_t *)payload, payload_len-1);
+            client_requestpacket_build(host_address,(uint8_t *)uri_path, COAP_MSG_CODE_REQUEST_PUT, msg_type_con_noncon, (uint8_t *)payload, payload_len-1);
     } else if (strncmp((char *)request_method_type, "post",request_method_type_len) == 0) {
         if(strncmp((char *)msg_type, "con", msg_type_len) == 0) {
             msg_type_con_noncon = COAP_MSG_TYPE_CONFIRMABLE;
         } else {
              msg_type_con_noncon = COAP_MSG_TYPE_NON_CONFIRMABLE;
         }
-            Packet_builder(host_address, (uint8_t *)uri_path,  COAP_MSG_CODE_REQUEST_POST, msg_type_con_noncon, (uint8_t *)payload, payload_len-1);
+            client_requestpacket_build(host_address, (uint8_t *)uri_path,  COAP_MSG_CODE_REQUEST_POST, msg_type_con_noncon, (uint8_t *)payload, payload_len-1);
     } else if (strncmp((char *)request_method_type, "delete",request_method_type_len) == 0) {
         if(strncmp((char *)msg_type, "con", msg_type_len) == 0) {
             msg_type_con_noncon = COAP_MSG_TYPE_CONFIRMABLE;
         } else {
              msg_type_con_noncon = COAP_MSG_TYPE_NON_CONFIRMABLE;
         }
-        Packet_builder(host_address, (uint8_t *)uri_path, COAP_MSG_CODE_REQUEST_DELETE, msg_type_con_noncon, (uint8_t *)payload, payload_len-1);
+        client_requestpacket_build(host_address, (uint8_t *)uri_path, COAP_MSG_CODE_REQUEST_DELETE, msg_type_con_noncon, (uint8_t *)payload, payload_len-1);
     }    
 }
 
