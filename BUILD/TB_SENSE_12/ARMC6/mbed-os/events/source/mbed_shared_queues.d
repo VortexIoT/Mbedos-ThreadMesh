@@ -65,8 +65,9 @@ BUILD\TB_SENSE_12\ARMC6\mbed-os\events\source\mbed_shared_queues.o: \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\emlib\inc\em_bus.h \
   mbed-os\platform\Callback.h mbed-os\platform\mbed_assert.h \
   mbed-os\platform\mbed_toolchain.h mbed-os\platform\mbed_preprocessor.h \
-  mbed-os\platform\NonCopyable.h mbed-os\rtos\Thread.h \
-  mbed-os\rtos\mbed_rtos_types.h mbed-os\rtos\mbed_rtos1_types.h \
+  mbed-os\platform\NonCopyable.h mbed-os\platform\mbed_debug.h \
+  mbed-os\rtos\Thread.h mbed-os\rtos\mbed_rtos_types.h \
+  mbed-os\rtos\mbed_rtos1_types.h \
   mbed-os\rtos\source\TARGET_CORTEX\rtx4\cmsis_os.h \
   mbed-os\rtos\mbed_rtos_storage.h mbed-os\rtos\Semaphore.h \
   mbed-os\rtos\Mutex.h mbed-os\platform\ScopedLock.h

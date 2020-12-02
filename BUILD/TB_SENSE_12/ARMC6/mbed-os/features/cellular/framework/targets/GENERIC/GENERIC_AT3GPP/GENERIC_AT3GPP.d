@@ -69,7 +69,7 @@ BUILD\TB_SENSE_12\ARMC6\mbed-os\features\cellular\framework\targets\GENERIC\GENE
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\emlib\inc\em_bus.h \
   mbed-os\platform\Callback.h mbed-os\platform\mbed_assert.h \
   mbed-os\platform\mbed_toolchain.h mbed-os\platform\mbed_preprocessor.h \
-  mbed-os\platform\NonCopyable.h \
+  mbed-os\platform\NonCopyable.h mbed-os\platform\mbed_debug.h \
   mbed-os\features\cellular\framework\API\CellularNetwork.h \
   mbed-os\features\cellular\framework\common\CellularList.h \
   mbed-os\platform\Callback.h mbed-os\features\netsocket\nsapi_types.h \

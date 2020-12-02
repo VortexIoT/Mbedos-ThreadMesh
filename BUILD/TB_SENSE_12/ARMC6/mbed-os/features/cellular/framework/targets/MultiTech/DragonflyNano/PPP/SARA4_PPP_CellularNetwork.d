@@ -73,7 +73,8 @@ BUILD\TB_SENSE_12\ARMC6\mbed-os\features\cellular\framework\targets\MultiTech\Dr
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\emlib\inc\em_assert.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\emlib\inc\em_bus.h \
   mbed-os\platform\Callback.h mbed-os\platform\NonCopyable.h \
-  mbed-os\drivers\UARTSerial.h mbed-os\platform\platform.h \
+  mbed-os\platform\mbed_debug.h mbed-os\drivers\UARTSerial.h \
+  mbed-os\platform\platform.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\common\device.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\common\cmsis.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\common\cmsis_nvic.h \

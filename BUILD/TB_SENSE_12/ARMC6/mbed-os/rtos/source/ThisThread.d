@@ -8,7 +8,7 @@ BUILD\TB_SENSE_12\ARMC6\mbed-os\rtos\source\ThisThread.o: \
   mbed-os\platform\mbed_assert.h mbed-os\platform\mbed_critical.h \
   mbed-os\platform\source\mbed_os_timer.h \
   mbed-os\platform\source\SysTimer.h mbed-os\platform\NonCopyable.h \
-  mbed-os\platform\mbed_atomic.h \
+  mbed-os\platform\mbed_debug.h mbed-os\platform\mbed_atomic.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\common\cmsis.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\TARGET_EFR32MG12\device\em_device.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\TARGET_EFR32MG12\device\efr32mg12p332f1024gl125.h \

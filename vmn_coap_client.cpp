@@ -1,8 +1,8 @@
-#include "mbed.h"
+//#include "mbed.h"
 #include "vmn_coap_client.h"
 #include "ip6string.h"
-#include "stdlib.h"
-#include "stdio.h"
+//#include "stdlib.h"
+//#include "stdio.h"
 #include <cstdint>
 #include <cstdlib>
 #include <string>
@@ -62,8 +62,10 @@ void client_requestpacket_build(char *host_address, uint8_t *uri_path, uint8_t m
         case 2:coap_res_ptr->msg_code = COAP_MSG_CODE_REQUEST_POST;
         if (strncmp((char *)coap_res_ptr->uri_path_ptr, "/sensor/temp/scaling", coap_res_ptr->uri_path_len) == 0) {//"/sensor/temp/scaling")) { // == 0 
             requested_temp_scaling = atoi((char *)payload);
+            //check with vijay if server handles this cal so check it later
         }else if (strncmp((char *)coap_res_ptr->uri_path_ptr, "/sensor/hum/scaling", coap_res_ptr->uri_path_len)==0) {
-            requested_hum_scaling = atoi((char *)payload);
+            requested_hum_scaling = atoi((char *)payload); //hold these values to double check with server at the moment
+            //check with vijay if server handles this cal so check it later
         }
         printf("post\n");//test purpose
         break;
@@ -123,13 +125,13 @@ void client_responsepacket_parse(SocketAddress addr, uint8_t requestmethod)
             uint8_t payload_value;
             payload_value = atoi( payload.c_str());
             if (strncmp(uri.c_str(),"/sensor/temp/value" ,strlen(uri.c_str()))==0) {  //"/sensor/temp/scaling"
-               payload_value = payload_value * requested_temp_scaling;
+               payload_value = payload_value * requested_temp_scaling;  //server responses with payload as payloadvalue*scaling this calculation is not needed
                printf("RTS: %d   %d", requested_temp_scaling, requested_hum_scaling);
                 
             }else if (strncmp(uri.c_str(), "/sensor/hum/value",strlen(uri.c_str()))==0) { //"/sensor/hum/scaling"
              //   sprintf(payload_value, "%d", payload.c_str());
               //  payload_value = (uint8_t)payload.data();
-                payload_value =   payload_value * requested_hum_scaling;
+                payload_value =   payload_value * requested_hum_scaling; //server responses with payload as payloadvalue*scaling this calculation is not needed
             //    printf("payload_len:  %d\n", parsed->payload_len);
             //    printf("payload:  %d\n", payload_value); // payload.c_str());
              }

@@ -85,12 +85,12 @@ int main() {
     printf("Start Thread - Mesh application\n");
     coapserver_thread.start(callback(&coapserver_eventqueue, &EventQueue::dispatch_forever)); //coap server
     temp_hum_sensor_thread.start(callback(&sensor_eventqueue, &EventQueue::dispatch_forever)); //sensor data
-    coapclient_thread.start(callback(&coapclient_eventqueue, &EventQueue::dispatch_forever)); //coapclient
+    coapclient_thread.start(callback(&coapclient_eventqueue, &EventQueue::dispatch_forever)); //coapclient*/
     start_blinking();   //led
     temp_hum_sensor_read_every_5min(); //reading every 5min
     pc.attach(&isr_rx); //receive interrupt
     i2cinit();  //i2c frequency init
-    
+ //   coap_server_init(coap_server_ipaddr);
     while (1) {
         if (flag) {
             flag = 0;

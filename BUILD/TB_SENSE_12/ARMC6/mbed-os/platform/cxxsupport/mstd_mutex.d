@@ -72,8 +72,8 @@ BUILD\TB_SENSE_12\ARMC6\mbed-os\platform\cxxsupport\mstd_mutex.o: \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\emlib\inc\em_cmu.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\emlib\inc\em_assert.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\emlib\inc\em_bus.h \
-  mbed-os\platform\NonCopyable.h mbed-os\platform\ScopedLock.h \
-  mbed-os\platform\cxxsupport\mstd_utility \
+  mbed-os\platform\NonCopyable.h mbed-os\platform\mbed_debug.h \
+  mbed-os\platform\ScopedLock.h mbed-os\platform\cxxsupport\mstd_utility \
   mbed-os\platform\cxxsupport\mstd_functional \
   mbed-os\platform\cxxsupport\mstd_memory \
   mbed-os\platform\cxxsupport\mstd_iterator \

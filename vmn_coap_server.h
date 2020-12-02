@@ -29,7 +29,7 @@ SocketAddress coap_config(char *host_address);
 void receive_msg(void);
 void coap_server_init(char *ipaddr) ;
 void text(void);
-void coapserver_response_build(SocketAddress addr,sn_coap_hdr_s* coap_res_ptr);
+void coapserver_response_build(SocketAddress addr,sn_coap_hdr_s* coap_res_ptr,uint8_t ack_pack_len);
 void receive_msg(void);
 void response_packet_formation(SocketAddress addr, sn_coap_hdr_s* coap_build_res_ptr, uint16_t response_messageid,char *payload);
 //void coapserver_response_builder(void);

@@ -3,7 +3,8 @@ BUILD\TB_SENSE_12\ARMC6\mbed-os\features\lorawan\lorastack\phy\LoRaPHYUS915.o: \
   BUILD\TB_SENSE_12\ARMC6\mbed_config.h \
   mbed-os\features\lorawan\lorastack\phy\LoRaPHYUS915.h \
   mbed-os\features\lorawan\lorastack\phy\LoRaPHY.h \
-  mbed-os\platform\NonCopyable.h \
+  mbed-os\platform\NonCopyable.h mbed-os\platform\mbed_toolchain.h \
+  mbed-os\platform\mbed_preprocessor.h mbed-os\platform\mbed_debug.h \
   mbed-os\features\lorawan\system\LoRaWANTimer.h \
   mbed-os\events\EventQueue.h mbed-os\events\equeue.h \
   mbed-os\events\internal\equeue_platform.h \
@@ -68,7 +69,6 @@ BUILD\TB_SENSE_12\ARMC6\mbed-os\features\lorawan\lorastack\phy\LoRaPHYUS915.o: \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\emlib\inc\em_assert.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\emlib\inc\em_bus.h \
   mbed-os\platform\Callback.h mbed-os\platform\mbed_assert.h \
-  mbed-os\platform\mbed_toolchain.h mbed-os\platform\mbed_preprocessor.h \
   mbed-os\features\lorawan\system\lorawan_data_structures.h \
   mbed-os\features\lorawan\lorawan_types.h \
   mbed-os\features\lorawan\LoRaRadio.h \

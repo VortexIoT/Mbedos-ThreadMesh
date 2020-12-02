@@ -1,5 +1,7 @@
 //#include "vmn_coap_server.h"
-
+#include "stdlib.h"
+#include "stdio.h"
+#include "mbed.h"
 
 void* coap_client_malloc(uint16_t size);
 void coap_client_free(void* addr);

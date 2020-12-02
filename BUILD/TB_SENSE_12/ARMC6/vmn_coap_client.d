@@ -1,5 +1,5 @@
 BUILD\TB_SENSE_12\ARMC6\vmn_coap_client.o: vmn_coap_client.cpp \
-  BUILD\TB_SENSE_12\ARMC6\mbed_config.h mbed-os\mbed.h \
+  BUILD\TB_SENSE_12\ARMC6\mbed_config.h vmn_coap_client.h mbed-os\mbed.h \
   mbed-os\platform\mbed_version.h mbed-os\rtos\rtos.h \
   mbed-os\rtos\mbed_rtos_storage.h \
   mbed-os\rtos\source\TARGET_CORTEX\mbed_rtx_storage.h \
@@ -66,13 +66,14 @@ BUILD\TB_SENSE_12\ARMC6\vmn_coap_client.o: vmn_coap_client.cpp \
   mbed-os\rtos\source\TARGET_CORTEX\rtx4\cmsis_os.h \
   mbed-os\platform\Callback.h mbed-os\platform\mbed_assert.h \
   mbed-os\platform\mbed_toolchain.h mbed-os\platform\mbed_preprocessor.h \
-  mbed-os\platform\NonCopyable.h mbed-os\rtos\Semaphore.h \
-  mbed-os\rtos\Mutex.h mbed-os\platform\ScopedLock.h \
-  mbed-os\rtos\ThisThread.h mbed-os\rtos\RtosTimer.h mbed-os\rtos\Mail.h \
-  mbed-os\rtos\Queue.h mbed-os\platform\mbed_error.h \
-  mbed-os\platform\mbed_retarget.h mbed-os\rtos\MemoryPool.h \
-  mbed-os\rtos\Kernel.h mbed-os\rtos\EventFlags.h \
-  mbed-os\rtos\ConditionVariable.h mbed-os\features\netsocket\nsapi.h \
+  mbed-os\platform\NonCopyable.h mbed-os\platform\mbed_debug.h \
+  mbed-os\rtos\Semaphore.h mbed-os\rtos\Mutex.h \
+  mbed-os\platform\ScopedLock.h mbed-os\rtos\ThisThread.h \
+  mbed-os\rtos\RtosTimer.h mbed-os\rtos\Mail.h mbed-os\rtos\Queue.h \
+  mbed-os\platform\mbed_error.h mbed-os\platform\mbed_retarget.h \
+  mbed-os\rtos\MemoryPool.h mbed-os\rtos\Kernel.h \
+  mbed-os\rtos\EventFlags.h mbed-os\rtos\ConditionVariable.h \
+  mbed-os\features\netsocket\nsapi.h \
   mbed-os\features\netsocket\nsapi_types.h \
   mbed-os\features\netsocket\SocketAddress.h \
   mbed-os\platform\mbed_toolchain.h \
@@ -235,6 +236,5 @@ BUILD\TB_SENSE_12\ARMC6\vmn_coap_client.o: vmn_coap_client.cpp \
   mbed-os\features\frameworks\mbed-coap\mbed-coap\sn_coap_protocol.h \
   mbed-os\features\frameworks\mbed-coap\mbed-coap\sn_coap_header.h \
   mbed-os\features\frameworks\mbed-coap\mbed-coap\sn_coap_header.h \
-  vmn_coap_client.h \
   mbed-os\features\frameworks\nanostack-libservice\mbed-client-libservice\ip6string.h \
   mbed-os\features\frameworks\nanostack-libservice\mbed-client-libservice\ns_types.h

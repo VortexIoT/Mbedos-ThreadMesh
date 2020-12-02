@@ -69,7 +69,7 @@ void coap_server_init(char *ipaddr) //(uint8_t msg_Code, uint8_t msg_type,uint8_
   //  portnumber = addr.get_port();
     udpsock.open(interface);
     udpsock.bind(5683); //coap dedicated port
-    coapHandle = sn_coap_protocol_init(&coap_server_malloc, &coap_server_free, &coap_server_tx_cb, &coap_server_rx_cb);
+ //   coapHandle = sn_coap_protocol_init(&coap_server_malloc, &coap_server_free, &coap_server_tx_cb, &coap_server_rx_cb);
     stoip6(ipaddr, sizeof(ipaddr),ipaddress_buffer);
     SocketAddress addr1(ipaddress_buffer,NSAPI_IPv6,5683);
     coapserver_eventqueue.call(receive_msg);
@@ -103,38 +103,53 @@ if(!strcmp((char *)uri_path,"/sensor/temp/value")) {
         coap_res_ptr->payload_len = sizeof(Temp_centigrade);                              // Body length
     }
     */
+    coapHandle = sn_coap_protocol_init(&coap_server_malloc, &coap_server_free, &coap_server_tx_cb, &coap_server_rx_cb);
     portnumber = addr.get_port();
     printf("IP : %s    Port:%d\n",addr.get_ip_address(),portnumber);
     if (ret1 > 0) {
         printf("length of Request packet from client of  '%d'\n", ret1);
         parsed = sn_coap_parser(coapHandle, ret1, recv_buffer, &coapVersion);
+   //    printf("out frm parser\n");
+    if(parsed->msg_code != COAP_MSG_CODE_EMPTY)
+    {
         std::string payload((const char*)parsed->payload_ptr, parsed->payload_len);// payload is a string
-        printf("msg_id:   %d\n", parsed->msg_id);
-        printf("msg_code %d\n",parsed->msg_code);
-        printf("payload_len:  %d\n", parsed->payload_len);
-        printf("payload:  %s\n", payload.c_str());
-        printf("content-format: %d\n", parsed->content_format);
-        printf("Response %d\n", parsed->msg_type);
-        printf("Uri-path : %s\n",parsed->uri_path_ptr);
-        printf("Uri-path_len : %d\n",parsed->uri_path_len);
-        printf("token-ID : %s\n",parsed->token_ptr);
-        printf("token-ID-len: %d\n",parsed->token_len);
-        if (parsed->options_list_ptr) {
-            printf("location_path_ptr: %s\n", parsed->options_list_ptr->location_path_ptr);
-            printf("location_path_len: %d\n", parsed->options_list_ptr->location_path_len);
-            printf("uri_host_ptr: %p\n", parsed->options_list_ptr->uri_host_ptr);
-        }
-    }else {
+    //    printf("aftr payload\n");
+        std::string token((const char*)parsed->token_ptr, parsed->token_len);// payload is a string
+           parsed->uri_path_ptr[parsed->uri_path_len] = '\0';
+            printf("msg_id:   %d\n", parsed->msg_id);
+            printf("msg_code: %d\n",parsed->msg_code);
+        
+            if(parsed->msg_code == COAP_MSG_CODE_REQUEST_GET)
+            {
+                printf("payload_len:  %d\n", parsed->payload_len);
+                printf("payload:  %s\n", payload.c_str());
+            }
+            printf("content-format: %d\n", parsed->content_format);
+            printf("Response: %d\n", parsed->msg_type);
+          printf("Uri-path: %s\n",parsed->uri_path_ptr);
+        //  printf("Uri-path_len : %d\n",parsed->uri_path_len);
+            printf("token-ID: %s\n",token.c_str());
+        //   printf("token-ID-len: %d\n",parsed->token_len);
+            if (parsed->options_list_ptr) {
+                printf("location_path_ptr: %s\n", parsed->options_list_ptr->location_path_ptr);
+                printf("location_path_len: %d\n", parsed->options_list_ptr->location_path_len);
+                printf("uri_host_ptr: %p\n", parsed->options_list_ptr->uri_host_ptr);
+            }
+        
+      //  printf("after response\n");
+        
+     //   printf("free\n");
+        //here check for uri path and make a response packet as for the uri path
+
+        coapserver_eventqueue.cancel(coapserver_eventqueue_handle);
+      //  printf("after cancel\n");
+        coapserver_response_build(addr, parsed, ret1);    
+    }
+    //create build response
+    } else {
         printf("Failed to receive message (%d)\n", ret1);
     }
     free(recv_buffer);
-
-    //here check for uri path and make a response packet as for the uri path
-
-    coapserver_eventqueue.cancel(coapserver_eventqueue_handle);
-    coapserver_response_build(addr, parsed);    
-    //create build response
-
     //coapserver_eventqueue.break_dispatch();
     //sn_coap_build_response(coapHandle, parsed, parsed->msg_code);
     //coapserver_eventqueue_handle = coapserver_eventqueue.call_in((60 * 1000), coapserver_response_builder(parsed));
@@ -145,7 +160,7 @@ if(!strcmp((char *)uri_path,"/sensor/temp/value")) {
 //and respond with token num and see how it will impact.
 //token is also called a "request ID"
 uint8_t var = 0x01;
-void coapserver_response_build(SocketAddress addr, sn_coap_hdr_s* coap_res_ptr)
+void coapserver_response_build(SocketAddress addr, sn_coap_hdr_s* coap_res_ptr,uint8_t ack_pack_len)
 {
     // sn_coap_hdr_s* coap_res_ptr = parsed;
     // SocketAddress addr;
@@ -154,13 +169,15 @@ void coapserver_response_build(SocketAddress addr, sn_coap_hdr_s* coap_res_ptr)
     char *payload_buff;  //to read temp and humidity readings
     
    // humidity_temp_read();
-    coapHandle = sn_coap_protocol_init(&coap_server_malloc, &coap_server_free, &coap_server_tx_cb, &coap_server_rx_cb); 
+  //  coapHandle = sn_coap_protocol_init(&coap_server_malloc, &coap_server_free, &coap_server_tx_cb, &coap_server_rx_cb); 
     if(var < 0x80)
         var = var << 1;
     else {
     var = 0x01;
     }
-    printf("addr :%s\n", addr.get_ip_address());
+//if(ack_pack_len > 4)
+//{
+ //   printf("addr :%s\n", addr.get_ip_address());
     uint8_t msg_code = coap_res_ptr->msg_code;
     std::string uri_path((const char *)coap_res_ptr->uri_path_ptr,coap_res_ptr->uri_path_len);
     std::string payload((const char*)coap_res_ptr->payload_ptr, coap_res_ptr->payload_len);// payload is a string
@@ -169,25 +186,40 @@ void coapserver_response_build(SocketAddress addr, sn_coap_hdr_s* coap_res_ptr)
      switch(msg_code) {
         case COAP_MSG_CODE_REQUEST_GET:
             coap_res_ptr->msg_code = COAP_MSG_CODE_RESPONSE_CONTENT;
+            uint8_t Temp_hum_data;
             if (strncmp(uri_path.c_str(), "sensor/temp/value", strlen(uri_path.c_str())) == 0) {//this for temperature
               //  coap_res_ptr = sn_coap_build_response(coapHandle,coap_res_ptr,coap_res_ptr->msg_code);
                // sprintf(payload_buff, "%d", Temp_centigrade*requested_temp_scaling);
              //  uint8_t T = Temp_centigrade*requested_temp_scaling;
-             requested_temp_scaling = 1;
-              uint8_t T = Temp_centigrade*requested_temp_scaling;
+           //  uint8_t Temp_hum_data;
+          //   requested_temp_scaling = 1;
+             if(requested_temp_scaling > 0)
+                Temp_hum_data = Temp_centigrade * requested_temp_scaling;
+             else 
+             {
+              Temp_hum_data = Temp_centigrade; 
                 printf("get1");
-                coap_res_ptr->payload_ptr =  &(T);//(uint8_t *)payload_buff; //&(var);
-                coap_res_ptr->payload_len =  sizeof(T);//sizeof(var);//sizeof(Temp_centigrade);
+             }
+            //    coap_res_ptr->payload_ptr =  &(Temp_hum_data);//(uint8_t *)payload_buff; //&(var);
+            //    coap_res_ptr->payload_len =  sizeof(Temp_hum_data);//sizeof(var);//sizeof(Temp_centigrade);
               //  printf("payld: %d\n",T);
              //   response_packet_formation(addr, coap_res_ptr, messageid, payload_buff);
             } else if (strncmp(uri_path.c_str(), "sensor/hum/value", strlen(uri_path.c_str())) == 0) {//this for humidity
              //   coap_res_ptr = sn_coap_build_response(coapHandle,coap_res_ptr,coap_res_ptr->msg_code);
-            // uint8_t RH = RH_percentage*requested_hum_scaling;
+           //  uint8_t RH;// = RH_percentage*requested_hum_scaling;
              //   sprintf(payload_buff, "%d", RH); //grams of water vapor per meter air
-             printf("get2");
-                coap_res_ptr->payload_ptr =  &(RH_percentage);//(uint8_t *)payload_buff; //&(var);// //
-                coap_res_ptr->payload_len = sizeof(RH_percentage);//sizeof(var);//sizeof(RH_percentage); 
+              if(requested_hum_scaling > 0)
+              {
+                Temp_hum_data = RH_percentage * requested_hum_scaling; printf("get2");
+              }
+             else 
+              Temp_hum_data = RH_percentage; 
+            
+            //    coap_res_ptr->payload_ptr =  &(RH);//(uint8_t *)payload_buff; //&(var);// //
+            //    coap_res_ptr->payload_len = sizeof(RH);//sizeof(var);//sizeof(RH_percentage); 
             }
+            coap_res_ptr->payload_ptr =  &(Temp_hum_data);//(uint8_t *)payload_buff; //&(var);
+            coap_res_ptr->payload_len =  sizeof(Temp_hum_data);//sizeof(var);//sizeof(Temp_centigrade);
             response_packet_formation(addr, coap_res_ptr, messageid, payload_buff);
             
 
@@ -218,10 +250,11 @@ void coapserver_response_build(SocketAddress addr, sn_coap_hdr_s* coap_res_ptr)
         case COAP_MSG_CODE_REQUEST_DELETE:
             coap_res_ptr->msg_code = COAP_MSG_CODE_RESPONSE_VALID;//COAP_MSG_CODE_RESPONSE_DELETED;
         break;
-        default: coapserver_eventqueue_handle = coapserver_eventqueue.call_in(5000, receive_msg); //calling for every 5s
+        default: coap_res_ptr->msg_code = COAP_MSG_CODE_EMPTY;
+      //  coapserver_eventqueue_handle = coapserver_eventqueue.call_in(5000, receive_msg); //calling for every 5s
         break;
     }
-   coapserver_eventqueue_handle = coapserver_eventqueue.call_in(5000, receive_msg); 
+     coapserver_eventqueue_handle = coapserver_eventqueue.call_every(5000, receive_msg); 
     //char *resource_path = uri_path.c_str();
   /*  if (strncmp(uri_path.c_str(), "/sensor/temp/value", coap_res_ptr->uri_path_len) == 0) {//this for temperature
         coap_res_ptr = sn_coap_build_response(coapHandle,coap_res_ptr,coap_res_ptr->msg_code);
@@ -252,7 +285,10 @@ void coapserver_response_build(SocketAddress addr, sn_coap_hdr_s* coap_res_ptr)
  //   payload_buff[2]= ' ';
     payload_buff[3]= Temp_centigrade;
     payload_buff[4] = '\0';*/
-    
+//}
+//else {
+// coapserver_eventqueue_handle = coapserver_eventqueue.call_in(5000, receive_msg); 
+//}
  
 }
 void response_packet_formation(SocketAddress addr, sn_coap_hdr_s* coap_build_res_ptr, uint16_t response_messageid,char *payload)
@@ -277,7 +313,7 @@ void response_packet_formation(SocketAddress addr, sn_coap_hdr_s* coap_build_res
         default: break;
     }*/
     //coap_build_res_ptr->msg_id = response_messageid;
-     printf("addr :%s\n", addr.get_ip_address());
+  //   printf("addr :%s\n", addr.get_ip_address());
     uint16_t message_len = sn_coap_builder_calc_needed_packet_data_size(coap_build_res_ptr);
     printf("Calculated message length: %d bytes\n", message_len);
     uint8_t* message_ptr = (uint8_t*)malloc(message_len);
