@@ -73,7 +73,6 @@ BUILD\TB_SENSE_12\ARMC6\mbed-os\drivers\source\Timeout.o: \
   mbed-os\hal\dma_api.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\emlib\inc\em_ldma.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\TARGET_EFR32MG12\TARGET_TB_SENSE_12\device_peripherals.h \
-  mbed-os\platform\NonCopyable.h mbed-os\platform\mbed_toolchain.h \
-  mbed-os\platform\mbed_preprocessor.h mbed-os\platform\mbed_debug.h \
-  mbed-os\platform\Callback.h mbed-os\platform\mbed_assert.h \
-  mbed-os\hal\lp_ticker_api.h
+  mbed-os\platform\NonCopyable.h mbed-os\platform\Callback.h \
+  mbed-os\platform\mbed_assert.h mbed-os\platform\mbed_toolchain.h \
+  mbed-os\platform\mbed_preprocessor.h mbed-os\hal\lp_ticker_api.h

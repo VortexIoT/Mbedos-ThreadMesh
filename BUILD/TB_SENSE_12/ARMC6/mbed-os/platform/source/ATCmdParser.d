@@ -3,9 +3,9 @@ BUILD\TB_SENSE_12\ARMC6\mbed-os\platform\source\ATCmdParser.o: \
   BUILD\TB_SENSE_12\ARMC6\mbed_config.h mbed-os\platform\ATCmdParser.h \
   mbed-os\platform\Callback.h mbed-os\platform\mbed_assert.h \
   mbed-os\platform\mbed_toolchain.h mbed-os\platform\mbed_preprocessor.h \
-  mbed-os\platform\NonCopyable.h mbed-os\platform\mbed_debug.h \
-  mbed-os\platform\FileHandle.h mbed-os\platform\mbed_poll.h \
-  mbed-os\platform\platform.h mbed-os\platform\mbed_retarget.h \
+  mbed-os\platform\NonCopyable.h mbed-os\platform\FileHandle.h \
+  mbed-os\platform\mbed_poll.h mbed-os\platform\platform.h \
+  mbed-os\platform\mbed_retarget.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\common\device.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\common\cmsis.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\TARGET_EFR32MG12\device\em_device.h \

@@ -57,5 +57,4 @@ BUILD\TB_SENSE_12\ARMC6\mbed-os\features\storage\kvstore\securestore\SecureStore
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\TARGET_EFR32MG12\device\efr32mg12p_af_pins.h \
   mbed-os\features\mbedtls\inc\mbedtls\check_config.h \
   mbed-os\features\device_key\source\DeviceKey.h \
-  mbed-os\platform\NonCopyable.h mbed-os\platform\mbed_toolchain.h \
-  mbed-os\platform\mbed_preprocessor.h mbed-os\platform\mbed_debug.h
+  mbed-os\platform\NonCopyable.h

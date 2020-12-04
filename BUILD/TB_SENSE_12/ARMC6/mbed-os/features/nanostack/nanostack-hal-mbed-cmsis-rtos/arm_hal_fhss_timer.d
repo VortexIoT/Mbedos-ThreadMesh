@@ -89,8 +89,7 @@ BUILD\TB_SENSE_12\ARMC6\mbed-os\features\nanostack\nanostack-hal-mbed-cmsis-rtos
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\emlib\inc\em_ldma.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\TARGET_EFR32MG12\TARGET_TB_SENSE_12\device_peripherals.h \
   mbed-os\hal\ticker_api.h mbed-os\platform\NonCopyable.h \
-  mbed-os\platform\mbed_debug.h mbed-os\events\equeue.h \
-  mbed-os\events\internal\equeue_platform.h \
+  mbed-os\events\equeue.h mbed-os\events\internal\equeue_platform.h \
   mbed-os\rtos\mbed_rtos_storage.h \
   mbed-os\rtos\source\TARGET_CORTEX\mbed_rtx_storage.h \
   mbed-os\rtos\source\TARGET_CORTEX\rtx5\RTX\Include\rtx_os.h \

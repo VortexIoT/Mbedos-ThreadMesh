@@ -97,8 +97,7 @@ BUILD\TB_SENSE_12\ARMC6\mbed-os\features\nfc\source\nfc\Type4RemoteInitiator.o: 
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\emlib\inc\em_assert.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\emlib\inc\em_bus.h \
   mbed-os\platform\Callback.h mbed-os\platform\NonCopyable.h \
-  mbed-os\platform\mbed_debug.h mbed-os\platform\SharedPtr.h \
-  mbed-os\platform\mbed_atomic.h \
+  mbed-os\platform\SharedPtr.h mbed-os\platform\mbed_atomic.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\common\cmsis.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\common\cmsis_nvic.h \
   mbed-os\platform\cxxsupport\mstd_type_traits \
