@@ -4,12 +4,11 @@
 #include "InternetSocket.h"
 #include "protocol_abstract.h"
 #include "RawSerial.h"
-//#include "Serial.h"
-
-
-
+#include "sn_coap_protocol.h"
+#include "sn_coap_header.h"
 
 /*-------------------  Function declarations START -----------------------*/
+
 void isr_rx();
 uint8_t mesh_connect();
 void mesh_disconnect(void);

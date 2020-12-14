@@ -70,6 +70,11 @@
         "NCS36510": {
             "LED": "LED1",
             "BUTTON": "SW2"
+        },
+        "RADIO_BOARD" : {
+            "LED": "LED0",
+            "BUTTON": "BTN0",
+            "BUTTON_MODE": "PullUp"
         }
        
     }

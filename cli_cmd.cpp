@@ -1,4 +1,3 @@
-#include "cli_cmd.h"
 #include "stdio.h"
 #include "socket_api.h"
 #include "mesh_nvm.h"
@@ -6,17 +5,18 @@
 #include "ThreadInterface.h"
 #include "string.h"
 #include <cstdint>
-#include <iostream>
-#include "coap_protocol.h"
+#include "cli_cmd.h"
+#include "vmn_Coap_client.h"
 
-mbed::RawSerial pc(USBTX, USBRX,115200);
+
+extern mbed::RawSerial pc;
 MeshInterface *mesh;
 /*********************  Variable Decalrations START **************************/
 /*  Network Parameters */
 uint8_t extpanid[8] = {0xf1, 0xb5, 0xa1, 0xb2,0xc4, 0xd5, 0xa1, 0xbd };
-uint8_t masterkey[16] ={0xa4, 0xb1, 0x14, 0x95, 0xa8, 0x89, 0x5e, 0x6e, 0xc2, 0x93, 0xf5, 0x3d, 0x54, 0x86, 0x18, 0xd6};//{ 0x00, 0xeb, 0x64, 0x37, 0x02, 0x4c, 0x86, 0x8d, 0xdd, 0x2b, 0x18, 0xde, 0x62, 0xc7, 0x98, 0x68};
+uint8_t masterkey[16] ={0x10, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0x99, 0xaa, 0xbb, 0xcc, 0xdd, 0xee, 0xff};//{ 0x00, 0xeb, 0x64, 0x37, 0x02, 0x4c, 0x86, 0x8d, 0xdd, 0x2b, 0x18, 0xde, 0x62, 0xc7, 0x98, 0x68};
 uint16_t panid= 0x0700;;
-uint8_t Network_name[16];// = "Thread Network";
+uint8_t Network_name[16] = "Thread Network";
 uint16_t channel = 22;
 uint8_t meshprefix[8] = {0xfd, 0x0, 0x0d, 0xb8, 0x0, 0x0, 0x0, 0x0};
 uint8_t channel_mask[9] = "07fff800";
@@ -29,15 +29,13 @@ nwk_interface_id id = IF_IPV6;
 volatile uint8_t flag=0;
 volatile char Rx_buff[256];
 uint8_t Receive_buff_length=0;
-uint8_t getcdatacnt=0;
 uint8_t getcmd_count=1;
 SocketAddress sockAddr;
 
 /*********************  Variable Decalrations END **************************/
 
 //This function generates the EUI64
-void thread_eui64_trace()
-{
+void thread_eui64_trace() {
     #define LOWPAN 1
     #define THREAD 2
     #if MBED_CONF_NSAPI_DEFAULT_MESH_TYPE == THREAD && (MBED_VERSION >= MBED_ENCODE_VERSION(5,10,0))
@@ -65,17 +63,14 @@ void isr_rx() {
 }
 
 //Transmit interrupt function
-void  transmit_interrupt(char *Data_buff)
-{
+void  transmit_interrupt(char *Data_buff) {
   pc.puts(Data_buff);
-
 }
 /***************  END ******************/
 
 // This function connects the device into the network and also it return the device Connected IP address
-uint8_t mesh_connect(void)
-{
-     uint8_t error;
+uint8_t mesh_connect(void) {
+    uint8_t error;
     mesh = MeshInterface::get_default_instance();  //returns pointer to the mesh interface
     if (!mesh) {
         printf("Error! MeshInterface not found!\n");
@@ -85,33 +80,28 @@ uint8_t mesh_connect(void)
     mesh_nvm_initialize();  //initializes the non-volatile memory
     printf("Connecting...\n");
     error = mesh->connect();  
-       if (error) {
+    if (error) {
         printf("Connection failed! %d\n", error);
        return error;
-    }
-    //ThisThread::sleep_for(100); //
-  
-   SocketAddress sockAddr;
-   while (NSAPI_ERROR_OK != mesh->get_ip_address(&sockAddr)) //local ip address
-   {
+    } 
+    SocketAddress sockAddr;
+    while (NSAPI_ERROR_OK != mesh->get_ip_address(&sockAddr)) {//local ip address
         ThisThread::sleep_for(500); //keep this loop on until get the IP address with offering 500ms for each turn  
-   }
-   printf("Connected IP : %s\n",sockAddr.get_ip_address());
-   link = thread_management_configuration_get(id);
-   thread_management_set_link_timeout(id,80);
-   getcmd_count = 1;
-  return 1;
-
+    }
+    printf("Connected IP : %s\n",sockAddr.get_ip_address());
+    link = thread_management_configuration_get(id);
+    thread_management_set_link_timeout(id,80);
+    getcmd_count = 1;
+    return 1;
 }
 
  //Disconnects the device from network
-void mesh_disconnect(void)
-{
+void mesh_disconnect(void) {
     mesh->disconnect();
 }
+
 // Call this function whenever want to read the IP address of the network device
-void read_ipaddr(void)
-{
+void read_ipaddr(void) {
     SocketAddress sockAddr;
     while (NSAPI_ERROR_OK != mesh->get_ip_address(&sockAddr)) {//local ip address
         ThisThread::sleep_for(500); 
@@ -119,21 +109,18 @@ void read_ipaddr(void)
     printf("Connected IP : %s\n",sockAddr.get_ip_address());
 }
 
-
 // This function will converts char into hex format
-uint8_t chartohex(char ch)
-{
+uint8_t chartohex(char ch) {
     if ((ch <= '9') && (ch >= '0')) {
         ch = ch-'0';
-    }
-    if ((ch >= 'A') && (ch <= 'F')) {
+    } if ((ch >= 'A') && (ch <= 'F')) {
         ch = ch-'A' + 10;
-    }
-    if ((ch >= 'a') && (ch <= 'f')) {
+    } if ((ch >= 'a') && (ch <= 'f')) {
     ch = ch-'a' + 10;
     }
     return ch;
 }
+
 // This function will converts string of required length into hex format.
 /*
  This function accepts 3 params
@@ -142,8 +129,7 @@ output = pointer to store the converted hex data
 len = length of data
 
 */
-void string_to_hex(char *str, uint8_t *output,uint8_t len)
-{
+void string_to_hex(char *str, uint8_t *output, uint8_t len) {
     int j=0;
     uint8_t hex1,hex2;
     for (uint8_t i=0;i<len;) {
@@ -154,10 +140,10 @@ void string_to_hex(char *str, uint8_t *output,uint8_t len)
         j++;     
     }
 }
+
 /* This function implemented only for panid.
 Calling this function will return 16bit panid value*/ 
-uint16_t panid_value(char *str)
-{
+uint16_t panid_value(char *str) {
     uint16_t panid;
     char hex1,hex2,hex3,hex4;
     hex1 = chartohex(str[0]);
@@ -169,43 +155,40 @@ uint16_t panid_value(char *str)
 }   
 
 // Call this function to get detailed information about the network parameters
-void scan_network_details(void)
-{
-
+void scan_network_details(void) {
     link = thread_management_configuration_get(id);
     printf("Panid :0x%04x\nNetwork Name :%s\nChanne1 : %d\n", link->panId, link->name,link->rfChannel);
     printf("Masterkey : ");
     for (int i=0;i< sizeof(link->master_key);i++)                   
         printf("%02x", link->master_key[i]);printf("\n");
-    
-    printf("Ext Panid :");
+    printf("Ext Panid : ");
     for (int i=0;i< 8;i++) 
         printf("%02x", link->extented_pan_id[i]); printf("\n");
-    printf("Channel Mask :");
-        for (int i=0;i< 8;i++) {
-            if (link->channel_mask[i] >= channel_mask[i])
-                printf("%c",link->channel_mask[i]);
-            else
+    printf("Channel Mask : ");
+    for (int i=0;i< 8;i++) {
+        if (link->channel_mask[i] >= channel_mask[i])
+            printf("%c",link->channel_mask[i]);
+        else
             printf("%c",channel_mask[i]);
-        }
+    }
     printf("\n");
-    printf("PSKc :");
+    printf("PSKc : ");
     for (int i=0;i< 16;i++) 
         printf("%x", link->PSKc[i]); printf("\n");
     printf("Security Policy : %d\n",link->securityPolicy);
     printf("Mesh prefix :");
     for (int i=0;i< 8;i++){
-     if ((i>0) && (i%2 == 0))
+        if ((i>0) && (i%2 == 0))
             printf(":");
     printf("%02x", link->mesh_local_ula_prefix[i]);
     } 
-     printf("/64\n");
+    printf("/64\n");
 }
 
 // This function called whenever user enters the dataset commit active command.
-void datasetcommit_active(void)
-{
-    thread_management_set_request_full_nwk_data(id,true);           
+void datasetcommit_active(void) {
+    mesh = MeshInterface::get_default_instance();  //returns pointer to the mesh interface
+    thread_management_set_request_full_nwk_data(id, true);           
     link->rfChannel = channel;
     for (int i=0;i<sizeof(Network_name);i++)
         link->name[i]= Network_name[i];
@@ -220,42 +203,27 @@ void datasetcommit_active(void)
        link->mesh_local_ula_prefix[i] = meshprefix[i];
     for (int i=0;i<16;i++)
         link->PSKc[i] = psk[i];
-        link->securityPolicy = securitypolicy;
-    thread_management_link_configuration_store(id,link);
-                        
+    link->securityPolicy = securitypolicy;
+    thread_management_link_configuration_store(id,link);            
 }
-/*
-using namespace std;
-typedef enum{
- masterkey1,
- channel1,
- networkname1,
- psk1
-
-
-}parameters;
-
-parameters text(string param);*/
 
 // This function called when user entered command follows with get * command 
 // THis function accepts param as a input string to distinguish between commands
-void get_values(char *networkparameter,uint8_t len)
-{
-    if (!strncmp(networkparameter,"masterkey",len)) {
-      //  printf("Masterkey : ");
+void get_values(char *networkparameter, uint8_t len) {
+    if (!strncmp(networkparameter,"masterkey",9)) {
         for (int i=0;i< sizeof(linkcopy->master_key);i++)                   
             printf("%02x", linkcopy->master_key[i]);printf("\n");
-    } else if (!strncmp(networkparameter,"panid",len)) {
+    } else if (!strncmp(networkparameter,"panid",5)) {
         printf("0x%04x\n", linkcopy->panId);
-    } else if (!strncmp(networkparameter,"networkname",len)) {
+    } else if (!strncmp(networkparameter,"networkname",11)) {
         printf("%s\n", linkcopy->name);
-    } else if (!strncmp(networkparameter,"extpanid",len)) {
-        for (int i=0;i< 8;i++)  //addlinkconfig->master_key
+    } else if (!strncmp(networkparameter,"extpanid",8)) {
+        for (int i=0;i< 8;i++)  
             printf("%02x", linkcopy->extented_pan_id[i]); printf("\n");
-    } else if (!strncmp(networkparameter,"channel",len)) {
+    } else if (!strncmp(networkparameter,"channel",7)) {
         printf("%d\n",linkcopy->rfChannel);
-    } else if (!strncmp(networkparameter,"channelmask",len)) {
-        for (int i=0;i< 8;i++) { //addlinkconfig->master_key
+    } else if (!strncmp(networkparameter,"channelmask",11)) {
+        for (int i=0;i< 8;i++) { 
             if (linkcopy->channel_mask[i] >= channel_mask[i]) {
                printf("%c",linkcopy->channel_mask[i]);
             } else {
@@ -263,14 +231,13 @@ void get_values(char *networkparameter,uint8_t len)
             }
         }
         printf("\n");
-    } else if(!strncmp(networkparameter,"psk",len)) {
-     //   printf("PSKc :");
-        for(int i=0;i< 16;i++)  //addlinkconfig->master_key
+    } else if(!strncmp(networkparameter,"psk",3)) {
+        for(int i=0;i< 16;i++) 
             printf("%x", linkcopy->PSKc[i]); printf("\n");
-    } else if(!strncmp(networkparameter,"securitypolicy",len)) {
+    } else if(!strncmp(networkparameter,"securitypolicy",14)) {
         printf("%d\n", linkcopy->securityPolicy);
-    } else if(!strncmp(networkparameter,"prefix",len)) {
-        for (int i=0;i< 8;i++) { //addlinkconfig->master_key
+    } else if(!strncmp(networkparameter,"prefix",6)) {
+        for (int i=0;i< 8;i++) { 
              if ((i>0) && (i%2 == 0)) {
                 printf(":");
              }
@@ -279,9 +246,9 @@ void get_values(char *networkparameter,uint8_t len)
         printf("/64\n");
     }
 }
+
 // This function gives the list of commands with prefix of dataset
-void dataset_commands_List(void)  //call this function when dataset help command called
-{
+void dataset_commands_List(void)  {//call this function when dataset help command called
    printf("commit\n");
    printf("channel\n");
    printf("channelmask\n");
@@ -295,62 +262,61 @@ void dataset_commands_List(void)  //call this function when dataset help command
 }
 
 // This function store the network parameters into respective buffers and updates these details whenever the dataset commit active command called.
-uint8_t values_to_set(char *networkparameter, char *value)
-{
+uint8_t values_to_set(char *networkparameter, char *value) {
     uint8_t len = strlen(value)-1;
     uint8_t out=0;
-   if (!strcmp(networkparameter,"masterkey")) {
+    if (!strcmp(networkparameter,"masterkey")) {
        if (len == 32) {
         string_to_hex(value,masterkey,len);
         out = 1;
        }
     } else if (!strcmp(networkparameter,"panid")) {
        if(len == 4) {
-        panid = panid_value(value);
-        out = 1;
+            panid = panid_value(value);
+             out = 1;
        }
     } else if (!strcmp(networkparameter,"networkname")) {
        if(len > 1) {
-        strcpy((char *)Network_name,value);
-        out = 1;
+            strcpy((char *)Network_name,value);
+            out = 1;
        }
     } else if (!strcmp(networkparameter,"extpanid")) { //giving hardfault
        if(len == 16) {
-       string_to_hex(value,extpanid,len);
-       out = 1;
+            string_to_hex(value,extpanid,len);
+            out = 1;
        }
     } else if (!strcmp(networkparameter,"channel")) {
-       uint8_t ch = atol(value);
-       if ((ch >= 11) && (ch <= 26)) {
-        channel = ch;
-        out = 1;
-       }
+        uint8_t ch = atol(value);
+        if ((ch >= 11) && (ch <= 26)) {
+            channel = ch;
+            out = 1;
+        }
     } else if (!strcmp(networkparameter,"channelmask")) {
        strcpy((char *)channel_mask,value);
     } else if (!strcmp(networkparameter,"psk")) {
-       if(len == 32) {
-        string_to_hex(value,psk,len);
-        out = 1;
-       }
+        if(len == 32) {
+            string_to_hex(value,psk,len);
+            out = 1;
+        }
     } else if (!strcmp(networkparameter,"securitypolicy")) {//not updating value
-       uint8_t val = atol(value);
-       if ((val>=0) && (val<=255)) {
-        securitypolicy = val;
-        out = 1;
-       }
+        uint8_t val = atol(value);
+        if ((val>=0) && (val<=255)) {
+            securitypolicy = val;
+            out = 1;
+        }
     } else if (!strcmp(networkparameter,"prefix")) {
-       if (len == 16) {
-        string_to_hex(value,meshprefix,len);
-        out = 1;
-       }
+        if (len == 16) {
+            string_to_hex(value,meshprefix,len);
+            out = 1;
+         }
     }
     return out;
 }
+
 /* This function handles the commands
 It accepts str as a input parameter.
 calling this function to validates the command structure.*/
-void commands_list(void)
-{
+void commands_list(void) {
     printf("thread..\n");
     printf("info\n");
     printf("dataset..\n");
@@ -365,9 +331,9 @@ void commands_list(void)
     printf("prefix\n");
     printf("securitypolicy\n");
 }
+
 // This function called with get help command
-void getcmds_list(void)
-{
+void getcmds_list(void) {
    printf("channel\n");
    printf("channelmask\n");
    printf("extpanid\n");
@@ -380,31 +346,27 @@ void getcmds_list(void)
 }
 
 //This function access the commands start with thread keyword
-void threadkeyword_cmds(char *cmd,uint8_t len)
-{
+void threadkeyword_cmds(char *cmd, uint8_t len) {
     if (len) {
-        if (strncmp(cmd,"start",len) == 0) {//start to establish a connection
-             mesh_connect(); //this function connects the device into network
-             printf("Done\n");
-        } else if (strncmp(cmd,"stop",len) == 0) {//to disconnect from network
-
+        if (strncmp(cmd,"start",5) == 0) {//start to establish a connection
+            mesh_connect(); //this function connects the device into network
+            printf("Done\n");
+        } else if (strncmp(cmd,"stop",4) == 0) {//to disconnect from network
             mesh_disconnect(); //this function disconnects the device from the network
             printf("Done\n");
-        } else if (strncmp(cmd,"help",len) == 0) {
+        } else if (strncmp(cmd,"help",4) == 0) {
             printf("start\n"); // print when command format doesn't match
             printf("stop\n");
         }
     }
-  //  else
-   //     printf("Invalid command\n");// print when command format doesn't match  
+//  else
+//     printf("Invalid command\n");// print when command format doesn't match  
 }
 
-void dataset_keyword_cmds(char *networkparameter, char *value,uint8_t netwrkparam_len,uint8_t value_len)
-{
+void dataset_keyword_cmds(char *networkparameter, char *value, uint8_t netwrkparam_len, uint8_t value_len) {
     uint8_t donebyte = 0;
     if (netwrkparam_len > 0) {
-        printf("%s %s\n",networkparameter,value);
-        if (strncmp(networkparameter,"help",netwrkparam_len-1) == 0) { // to list the available commands to start with dataset
+        if (strncmp(networkparameter,"help",4) == 0) { // to list the available commands to start with dataset netwrkparam_len-1
             if (value_len == 0)  //nothing is there in 3rd place
                 dataset_commands_List();
             else 
@@ -428,10 +390,9 @@ void dataset_keyword_cmds(char *networkparameter, char *value,uint8_t netwrkpara
 
 //This function prints the networkwork parameter details, 
 //This function called only user request for network details with get keyword
-void get_keyword_cmds(char *networkparam,uint8_t param_len)
-{
+void get_keyword_cmds(char *networkparam,uint8_t param_len) {
     if (param_len > 0) {
-        if (strncmp((char *)networkparam, "help",param_len-1)==0)
+        if (strncmp((char *)networkparam, "help",4)==0) //param_len-1
             getcmds_list();
         else {
             if (getcmd_count == 1) {//read only once
@@ -444,6 +405,8 @@ void get_keyword_cmds(char *networkparam,uint8_t param_len)
 }
 //Have to make it perfect, just implemented for test purpose
 // change later
+
+char *coap_server_ipaddr;
 void coap_request_cmds(char *str)
 {
     SocketAddress addr;
@@ -461,45 +424,41 @@ void coap_request_cmds(char *str)
     msg_type_len = strlen(msg_type);
     payload_len = strlen(payload);
 
-   // if (strncmp((char *)request_method_type, "start",request_method_type_len-1) == 0) {
-    //    printf("hello\n");
-    //    addr = coap_config(host_address);
-   // } else
-    if (strncmp((char *)request_method_type, "get",request_method_type_len) == 0) {
-        if(strncmp((char *)msg_type, "con", msg_type_len-1) == 0) {
+  // coap_server_ipaddr = request_method_type;
+    if (strncmp((char *)request_method_type, "get", 3) == 0) { //request_method_type_len
+        if(strncmp((char *)msg_type, "con", 3) == 0) { //msg_type_len-1
             msg_type_con_noncon = COAP_MSG_TYPE_CONFIRMABLE;
         } else {
             msg_type_con_noncon = COAP_MSG_TYPE_NON_CONFIRMABLE;
         }
-            Packet_builder(host_address,(uint8_t *)uri_path, COAP_MSG_CODE_REQUEST_GET, msg_type_con_noncon, 0, 0);
-    } else if (strncmp((char *)request_method_type, "put",request_method_type_len) == 0) {
-        if(strncmp((char *)msg_type, "con", msg_type_len) == 0) {
+            client_requestpacket_build(host_address,(uint8_t *)uri_path, COAP_MSG_CODE_REQUEST_GET, msg_type_con_noncon, 0, 0);
+    } else if (strncmp((char *)request_method_type, "put", 3) == 0) { //request_method_type_len
+        if(strncmp((char *)msg_type, "con", 3) == 0) { //msg_type_len
             msg_type_con_noncon = COAP_MSG_TYPE_CONFIRMABLE;
         } else {
              msg_type_con_noncon = COAP_MSG_TYPE_NON_CONFIRMABLE;
         }
-            Packet_builder(host_address,(uint8_t *)uri_path, COAP_MSG_CODE_REQUEST_PUT, msg_type_con_noncon, (uint8_t *)payload, payload_len-1);
-    } else if (strncmp((char *)request_method_type, "post",request_method_type_len) == 0) {
-        if(strncmp((char *)msg_type, "con", msg_type_len) == 0) {
+            client_requestpacket_build(host_address,(uint8_t *)uri_path, COAP_MSG_CODE_REQUEST_PUT, msg_type_con_noncon, (uint8_t *)payload, payload_len-1);
+    } else if (strncmp((char *)request_method_type, "post", 4) == 0) { //request_method_type_len
+        if(strncmp((char *)msg_type, "con", 3) == 0) {  //msg_type_len
             msg_type_con_noncon = COAP_MSG_TYPE_CONFIRMABLE;
         } else {
              msg_type_con_noncon = COAP_MSG_TYPE_NON_CONFIRMABLE;
         }
-            Packet_builder(host_address, (uint8_t *)uri_path,  COAP_MSG_CODE_REQUEST_POST, msg_type_con_noncon, (uint8_t *)payload, payload_len-1);
-    } else if (strncmp((char *)request_method_type, "delete",request_method_type_len) == 0) {
-        if(strncmp((char *)msg_type, "con", msg_type_len) == 0) {
+            client_requestpacket_build(host_address, (uint8_t *)uri_path,  COAP_MSG_CODE_REQUEST_POST, msg_type_con_noncon, (uint8_t *)payload, payload_len-1);
+    } else if (strncmp((char *)request_method_type, "delete", 6) == 0) { //request_method_type_len
+        if(strncmp((char *)msg_type, "con", 3) == 0) { //msg_type_len
             msg_type_con_noncon = COAP_MSG_TYPE_CONFIRMABLE;
         } else {
              msg_type_con_noncon = COAP_MSG_TYPE_NON_CONFIRMABLE;
         }
-        Packet_builder(host_address, (uint8_t *)uri_path, COAP_MSG_CODE_REQUEST_DELETE, msg_type_con_noncon, (uint8_t *)payload, payload_len-1);
+        client_requestpacket_build(host_address, (uint8_t *)uri_path, COAP_MSG_CODE_REQUEST_DELETE, msg_type_con_noncon, (uint8_t *)payload, payload_len-1);
     }    
 }
 
 /* This function handles the commands
 It accepts str as a input parameter.
 calling this function to validates the command structure.*/
-
 
 //make some changes in the future
 void cli_cmds_Handler(char *str)
@@ -513,19 +472,16 @@ void cli_cmds_Handler(char *str)
     
     if (strncmp((char *)first_string, "coap",first_string_len) == 0) {
         coap_request_cmds(second_string);
-    } else
-     {
+    } else {
         second_string = strtok_r(second_string," ", &third_string);
         third_string =  strtok_r(third_string," ", &fourth_string); //checking whether there is something in 4th place
-
         first_string_len = strlen(first_string);
         second_string_len = strlen(second_string);
         third_string_len = strlen(third_string);
         fourth_string_len = strlen(fourth_string); //if yes length of the data
-        
-        if (fourth_string_len != 0)  {//if we are not handling command entry in 4th place.
+        if (fourth_string_len != 0)  {      //if we are not handling command entry in 4th place.
             printf("Invalid no.of Args\n");
-        } else {//if nothing in 4th place, look for matching command
+        } else {        //if nothing in 4th place, look for matching command
             // This 'if' condition for to connect and discoonect the device into/from the network.
             if (strncmp((char *)first_string, "thread",first_string_len) == 0) { //To connect Mesh network and disconnect
                 if (third_string_len == 0) {    //if some text is entered
@@ -542,11 +498,11 @@ void cli_cmds_Handler(char *str)
             } else {   //check is it better to check str1 is not zero
                 if (second_string_len == 0) {  //only excute this when entered command is info
                     first_string_len = first_string_len - 1;
-                    if (strncmp((char *)first_string, "info",first_string_len) == 0) {
+                    if (strncmp((char *)first_string, "info", 4) == 0) { //first_string_len
                         scan_network_details();  //to get information about the
-                    } else if (strncmp((char *)first_string, "ipaddr",first_string_len) == 0) {//to get the default network parameters
+                    } else if (strncmp((char *)first_string, "ipaddr", 6) == 0) {// first_string_len to get the default network parameters
                         read_ipaddr(); // This condition to read the IP addr 
-                    } else if (strncmp((char *)first_string, "dataset",first_string_len)==0) {
+                    } else if (strncmp((char *)first_string, "dataset", 7)==0) { //first_string_len
                         scan_network_details();     //to get dataset it may be dataset or info command decide later
                     } else {  //to get values
                         if (getcmd_count == 1) {//read only once
