@@ -78,7 +78,8 @@ BUILD\TB_SENSE_12\ARMC6\mbed-os\features\cellular\framework\targets\UBLOX\AT\UBL
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\emlib\inc\em_ldma.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\TARGET_EFR32MG12\TARGET_TB_SENSE_12\device_peripherals.h \
   mbed-os\hal\ticker_api.h mbed-os\platform\NonCopyable.h \
-  mbed-os\platform\mbed_wait_api.h mbed-os\platform\mbed_atomic.h \
+  mbed-os\platform\mbed_debug.h mbed-os\platform\mbed_wait_api.h \
+  mbed-os\platform\mbed_atomic.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\common\cmsis.h \
   mbed-os\platform\cxxsupport\mstd_type_traits \
   mbed-os\platform\cxxsupport\mstd_cstddef \

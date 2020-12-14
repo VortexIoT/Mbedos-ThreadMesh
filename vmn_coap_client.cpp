@@ -10,6 +10,7 @@ struct coap_s* coaphandle;//=sn_coap_protocol_init(&coap_client_malloc, &coap_cl
 coap_version_e coap_version = COAP_VERSION_1;
 uint8_t ipdestbuffer[16] = {0};
 EventQueue coapclient_eventqueue;
+extern MeshInterface *mesh;
 
 void* coap_client_malloc(uint16_t size) {
     return malloc(size);

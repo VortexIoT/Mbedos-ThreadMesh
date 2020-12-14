@@ -1,7 +1,7 @@
 /*
   Oct 2020
 */
-//#include "temp_humidity_sensor.h"
+#include "temp_humidity_sensor.h"
 #include <cstdint>
 #include "mbed.h"
 

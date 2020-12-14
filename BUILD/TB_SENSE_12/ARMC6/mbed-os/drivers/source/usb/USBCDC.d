@@ -77,7 +77,8 @@ BUILD\TB_SENSE_12\ARMC6\mbed-os\drivers\source\usb\USBCDC.o: \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\TARGET_EFR32MG12\device\efr32mg12p_af_pins.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\emlib\inc\em_assert.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\emlib\inc\em_bus.h \
-  mbed-os\platform\NonCopyable.h mbed-os\platform\ScopedLock.h \
-  mbed-os\rtos\Semaphore.h mbed-os\drivers\internal\EndpointResolver.h \
+  mbed-os\platform\NonCopyable.h mbed-os\platform\mbed_debug.h \
+  mbed-os\platform\ScopedLock.h mbed-os\rtos\Semaphore.h \
+  mbed-os\drivers\internal\EndpointResolver.h \
   mbed-os\drivers\internal\AsyncOp.h mbed-os\hal\usb\usb_phy_api.h \
   mbed-os\hal\usb\USBPhy.h

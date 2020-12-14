@@ -5,6 +5,9 @@
 #include "ThreadInterface.h"
 #include "string.h"
 #include <cstdint>
+#include "cli_cmd.h"
+#include "sn_coap_header.h"
+#include "vmn_coap_client.h"
 
 
 mbed::RawSerial pc(USBTX, USBRX,115200);

@@ -129,8 +129,8 @@ BUILD\TB_SENSE_12\ARMC6\mbed-os\features\lwipstack\LWIPInterfaceL3IP.o: \
   mbed-os\rtos\mbed_rtos_types.h mbed-os\rtos\mbed_rtos1_types.h \
   mbed-os\rtos\source\TARGET_CORTEX\rtx4\cmsis_os.h \
   mbed-os\rtos\mbed_rtos_storage.h mbed-os\platform\NonCopyable.h \
-  mbed-os\platform\ScopedLock.h mbed-os\rtos\EventFlags.h \
-  mbed-os\platform\mbed_atomic.h \
+  mbed-os\platform\mbed_debug.h mbed-os\platform\ScopedLock.h \
+  mbed-os\rtos\EventFlags.h mbed-os\platform\mbed_atomic.h \
   mbed-os\platform\cxxsupport\mstd_type_traits \
   mbed-os\platform\cxxsupport\mstd_cstddef \
   mbed-os\platform\internal\mbed_atomic_impl.h \

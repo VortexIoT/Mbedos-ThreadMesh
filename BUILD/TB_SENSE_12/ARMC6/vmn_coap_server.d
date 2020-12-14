@@ -66,13 +66,14 @@ BUILD\TB_SENSE_12\ARMC6\vmn_coap_server.o: vmn_coap_server.cpp \
   mbed-os\rtos\source\TARGET_CORTEX\rtx4\cmsis_os.h \
   mbed-os\platform\Callback.h mbed-os\platform\mbed_assert.h \
   mbed-os\platform\mbed_toolchain.h mbed-os\platform\mbed_preprocessor.h \
-  mbed-os\platform\NonCopyable.h mbed-os\rtos\Semaphore.h \
-  mbed-os\rtos\Mutex.h mbed-os\platform\ScopedLock.h \
-  mbed-os\rtos\ThisThread.h mbed-os\rtos\RtosTimer.h mbed-os\rtos\Mail.h \
-  mbed-os\rtos\Queue.h mbed-os\platform\mbed_error.h \
-  mbed-os\platform\mbed_retarget.h mbed-os\rtos\MemoryPool.h \
-  mbed-os\rtos\Kernel.h mbed-os\rtos\EventFlags.h \
-  mbed-os\rtos\ConditionVariable.h mbed-os\features\netsocket\nsapi.h \
+  mbed-os\platform\NonCopyable.h mbed-os\platform\mbed_debug.h \
+  mbed-os\rtos\Semaphore.h mbed-os\rtos\Mutex.h \
+  mbed-os\platform\ScopedLock.h mbed-os\rtos\ThisThread.h \
+  mbed-os\rtos\RtosTimer.h mbed-os\rtos\Mail.h mbed-os\rtos\Queue.h \
+  mbed-os\platform\mbed_error.h mbed-os\platform\mbed_retarget.h \
+  mbed-os\rtos\MemoryPool.h mbed-os\rtos\Kernel.h \
+  mbed-os\rtos\EventFlags.h mbed-os\rtos\ConditionVariable.h \
+  mbed-os\features\netsocket\nsapi.h \
   mbed-os\features\netsocket\nsapi_types.h \
   mbed-os\features\netsocket\SocketAddress.h \
   mbed-os\platform\mbed_toolchain.h \
@@ -222,19 +223,9 @@ BUILD\TB_SENSE_12\ARMC6\vmn_coap_server.o: vmn_coap_server.cpp \
   mbed-os\platform\ScopedRamExecutionLock.h \
   mbed-os\platform\mbed_stats.h mbed-os\platform\Callback.h \
   mbed-os\platform\FunctionPointer.h mbed-os\platform\ScopedLock.h \
-  cli_cmd.h \
-  mbed-os\features\nanostack\sal-stack-nanostack\nanostack\thread_management_if.h \
+  mbed-os\features\frameworks\nanostack-libservice\mbed-client-libservice\ip6string.h \
   mbed-os\features\frameworks\nanostack-libservice\mbed-client-libservice\ns_types.h \
-  mbed-os\features\nanostack\sal-stack-nanostack\nanostack\net_interface.h \
-  mbed-os\features\nanostack\sal-stack-nanostack\nanostack\platform\arm_hal_phy.h \
-  mbed-os\features\netsocket\InternetSocket.h \
-  mbed-os\features\nanostack\sal-stack-nanostack\source\NWK_INTERFACE\Include\protocol_abstract.h \
-  mbed-os\drivers\RawSerial.h temp_humidity_sensor.h \
-  mbed-os\drivers\I2C.h vmn_coap_server.h \
-  mbed-os\features\netsocket\UDPSocket.h \
+  vmn_coap_server.h mbed-os\features\netsocket\UDPSocket.h \
   mbed-os\features\frameworks\mbed-coap\mbed-coap\sn_coap_protocol.h \
   mbed-os\features\frameworks\mbed-coap\mbed-coap\sn_coap_header.h \
-  mbed-os\features\frameworks\mbed-coap\mbed-coap\sn_coap_header.h \
-  vmn_coap_client.h \
-  mbed-os\features\frameworks\nanostack-libservice\mbed-client-libservice\ip6string.h \
-  mbed-os\features\frameworks\nanostack-libservice\mbed-client-libservice\ns_types.h
+  mbed-os\features\frameworks\mbed-coap\mbed-coap\sn_coap_header.h

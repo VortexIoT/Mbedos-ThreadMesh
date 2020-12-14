@@ -85,13 +85,13 @@ BUILD\TB_SENSE_12\ARMC6\mbed-os\events\source\equeue_mbed.o: \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\TARGET_EFR32MG12\TARGET_TB_SENSE_12\device_peripherals.h \
   mbed-os\drivers\Timer.h mbed-os\platform\platform.h \
   mbed-os\platform\mbed_retarget.h mbed-os\platform\NonCopyable.h \
-  mbed-os\drivers\Ticker.h mbed-os\platform\cxxsupport\mstd_utility \
-  mbed-os\drivers\TimerEvent.h mbed-os\platform\Callback.h \
-  mbed-os\platform\mbed_assert.h mbed-os\hal\lp_ticker_api.h \
-  mbed-os\drivers\Timeout.h mbed-os\drivers\LowPowerTimeout.h \
-  mbed-os\drivers\LowPowerTicker.h mbed-os\drivers\LowPowerTimer.h \
-  mbed-os\rtos\Kernel.h mbed-os\rtos\mbed_rtos_types.h \
-  mbed-os\platform\source\mbed_os_timer.h \
+  mbed-os\platform\mbed_debug.h mbed-os\drivers\Ticker.h \
+  mbed-os\platform\cxxsupport\mstd_utility mbed-os\drivers\TimerEvent.h \
+  mbed-os\platform\Callback.h mbed-os\platform\mbed_assert.h \
+  mbed-os\hal\lp_ticker_api.h mbed-os\drivers\Timeout.h \
+  mbed-os\drivers\LowPowerTimeout.h mbed-os\drivers\LowPowerTicker.h \
+  mbed-os\drivers\LowPowerTimer.h mbed-os\rtos\Kernel.h \
+  mbed-os\rtos\mbed_rtos_types.h mbed-os\platform\source\mbed_os_timer.h \
   mbed-os\platform\source\SysTimer.h mbed-os\platform\mbed_atomic.h \
   mbed-os\platform\cxxsupport\mstd_type_traits \
   mbed-os\platform\cxxsupport\mstd_cstddef \

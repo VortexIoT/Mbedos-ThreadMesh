@@ -13,6 +13,7 @@
 #include <string>
 #include "ip6string.h"
 #include <cstring>
+#include "vmn_coap_server.h"
 
 
 //#define IPADDRESS2    "fd00:db8:0:0:0:ff:fe00:2000"

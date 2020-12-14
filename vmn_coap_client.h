@@ -2,6 +2,8 @@
 #include "stdlib.h"
 #include "stdio.h"
 #include "mbed.h"
+#include "sn_coap_header.h"
+#include "sn_coap_protocol.h"
 
 void* coap_client_malloc(uint16_t size);
 void coap_client_free(void* addr);

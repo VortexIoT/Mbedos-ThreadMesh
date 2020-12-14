@@ -74,6 +74,7 @@ BUILD\TB_SENSE_12\ARMC6\mbed-os\features\nanostack\nanostack-hal-mbed-cmsis-rtos
   mbed-os\events\mbed_shared_queues.h mbed-os\events\EventQueue.h \
   mbed-os\events\equeue.h mbed-os\events\internal\equeue_platform.h \
   mbed-os\platform\Callback.h mbed-os\platform\mbed_assert.h \
-  mbed-os\platform\NonCopyable.h mbed-os\events\Event.h \
+  mbed-os\platform\NonCopyable.h mbed-os\platform\mbed_debug.h \
+  mbed-os\events\Event.h \
   mbed-os\features\nanostack\nanostack-hal-mbed-cmsis-rtos\ns_event_loop_mutex.h \
   mbed-os\features\nanostack\nanostack-hal-mbed-cmsis-rtos\ns_event_loop.h

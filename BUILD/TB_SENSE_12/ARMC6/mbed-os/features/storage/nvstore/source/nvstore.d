@@ -2,8 +2,10 @@ BUILD\TB_SENSE_12\ARMC6\mbed-os\features\storage\nvstore\source\nvstore.o: \
   mbed-os\features\storage\nvstore\source\nvstore.cpp \
   BUILD\TB_SENSE_12\ARMC6\mbed_config.h \
   mbed-os\features\storage\nvstore\source\nvstore.h \
-  mbed-os\platform\NonCopyable.h mbed-os\platform\PlatformMutex.h \
-  mbed-os\rtos\Mutex.h mbed-os\rtos\mbed_rtos_types.h \
+  mbed-os\platform\NonCopyable.h mbed-os\platform\mbed_toolchain.h \
+  mbed-os\platform\mbed_preprocessor.h mbed-os\platform\mbed_debug.h \
+  mbed-os\platform\PlatformMutex.h mbed-os\rtos\Mutex.h \
+  mbed-os\rtos\mbed_rtos_types.h \
   mbed-os\rtos\source\TARGET_CORTEX\rtx5\Include\cmsis_os2.h \
   mbed-os\rtos\mbed_rtos1_types.h \
   mbed-os\rtos\source\TARGET_CORTEX\rtx4\cmsis_os.h \
@@ -66,8 +68,7 @@ BUILD\TB_SENSE_12\ARMC6\mbed-os\features\storage\nvstore\source\nvstore.o: \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\TARGET_EFR32MG12\device\efr32mg12p_af_pins.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\emlib\inc\em_assert.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\emlib\inc\em_bus.h \
-  mbed-os\platform\ScopedLock.h mbed-os\platform\mbed_toolchain.h \
-  mbed-os\platform\mbed_preprocessor.h mbed-os\drivers\FlashIAP.h \
+  mbed-os\platform\ScopedLock.h mbed-os\drivers\FlashIAP.h \
   mbed-os\hal\flash_api.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\common\device.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\common\cmsis.h \
