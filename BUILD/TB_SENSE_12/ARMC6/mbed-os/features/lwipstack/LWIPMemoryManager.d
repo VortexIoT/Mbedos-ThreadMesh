@@ -96,8 +96,9 @@ BUILD\TB_SENSE_12\ARMC6\mbed-os\features\lwipstack\LWIPMemoryManager.o: \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\emlib\inc\em_cmu.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\emlib\inc\em_assert.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\emlib\inc\em_bus.h \
-  mbed-os\platform\NonCopyable.h mbed-os\platform\ScopedLock.h \
-  mbed-os\rtos\EventFlags.h mbed-os\platform\mbed_atomic.h \
+  mbed-os\platform\NonCopyable.h mbed-os\platform\mbed_debug.h \
+  mbed-os\platform\ScopedLock.h mbed-os\rtos\EventFlags.h \
+  mbed-os\platform\mbed_atomic.h \
   mbed-os\platform\cxxsupport\mstd_type_traits \
   mbed-os\platform\cxxsupport\mstd_cstddef \
   mbed-os\platform\internal\mbed_atomic_impl.h \

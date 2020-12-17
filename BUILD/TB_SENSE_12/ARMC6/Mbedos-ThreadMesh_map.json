@@ -2,7 +2,7 @@
     {
         "module": "[lib]\\c_w.l",
         "size": {
-            ".text": 22009,
+            ".text": 14233,
             ".data": 16,
             ".bss": 348,
             ".text-delta": 0,
@@ -13,7 +13,7 @@
     {
         "module": "[lib]\\fz_wm.l",
         "size": {
-            ".text": 1312,
+            ".text": 2302,
             ".data": 0,
             ".bss": 0,
             ".text-delta": 0,
@@ -24,9 +24,9 @@
     {
         "module": "[lib]\\libcpp_w.l",
         "size": {
-            ".text": 65770,
+            ".text": 1,
             ".data": 0,
-            ".bss": 2920,
+            ".bss": 0,
             ".text-delta": 0,
             ".data-delta": 0,
             ".bss-delta": 0
@@ -35,7 +35,7 @@
     {
         "module": "[lib]\\libcppabi_w.l",
         "size": {
-            ".text": 2595,
+            ".text": 44,
             ".data": 0,
             ".bss": 0,
             ".text-delta": 0,
@@ -46,7 +46,7 @@
     {
         "module": "[lib]\\librail_efr32xg12_release.ar",
         "size": {
-            ".text": 37404,
+            ".text": 38218,
             ".data": 150,
             ".bss": 836,
             ".text-delta": 0,
@@ -57,7 +57,7 @@
     {
         "module": "[lib]\\m_wm.l",
         "size": {
-            ".text": 794,
+            ".text": 48,
             ".data": 0,
             ".bss": 0,
             ".text-delta": 0,
@@ -79,20 +79,9 @@
     {
         "module": "cli_cmd.o",
         "size": {
-            ".text": 166,
-            ".data": 0,
-            ".bss": 257,
-            ".text-delta": 0,
-            ".data-delta": 0,
-            ".bss-delta": 0
-        }
-    },
-    {
-        "module": "coap_protocol.o",
-        "size": {
-            ".text": 98,
-            ".data": 0,
-            ".bss": 144,
+            ".text": 4216,
+            ".data": 80,
+            ".bss": 298,
             ".text-delta": 0,
             ".data-delta": 0,
             ".bss-delta": 0
@@ -101,9 +90,9 @@
     {
         "module": "main.o",
         "size": {
-            ".text": 1670,
+            ".text": 608,
             ".data": 0,
-            ".bss": 240,
+            ".bss": 844,
             ".text-delta": 0,
             ".data-delta": 0,
             ".bss-delta": 0
@@ -112,7 +101,7 @@
     {
         "module": "mbed-os\\components",
         "size": {
-            ".text": 415,
+            ".text": 228,
             ".data": 0,
             ".bss": 0,
             ".text-delta": 0,
@@ -123,9 +112,9 @@
     {
         "module": "mbed-os\\drivers",
         "size": {
-            ".text": 2699,
+            ".text": 2783,
             ".data": 0,
-            ".bss": 84,
+            ".bss": 44,
             ".text-delta": 0,
             ".data-delta": 0,
             ".bss-delta": 0
@@ -134,9 +123,9 @@
     {
         "module": "mbed-os\\events",
         "size": {
-            ".text": 398,
+            ".text": 2002,
             ".data": 0,
-            ".bss": 0,
+            ".bss": 1572,
             ".text-delta": 0,
             ".data-delta": 0,
             ".bss-delta": 0
@@ -145,9 +134,9 @@
     {
         "module": "mbed-os\\features",
         "size": {
-            ".text": 22377,
-            ".data": 0,
-            ".bss": 257,
+            ".text": 414267,
+            ".data": 1039,
+            ".bss": 11017,
             ".text-delta": 0,
             ".data-delta": 0,
             ".bss-delta": 0
@@ -156,7 +145,7 @@
     {
         "module": "mbed-os\\hal",
         "size": {
-            ".text": 2336,
+            ".text": 2160,
             ".data": 8,
             ".bss": 131,
             ".text-delta": 0,
@@ -167,9 +156,9 @@
     {
         "module": "mbed-os\\platform",
         "size": {
-            ".text": 8333,
-            ".data": 64,
-            ".bss": 661,
+            ".text": 7341,
+            ".data": 80,
+            ".bss": 444,
             ".text-delta": 0,
             ".data-delta": 0,
             ".bss-delta": 0
@@ -178,7 +167,7 @@
     {
         "module": "mbed-os\\rtos",
         "size": {
-            ".text": 11778,
+            ".text": 13581,
             ".data": 168,
             ".bss": 6633,
             ".text-delta": 0,
@@ -189,9 +178,9 @@
     {
         "module": "mbed-os\\targets",
         "size": {
-            ".text": 17335,
+            ".text": 18025,
             ".data": 12,
-            ".bss": 288,
+            ".bss": 289,
             ".text-delta": 0,
             ".data-delta": 0,
             ".bss-delta": 0
@@ -200,7 +189,7 @@
     {
         "module": "mesh_led_control_example.o",
         "size": {
-            ".text": 288,
+            ".text": 258,
             ".data": 0,
             ".bss": 224,
             ".text-delta": 0,
@@ -209,11 +198,44 @@
         }
     },
     {
+        "module": "mesh_nvm.o",
+        "size": {
+            ".text": 2,
+            ".data": 0,
+            ".bss": 0,
+            ".text-delta": 0,
+            ".data-delta": 0,
+            ".bss-delta": 0
+        }
+    },
+    {
         "module": "temp_humidity_sensor.o",
         "size": {
-            ".text": 80,
+            ".text": 510,
             ".data": 0,
-            ".bss": 132,
+            ".bss": 226,
+            ".text-delta": 0,
+            ".data-delta": 0,
+            ".bss-delta": 0
+        }
+    },
+    {
+        "module": "vmn_coap_client.o",
+        "size": {
+            ".text": 1727,
+            ".data": 1,
+            ".bss": 256,
+            ".text-delta": 0,
+            ".data-delta": 0,
+            ".bss-delta": 0
+        }
+    },
+    {
+        "module": "vmn_coap_server.o",
+        "size": {
+            ".text": 2321,
+            ".data": 4,
+            ".bss": 252,
             ".text-delta": 0,
             ".data-delta": 0,
             ".bss-delta": 0
@@ -221,9 +243,9 @@
     },
     {
         "summary": {
-            "static_ram": 14597,
+            "static_ram": 25996,
             "static_ram_delta": 0,
-            "total_flash": 198307,
+            "total_flash": 526465,
             "total_flash_delta": 0
         }
     }

@@ -5,7 +5,7 @@
 #include <cstdint>
 #include "mbed.h"
 
-mbed::DigitalOut env_en(SENSOR_ENABLE, 1);
+//mbed::DigitalOut env_en(SENSE_ENABLE, 1);
 mbed::I2C i2c(I2C0_SDA,I2C0_SCL);  //i2c init
 
 uint8_t RH_percentage;

@@ -65,8 +65,9 @@ BUILD\TB_SENSE_12\ARMC6\mbed-os\rtos\source\Thread.o: \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\emlib\inc\em_bus.h \
   mbed-os\platform\Callback.h mbed-os\platform\mbed_assert.h \
   mbed-os\platform\mbed_toolchain.h mbed-os\platform\mbed_preprocessor.h \
-  mbed-os\platform\NonCopyable.h mbed-os\rtos\Semaphore.h \
-  mbed-os\rtos\Mutex.h mbed-os\platform\ScopedLock.h \
-  mbed-os\rtos\ThisThread.h mbed-os\rtos\source\rtos_idle.h \
-  mbed-os\platform\mbed_toolchain.h mbed-os\rtos\source\rtos_handlers.h \
-  mbed-os\platform\mbed_error.h mbed-os\platform\mbed_retarget.h
+  mbed-os\platform\NonCopyable.h mbed-os\platform\mbed_debug.h \
+  mbed-os\rtos\Semaphore.h mbed-os\rtos\Mutex.h \
+  mbed-os\platform\ScopedLock.h mbed-os\rtos\ThisThread.h \
+  mbed-os\rtos\source\rtos_idle.h mbed-os\platform\mbed_toolchain.h \
+  mbed-os\rtos\source\rtos_handlers.h mbed-os\platform\mbed_error.h \
+  mbed-os\platform\mbed_retarget.h

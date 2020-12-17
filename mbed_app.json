@@ -75,6 +75,11 @@
             "LED": "LED0",
             "BUTTON": "BTN0",
             "BUTTON_MODE": "PullUp"
+        },
+        "VORTEX_MAIN_BOARD" : {
+            "LED": "LED0",
+            "BUTTON": "BTN0",
+            "BUTTON_MODE": "PullUp"
         }
        
     }

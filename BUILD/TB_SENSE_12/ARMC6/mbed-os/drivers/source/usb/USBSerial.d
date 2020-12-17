@@ -77,9 +77,10 @@ BUILD\TB_SENSE_12\ARMC6\mbed-os\drivers\source\usb\USBSerial.o: \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\TARGET_EFR32MG12\device\efr32mg12p_af_pins.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\emlib\inc\em_assert.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\emlib\inc\em_bus.h \
-  mbed-os\platform\NonCopyable.h mbed-os\platform\ScopedLock.h \
-  mbed-os\rtos\Semaphore.h mbed-os\platform\Stream.h \
-  mbed-os\platform\platform.h mbed-os\platform\mbed_retarget.h \
+  mbed-os\platform\NonCopyable.h mbed-os\platform\mbed_debug.h \
+  mbed-os\platform\ScopedLock.h mbed-os\rtos\Semaphore.h \
+  mbed-os\platform\Stream.h mbed-os\platform\platform.h \
+  mbed-os\platform\mbed_retarget.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\common\device.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\common\cmsis.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\common\cmsis_nvic.h \

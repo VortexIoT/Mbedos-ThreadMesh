@@ -86,10 +86,10 @@ BUILD\TB_SENSE_12\ARMC6\mbed-os\features\netsocket\ppp\ppp_service.o: \
   mbed-os\targets\TARGET_Silicon_Labs\mbed_rtx.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\common\clocking.h \
   mbed-os\platform\Callback.h mbed-os\platform\mbed_assert.h \
-  mbed-os\platform\NonCopyable.h mbed-os\rtos\Semaphore.h \
-  mbed-os\rtos\Mutex.h mbed-os\platform\ScopedLock.h \
-  mbed-os\events\EventQueue.h mbed-os\events\equeue.h \
-  mbed-os\events\internal\equeue_platform.h \
+  mbed-os\platform\NonCopyable.h mbed-os\platform\mbed_debug.h \
+  mbed-os\rtos\Semaphore.h mbed-os\rtos\Mutex.h \
+  mbed-os\platform\ScopedLock.h mbed-os\events\EventQueue.h \
+  mbed-os\events\equeue.h mbed-os\events\internal\equeue_platform.h \
   mbed-os\rtos\mbed_rtos_storage.h mbed-os\platform\mbed_poll.h \
   mbed-os\features\frameworks\nanostack-libservice\mbed-client-libservice\ip4string.h \
   mbed-os\features\frameworks\nanostack-libservice\mbed-client-libservice\ns_types.h \

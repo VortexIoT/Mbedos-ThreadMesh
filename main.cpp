@@ -18,7 +18,8 @@
 
 static Mutex SerialOutMutex;
 mbed::RawSerial pc(USBTX, USBRX,115200);
-DigitalOut vcom_enable(VCOM_ENABLE, 1); //added newly to enable usart
+//DigitalOut vcom_enable(PA5, 1); //added newly to enable usart
+//DigitalOut led0(LED0);
 Thread coapserver_thread;
 Thread temp_hum_sensor_thread;
 Thread coapclient_thread;
@@ -47,7 +48,6 @@ void serial_out_mutex_release() {
 }
 
 int main() {
-  //  SocketAddress addr;
     mbed_trace_init();
     mbed_trace_print_function_set(trace_printer);
     mbed_trace_mutex_wait_function_set(serial_out_mutex_wait);

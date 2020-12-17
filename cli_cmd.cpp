@@ -188,6 +188,8 @@ void scan_network_details(void) {
 // This function called whenever user enters the dataset commit active command.
 void datasetcommit_active(void) {
     mesh = MeshInterface::get_default_instance();  //returns pointer to the mesh interface
+    thread_device_type_e devicetype = THREAD_DEVICE_REED;
+    thread_management_device_type_set(id, devicetype);
     thread_management_set_request_full_nwk_data(id, true);           
     link->rfChannel = channel;
     for (int i=0;i<sizeof(Network_name);i++)
@@ -204,7 +206,8 @@ void datasetcommit_active(void) {
     for (int i=0;i<16;i++)
         link->PSKc[i] = psk[i];
     link->securityPolicy = securitypolicy;
-    thread_management_link_configuration_store(id,link);            
+    thread_management_link_configuration_store(id,link);         
+    thread_management_device_type_set(id, devicetype);     
 }
 
 // This function called when user entered command follows with get * command 

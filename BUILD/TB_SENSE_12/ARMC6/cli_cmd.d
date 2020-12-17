@@ -1,27 +1,13 @@
 BUILD\TB_SENSE_12\ARMC6\cli_cmd.o: cli_cmd.cpp \
-  BUILD\TB_SENSE_12\ARMC6\mbed_config.h cli_cmd.h \
-  mbed-os\features\nanostack\sal-stack-nanostack\nanostack\thread_management_if.h \
+  BUILD\TB_SENSE_12\ARMC6\mbed_config.h \
+  mbed-os\features\nanostack\sal-stack-nanostack\nanostack\socket_api.h \
+  mbed-os\features\nanostack\sal-stack-nanostack\nanostack\ns_address.h \
   mbed-os\features\frameworks\nanostack-libservice\mbed-client-libservice\ns_types.h \
-  mbed-os\features\nanostack\sal-stack-nanostack\nanostack\net_interface.h \
-  mbed-os\features\nanostack\sal-stack-nanostack\nanostack\platform\arm_hal_phy.h \
-  mbed-os\features\netsocket\InternetSocket.h \
-  mbed-os\features\netsocket\Socket.h \
-  mbed-os\features\netsocket\SocketAddress.h \
-  mbed-os\features\netsocket\nsapi_types.h \
-  mbed-os\platform\mbed_toolchain.h mbed-os\platform\mbed_preprocessor.h \
-  mbed-os\platform\Callback.h mbed-os\platform\mbed_assert.h \
-  mbed-os\platform\mbed_toolchain.h \
-  mbed-os\features\netsocket\NetworkStack.h \
-  mbed-os\features\netsocket\NetworkInterface.h \
-  mbed-os\features\netsocket\nsapi_types.h \
-  mbed-os\features\netsocket\DNS.h mbed-os\rtos\Mutex.h \
-  mbed-os\rtos\mbed_rtos_types.h \
-  mbed-os\rtos\source\TARGET_CORTEX\rtx5\Include\cmsis_os2.h \
-  mbed-os\rtos\mbed_rtos1_types.h \
-  mbed-os\rtos\source\TARGET_CORTEX\rtx4\cmsis_os.h \
-  mbed-os\rtos\source\TARGET_CORTEX\rtx5\RTX\Include\rtx_os.h \
-  mbed-os\rtos\mbed_rtos_storage.h \
+  mesh_nvm.h mbed-os\mbed.h mbed-os\platform\mbed_version.h \
+  mbed-os\rtos\rtos.h mbed-os\rtos\mbed_rtos_storage.h \
   mbed-os\rtos\source\TARGET_CORTEX\mbed_rtx_storage.h \
+  mbed-os\rtos\source\TARGET_CORTEX\rtx5\RTX\Include\rtx_os.h \
+  mbed-os\rtos\source\TARGET_CORTEX\rtx5\Include\cmsis_os2.h \
   mbed-os\rtos\source\TARGET_CORTEX\mbed_rtx_conf.h \
   mbed-os\targets\TARGET_Silicon_Labs\mbed_rtx.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\common\clocking.h \
@@ -78,8 +64,36 @@ BUILD\TB_SENSE_12\ARMC6\cli_cmd.o: cli_cmd.cpp \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\TARGET_EFR32MG12\device\efr32mg12p_af_pins.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\emlib\inc\em_assert.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\emlib\inc\em_bus.h \
-  mbed-os\platform\NonCopyable.h mbed-os\platform\ScopedLock.h \
-  mbed-os\rtos\EventFlags.h mbed-os\platform\mbed_atomic.h \
+  mbed-os\rtos\Kernel.h mbed-os\rtos\mbed_rtos_types.h \
+  mbed-os\rtos\Thread.h mbed-os\rtos\mbed_rtos1_types.h \
+  mbed-os\rtos\source\TARGET_CORTEX\rtx4\cmsis_os.h \
+  mbed-os\platform\Callback.h mbed-os\platform\mbed_assert.h \
+  mbed-os\platform\mbed_toolchain.h mbed-os\platform\mbed_preprocessor.h \
+  mbed-os\platform\NonCopyable.h mbed-os\platform\mbed_debug.h \
+  mbed-os\rtos\Semaphore.h mbed-os\rtos\Mutex.h \
+  mbed-os\platform\ScopedLock.h mbed-os\rtos\ThisThread.h \
+  mbed-os\rtos\RtosTimer.h mbed-os\rtos\Mail.h mbed-os\rtos\Queue.h \
+  mbed-os\platform\mbed_error.h mbed-os\platform\mbed_retarget.h \
+  mbed-os\rtos\MemoryPool.h mbed-os\rtos\Kernel.h \
+  mbed-os\rtos\EventFlags.h mbed-os\rtos\ConditionVariable.h \
+  mbed-os\features\netsocket\nsapi.h \
+  mbed-os\features\netsocket\nsapi_types.h \
+  mbed-os\features\netsocket\SocketAddress.h \
+  mbed-os\platform\mbed_toolchain.h \
+  mbed-os\features\netsocket\NetworkStack.h \
+  mbed-os\features\netsocket\NetworkInterface.h \
+  mbed-os\features\netsocket\nsapi_types.h mbed-os\platform\Callback.h \
+  mbed-os\features\netsocket\DNS.h \
+  mbed-os\features\netsocket\EthInterface.h \
+  mbed-os\features\netsocket\WiFiInterface.h \
+  mbed-os\features\netsocket\WiFiAccessPoint.h \
+  mbed-os\features\netsocket\CellularBase.h \
+  mbed-os\features\netsocket\CellularInterface.h \
+  mbed-os\features\netsocket\MeshInterface.h \
+  mbed-os\features\netsocket\Socket.h \
+  mbed-os\features\netsocket\UDPSocket.h \
+  mbed-os\features\netsocket\InternetSocket.h \
+  mbed-os\platform\mbed_atomic.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\common\cmsis.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\common\cmsis_nvic.h \
   mbed-os\platform\cxxsupport\mstd_type_traits \
@@ -105,29 +119,6 @@ BUILD\TB_SENSE_12\ARMC6\cli_cmd.o: cli_cmd.cpp \
   mbed-os\hal\dma_api.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\emlib\inc\em_ldma.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\TARGET_EFR32MG12\TARGET_TB_SENSE_12\device_peripherals.h \
-  mbed-os\features\nanostack\sal-stack-nanostack\source\NWK_INTERFACE\Include\protocol_abstract.h \
-  mbed-os\drivers\RawSerial.h mbed-os\platform\platform.h \
-  mbed-os\platform\mbed_retarget.h mbed-os\drivers\SerialBase.h \
-  mbed-os\platform\Callback.h mbed-os\hal\serial_api.h \
-  mbed-os\hal\pinmap.h mbed-os\hal\buffer.h mbed-os\hal\dma_api.h \
-  mbed-os\platform\CThunk.h mbed-os\platform\internal\CThunkBase.h \
-  mbed-os\features\nanostack\sal-stack-nanostack\nanostack\socket_api.h \
-  mbed-os\features\nanostack\sal-stack-nanostack\nanostack\ns_address.h \
-  mesh_nvm.h mbed-os\mbed.h mbed-os\platform\mbed_version.h \
-  mbed-os\rtos\rtos.h mbed-os\rtos\Kernel.h mbed-os\rtos\Thread.h \
-  mbed-os\rtos\Semaphore.h mbed-os\rtos\ThisThread.h \
-  mbed-os\rtos\RtosTimer.h mbed-os\rtos\Mail.h mbed-os\rtos\Queue.h \
-  mbed-os\platform\mbed_error.h mbed-os\rtos\MemoryPool.h \
-  mbed-os\rtos\Kernel.h mbed-os\rtos\ConditionVariable.h \
-  mbed-os\features\netsocket\nsapi.h \
-  mbed-os\features\netsocket\EthInterface.h \
-  mbed-os\features\netsocket\WiFiInterface.h \
-  mbed-os\features\netsocket\WiFiAccessPoint.h \
-  mbed-os\features\netsocket\CellularBase.h \
-  mbed-os\features\netsocket\CellularInterface.h \
-  mbed-os\features\netsocket\MeshInterface.h \
-  mbed-os\features\netsocket\UDPSocket.h \
-  mbed-os\features\netsocket\InternetSocket.h \
   mbed-os\features\netsocket\InternetDatagramSocket.h \
   mbed-os\features\netsocket\ICMPSocket.h \
   mbed-os\features\netsocket\TCPSocket.h \
@@ -168,9 +159,10 @@ BUILD\TB_SENSE_12\ARMC6\cli_cmd.o: cli_cmd.cpp \
   mbed-os\features\netsocket\DTLSSocketWrapper.h \
   mbed-os\features\netsocket\UDPSocket.h \
   mbed-os\features\netsocket\nsapi_ppp.h mbed-os\platform\FileHandle.h \
-  mbed-os\platform\mbed_poll.h mbed-os\features\netsocket\NetworkStack.h \
-  mbed-os\events\mbed_events.h mbed-os\events\EventQueue.h \
-  mbed-os\events\equeue.h mbed-os\events\internal\equeue_platform.h \
+  mbed-os\platform\mbed_poll.h mbed-os\platform\platform.h \
+  mbed-os\features\netsocket\NetworkStack.h mbed-os\events\mbed_events.h \
+  mbed-os\events\EventQueue.h mbed-os\events\equeue.h \
+  mbed-os\events\internal\equeue_platform.h \
   mbed-os\rtos\mbed_rtos_storage.h mbed-os\events\Event.h \
   mbed-os\events\UserAllocatedEvent.h \
   mbed-os\events\mbed_shared_queues.h \
@@ -190,17 +182,20 @@ BUILD\TB_SENSE_12\ARMC6\cli_cmd.o: cli_cmd.cpp \
   mbed-os\platform\mbed_application.h mbed-os\platform\mbed_error.h \
   mbed-os\platform\mbed_interface.h mbed-os\platform\mbed_assert.h \
   mbed-os\platform\mbed_debug.h mbed-os\drivers\DigitalIn.h \
-  mbed-os\hal\gpio_api.h mbed-os\drivers\DigitalOut.h \
-  mbed-os\drivers\DigitalInOut.h mbed-os\drivers\BusIn.h \
-  mbed-os\drivers\DigitalIn.h mbed-os\drivers\BusOut.h \
-  mbed-os\drivers\DigitalOut.h mbed-os\drivers\BusInOut.h \
-  mbed-os\drivers\DigitalInOut.h mbed-os\drivers\PortIn.h \
-  mbed-os\hal\port_api.h mbed-os\drivers\PortInOut.h \
-  mbed-os\drivers\PortOut.h mbed-os\drivers\AnalogIn.h \
-  mbed-os\hal\analogin_api.h mbed-os\drivers\AnalogOut.h \
-  mbed-os\drivers\PwmOut.h mbed-os\hal\pwmout_api.h \
-  mbed-os\drivers\Serial.h mbed-os\platform\Stream.h \
-  mbed-os\platform\FileLike.h mbed-os\drivers\SPI.h \
+  mbed-os\hal\gpio_api.h mbed-os\hal\pinmap.h \
+  mbed-os\drivers\DigitalOut.h mbed-os\drivers\DigitalInOut.h \
+  mbed-os\drivers\BusIn.h mbed-os\drivers\DigitalIn.h \
+  mbed-os\drivers\BusOut.h mbed-os\drivers\DigitalOut.h \
+  mbed-os\drivers\BusInOut.h mbed-os\drivers\DigitalInOut.h \
+  mbed-os\drivers\PortIn.h mbed-os\hal\port_api.h \
+  mbed-os\drivers\PortInOut.h mbed-os\drivers\PortOut.h \
+  mbed-os\drivers\AnalogIn.h mbed-os\hal\analogin_api.h \
+  mbed-os\drivers\AnalogOut.h mbed-os\drivers\PwmOut.h \
+  mbed-os\hal\pwmout_api.h mbed-os\drivers\Serial.h \
+  mbed-os\platform\Stream.h mbed-os\platform\FileLike.h \
+  mbed-os\drivers\SerialBase.h mbed-os\hal\serial_api.h \
+  mbed-os\hal\buffer.h mbed-os\hal\dma_api.h mbed-os\platform\CThunk.h \
+  mbed-os\platform\internal\CThunkBase.h mbed-os\drivers\SPI.h \
   mbed-os\hal\spi_api.h mbed-os\platform\CircularBuffer.h \
   mbed-os\platform\mbed_critical.h mbed-os\platform\Transaction.h \
   mbed-os\drivers\SPISlave.h mbed-os\drivers\I2C.h mbed-os\hal\i2c_api.h \
@@ -250,7 +245,15 @@ BUILD\TB_SENSE_12\ARMC6\cli_cmd.o: cli_cmd.cpp \
   mbed-os\features\frameworks\nanostack-libservice\mbed-client-libservice\ns_list.h \
   mbed-os\features\frameworks\nanostack-libservice\mbed-client-libservice\ns_types.h \
   mbed-os\features\nanostack\mbed-mesh-api\mbed-mesh-api\mesh_interface_types.h \
-  coap_protocol.h mbed-os\features\netsocket\UDPSocket.h \
+  cli_cmd.h \
+  mbed-os\features\nanostack\sal-stack-nanostack\nanostack\thread_management_if.h \
+  mbed-os\features\nanostack\sal-stack-nanostack\nanostack\net_interface.h \
+  mbed-os\features\nanostack\sal-stack-nanostack\nanostack\platform\arm_hal_phy.h \
+  mbed-os\features\netsocket\InternetSocket.h \
+  mbed-os\features\nanostack\sal-stack-nanostack\source\NWK_INTERFACE\Include\protocol_abstract.h \
+  mbed-os\drivers\RawSerial.h \
   mbed-os\features\frameworks\mbed-coap\mbed-coap\sn_coap_protocol.h \
   mbed-os\features\frameworks\mbed-coap\mbed-coap\sn_coap_header.h \
-  mbed-os\features\frameworks\mbed-coap\mbed-coap\sn_coap_header.h
+  mbed-os\features\frameworks\mbed-coap\mbed-coap\sn_coap_header.h \
+  vmn_Coap_client.h vmn_coap_server.h \
+  mbed-os\features\netsocket\UDPSocket.h
