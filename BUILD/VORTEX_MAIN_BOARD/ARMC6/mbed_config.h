@@ -36,7 +36,7 @@
 #define MBED_CONF_APP_ISR                                                     1                                                                                                // set by application
 #define MBED_CONF_APP_LED                                                     LED0                                                                                             // set by application[VORTEX_MAIN_BOARD]
 #define MBED_CONF_APP_RELAY_CONTROL                                           NC                                                                                               // set by application
-#define MBED_CONF_APP_STORAGE_DEVICE                                          MESH_NVM_NONE                                                                                    // set by application
+#define MBED_CONF_APP_STORAGE_DEVICE                                          MESH_NVM_HEAP                                                                                    // set by application
 #define MBED_CONF_ATMEL_RF_ASSUME_SPACED_SPI                                  0                                                                                                // set by library:atmel-rf
 #define MBED_CONF_ATMEL_RF_FULL_SPI_SPEED                                     7500000                                                                                          // set by library:atmel-rf
 #define MBED_CONF_ATMEL_RF_FULL_SPI_SPEED_BYTE_SPACING                        250                                                                                              // set by library:atmel-rf

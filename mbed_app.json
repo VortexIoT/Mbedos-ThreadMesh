@@ -2,7 +2,7 @@
     "config": {
         "storage-device":{
             "help": "Values for storage (Thread) devices are: MESH_NVM_HEAP, MESH_NVM_SD_CARD and MESH_NVM_NONE",
-            "value": "MESH_NVM_NONE"
+            "value": "MESH_NVM_HEAP"
         },
         "ISR":true,
         "enable-led-control-example": true,

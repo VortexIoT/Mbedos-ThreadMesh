@@ -270,5 +270,7 @@ BUILD\TB_SENSE_12\ARMC6\main.o: main.cpp \
   mbed-os\features\frameworks\mbed-coap\mbed-coap\sn_coap_header.h \
   vmn_coap_client.h vmn_coap_server.h \
   mbed-os\features\netsocket\UDPSocket.h temp_humidity_sensor.h \
-  mbed-os\drivers\I2C.h mesh_led_control_example.h \
+  mbed-os\drivers\I2C.h \
+  mbed-os\features\nanostack\sal-stack-nanostack\nanostack\net_thread_test.h \
+  mx25r8035f.h mesh_led_control_example.h \
   mbed-os\features\netsocket\NetworkInterface.h

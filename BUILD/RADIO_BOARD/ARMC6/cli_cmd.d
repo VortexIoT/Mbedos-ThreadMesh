@@ -255,5 +255,10 @@ BUILD\RADIO_BOARD\ARMC6\cli_cmd.o: cli_cmd.cpp \
   mbed-os\features\frameworks\mbed-coap\mbed-coap\sn_coap_protocol.h \
   mbed-os\features\frameworks\mbed-coap\mbed-coap\sn_coap_header.h \
   mbed-os\features\frameworks\mbed-coap\mbed-coap\sn_coap_header.h \
-  vmn_Coap_client.h vmn_coap_server.h \
-  mbed-os\features\netsocket\UDPSocket.h
+  vmn_coap_client.h vmn_coap_server.h \
+  mbed-os\features\netsocket\UDPSocket.h \
+  mbed-os\features\nanostack\sal-stack-nanostack\source\6LoWPAN\Thread\thread_bootstrap.h \
+  mbed-os\features\nanostack\sal-stack-nanostack\nanostack\net_polling_api.h \
+  mbed-os\features\nanostack\sal-stack-nanostack\source\Service_Libs\mle_service\mle_service_api.h \
+  mbed-os\features\nanostack\sal-stack-nanostack\nanostack\ccmLIB.h \
+  mbed-os\features\nanostack\sal-stack-nanostack\nanostack\platform\arm_hal_aes.h

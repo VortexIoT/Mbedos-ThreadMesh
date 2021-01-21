@@ -11,6 +11,10 @@
 #include "vmn_coap_client.h"
 #include "vmn_coap_server.h"
 #include "temp_humidity_sensor.h"
+#include "net_thread_test.h"
+#include "mx25r8035f.h"
+//#include "thread_joiner_application.h"
+//#include "thread_common.h"
 
 #if MBED_CONF_APP_ENABLE_LED_CONTROL_EXAMPLE
 #include "mesh_led_control_example.h"
@@ -46,20 +50,27 @@ void serial_out_mutex_wait() {
 void serial_out_mutex_release() {
     SerialOutMutex.unlock();
 }
-
+extern nwk_interface_id id;
+extern uint8_t keeping_nw_default_details;
+uint8_t parameter_test_byte = 2;
 int main() {
+    uint8_t addr[16];
     mbed_trace_init();
     mbed_trace_print_function_set(trace_printer);
     mbed_trace_mutex_wait_function_set(serial_out_mutex_wait);
     mbed_trace_mutex_release_function_set(serial_out_mutex_release);
+    mesh = MeshInterface::get_default_instance();  //returns pointer to the mesh interface
+    thread_eui64_trace();  //This function generates the EUI64
+    mesh_nvm_initialize();  //initializes the non-volatile memory
     coapserver_thread.start(callback(&coapserver_eventqueue, &EventQueue::dispatch_forever)); //coap server
     temp_hum_sensor_thread.start(callback(&sensor_eventqueue, &EventQueue::dispatch_forever)); //sensor data
     coapclient_thread.start(callback(&coapclient_eventqueue, &EventQueue::dispatch_forever)); //coapclient
     printf("Start Thread - Mesh application\n");
     start_blinking();   //led
-    temp_hum_sensor_read_every_5min(); //reading every 5min
+ //   temp_hum_sensor_read_every_5min(); //reading every 5min
     pc.attach(&isr_rx); //receive interrupt
     i2cinit();  //i2c frequency init
+    mx25r8035f_init(); //external flash init
     while (1) {
         if (flag) {
             flag = 0;
@@ -71,8 +82,121 @@ int main() {
                 cli_cmds_Handler((char *)Rx_buff);
             }
             if (Rx_buff[0] == '2') {
+                printf("coap server\n");
                 coap_server_init(); //server init
             }
+            if(Rx_buff[0] == '1') {
+              parameter_test_byte = thread_management_link_configuration_delete(id); //delete the already existed parameters
+           //   printf("del %d",parameter_test_byte);// = 5;
+              keeping_nw_default_details = 0;
+            }
+            if(Rx_buff[0] == '3') {
+                int i = thread_management_device_type_set(id, THREAD_DEVICE_REED);
+                printf("reed : %d\n", i );
+            }
+            if(Rx_buff[0] == '4') {
+                printf("Parent Link-Local Address: ");
+                thread_management_get_parent_address(id,addr);
+                for (int i=0;i< 16;i++){
+                    if ((i>0) && (i%2 == 0))
+                        printf(":");
+                printf("%02x", addr[i]);
+                }
+                printf("\n");
+            }
+            if(Rx_buff[0] == '5') {
+                printf("Leader Address: ");
+                thread_management_get_leader_address(id,addr);
+                for (int i=0;i< 16;i++){
+                    if ((i>0) && (i%2 == 0))
+                        printf(":");
+                printf("%02x", addr[i]);
+                }
+                printf("\n");
+            }
+            if(Rx_buff[0] == '6') {
+                printf("Own Mesh-Link Address: ");
+                thread_management_get_ml16_address(id,addr); //get own address
+                for (int i=0;i< 16;i++){
+                    if ((i>0) && (i%2 == 0))
+                        printf(":");
+                printf("%02x", addr[i]);
+                }
+                printf("\n");
+            }
+            if(Rx_buff[0] == '7') {
+                device_configuration_s *deviceconfig;
+            //    int i=thread_test_stack_cache_reset(id);
+            //    int i = thread_joiner_application_link_configuration_delete(id);
+           //         printf("%d\n",i);
+                printf("device config \n\n");
+                printf("euid64: ");
+                deviceconfig = thread_management_device_configuration_get(id);
+                for (int i=0;i< 8;i++){
+                    printf("%x",deviceconfig->eui64[i]);
+                }printf("\nmesheid:");
+                for (int i=0;i< 8;i++){
+                     printf("%x",deviceconfig->mesh_local_eid[i]);
+                }printf("\nrandom_mac:");
+                for (int i=0;i< 8;i++){
+                    printf("%x",deviceconfig->extended_random_mac[i]);}printf("\n");
+            }
+            if(Rx_buff[0] == '8') {
+                printf("child count: ");
+                int i=thread_test_child_count_get(id);
+                printf("%d\n",i);
+            }
+            if(Rx_buff[0] == '9') {
+            //   int i = thread_joiner_application_nvm_link_configuration_load(id);
+            //    printf("%d\n",i);
+                read_device_id();
+            //    read_identification();
+            //    read_status_register();
+            //    read_config_register();
+                printf("\n\n");
+            }
+            if(Rx_buff[0] == 'w')  {
+                flash_write();
+            }
+            if(Rx_buff[0] == 'r')  {
+                flash_read();
+            }
+            if(Rx_buff[0] == 'e')  {
+                flash_sector_erase();
+            }
+
+         /*  if(Rx_buff[0] == 'a')
+            {
+                uint8_t index;
+                uint16_t *short_addr;
+                bool *sleepy;
+                uint8_t *mac64;
+                 uint8_t *margin;
+                int i=thread_test_child_info_get(id,index,short_addr,sleepy,mac64,margin);
+                printf("child inforamation\n");
+                printf("%d\n",i);
+                printf("index:%d", index);
+                while(*short_addr !='\0')
+                {
+                    printf("%02x", *short_addr++);
+                }
+                printf("\n");
+                while(*mac64 !='\0')
+                {
+                    printf("%02x", *mac64++);
+                }
+                printf("\n");
+                  //   addr:%02x sleepy : %d mac:%02x ")
+            }*/
+            
+
         }
     } 
 }
+
+/*
+
+net_thread_test.h
+int thread_test_remove_router_by_id(int8_t interface_id, uint8_t routerId); leader can kick out any router by ID
+
+*/

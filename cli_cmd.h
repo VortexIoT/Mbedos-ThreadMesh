@@ -28,5 +28,6 @@ void get_keyword_cmds(char *networkparam,uint8_t param_len);
 void dataset_keyword_cmds(char *networkparameter, char *value,uint8_t netwrkparam_len,uint8_t value_len);
 void threadkeyword_cmds(char *cmd,uint8_t len);
 void coap_request_cmds(char *str);
+void thread_eui64_trace();
 
 /*-------------------  Function declarations END -----------------------*/

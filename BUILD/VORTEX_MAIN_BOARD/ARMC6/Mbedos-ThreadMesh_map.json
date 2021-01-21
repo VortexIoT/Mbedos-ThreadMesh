@@ -13,7 +13,7 @@
     {
         "module": "[lib]\\fz_wm.l",
         "size": {
-            ".text": 2302,
+            ".text": 1822,
             ".data": 0,
             ".bss": 0,
             ".text-delta": 0,
@@ -79,9 +79,9 @@
     {
         "module": "cli_cmd.o",
         "size": {
-            ".text": 4234,
-            ".data": 80,
-            ".bss": 298,
+            ".text": 4296,
+            ".data": 83,
+            ".bss": 300,
             ".text-delta": 0,
             ".data-delta": 0,
             ".bss-delta": 0
@@ -90,8 +90,8 @@
     {
         "module": "main.o",
         "size": {
-            ".text": 688,
-            ".data": 0,
+            ".text": 1477,
+            ".data": 1,
             ".bss": 844,
             ".text-delta": 0,
             ".data-delta": 0,
@@ -112,9 +112,9 @@
     {
         "module": "mbed-os\\drivers",
         "size": {
-            ".text": 2783,
+            ".text": 3643,
             ".data": 0,
-            ".bss": 44,
+            ".bss": 372,
             ".text-delta": 0,
             ".data-delta": 0,
             ".bss-delta": 0
@@ -134,7 +134,7 @@
     {
         "module": "mbed-os\\features",
         "size": {
-            ".text": 414369,
+            ".text": 414535,
             ".data": 1039,
             ".bss": 11017,
             ".text-delta": 0,
@@ -178,7 +178,7 @@
     {
         "module": "mbed-os\\targets",
         "size": {
-            ".text": 18025,
+            ".text": 22252,
             ".data": 12,
             ".bss": 289,
             ".text-delta": 0,
@@ -209,9 +209,20 @@
         }
     },
     {
+        "module": "mx25r8035f.o",
+        "size": {
+            ".text": 870,
+            ".data": 0,
+            ".bss": 112,
+            ".text-delta": 0,
+            ".data-delta": 0,
+            ".bss-delta": 0
+        }
+    },
+    {
         "module": "temp_humidity_sensor.o",
         "size": {
-            ".text": 488,
+            ".text": 186,
             ".data": 0,
             ".bss": 218,
             ".text-delta": 0,
@@ -243,9 +254,9 @@
     },
     {
         "summary": {
-            "static_ram": 25988,
+            "static_ram": 26434,
             "static_ram_delta": 0,
-            "total_flash": 526651,
+            "total_flash": 532847,
             "total_flash_delta": 0
         }
     }

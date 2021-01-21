@@ -6,11 +6,12 @@
 #include "string.h"
 #include <cstdint>
 #include "cli_cmd.h"
-#include "vmn_Coap_client.h"
-
-
+#include "vmn_coap_client.h"
+#include "thread_bootstrap.h"
+#include "thread_management_if.h"
+//#include "6LoWPAN/Thread/thread_bootstrap.h"
 extern mbed::RawSerial pc;
-MeshInterface *mesh;
+MeshInterface *mesh = MeshInterface::get_default_instance();
 /*********************  Variable Decalrations START **************************/
 /*  Network Parameters */
 uint8_t extpanid[8] = {0xf1, 0xb5, 0xa1, 0xb2,0xc4, 0xd5, 0xa1, 0xbd };
@@ -22,10 +23,18 @@ uint8_t meshprefix[8] = {0xfd, 0x0, 0x0d, 0xb8, 0x0, 0x0, 0x0, 0x0};
 uint8_t channel_mask[9] = "07fff800";
 uint8_t psk[16] = MBED_CONF_MBED_MESH_API_THREAD_CONFIG_PSKC;
 uint8_t securitypolicy = 255; 
+uint64_t local_timestamp = 0x10000;
+uint8_t local_channel_page = 0;/**< channel page supported pages 0*/
+uint16_t local_key_rotation = 3600; /**< Key rotation time in hours*/
+uint32_t local_key_sequence = 0;
 
-link_configuration_s *linkcopy;
-link_configuration_s *link;
+uint8_t nwparams_change_identification = 0; //using for test purpose has to think again
+uint8_t keeping_nw_default_details = 1;
+
+link_configuration *linkcopy;
+link_configuration *link;
 nwk_interface_id id = IF_IPV6;
+thread_device_type_e devicetype = THREAD_DEVICE_REED;
 volatile uint8_t flag=0;
 volatile char Rx_buff[256];
 uint8_t Receive_buff_length=0;
@@ -67,11 +76,12 @@ void  transmit_interrupt(char *Data_buff) {
   pc.puts(Data_buff);
 }
 /***************  END ******************/
-
+device_configuration_s *deviceconfig;
 // This function connects the device into the network and also it return the device Connected IP address
 uint8_t mesh_connect(void) {
     uint8_t error;
-    mesh = MeshInterface::get_default_instance();  //returns pointer to the mesh interface
+    nsapi_connection_status_t status;
+ //   mesh = MeshInterface::get_default_instance();  //returns pointer to the mesh interface
     if (!mesh) {
         printf("Error! MeshInterface not found!\n");
         return -1;
@@ -79,18 +89,27 @@ uint8_t mesh_connect(void) {
     thread_eui64_trace();  //This function generates the EUI64
     mesh_nvm_initialize();  //initializes the non-volatile memory
     printf("Connecting...\n");
+    mesh->set_blocking(false);
     error = mesh->connect();  
     if (error) {
         printf("Connection failed! %d\n", error);
        return error;
     } 
-    SocketAddress sockAddr;
-    while (NSAPI_ERROR_OK != mesh->get_ip_address(&sockAddr)) {//local ip address
+    status =  mesh->get_connection_status();
+    for(int i=0;i<1000;i++)
+    {
+
+    }
+    if(status == NSAPI_STATUS_CONNECTING)
+    {
+        SocketAddress sockAddr;
+        while (NSAPI_ERROR_OK != mesh->get_ip_address(&sockAddr)) {//local ip address
         ThisThread::sleep_for(500); //keep this loop on until get the IP address with offering 500ms for each turn  
     }
     printf("Connected IP : %s\n",sockAddr.get_ip_address());
-    link = thread_management_configuration_get(id);
-    thread_management_set_link_timeout(id,80);
+    }
+    thread_management_set_link_timeout(id,60);
+    thread_management_device_type_set(id, THREAD_DEVICE_REED);
     getcmd_count = 1;
     return 1;
 }
@@ -102,10 +121,12 @@ void mesh_disconnect(void) {
 
 // Call this function whenever want to read the IP address of the network device
 void read_ipaddr(void) {
+ //   mesh = MeshInterface::get_default_instance();
     SocketAddress sockAddr;
-    while (NSAPI_ERROR_OK != mesh->get_ip_address(&sockAddr)) {//local ip address
-        ThisThread::sleep_for(500); 
-    }
+    mesh->get_ip_address(&sockAddr);
+  //  while (NSAPI_ERROR_OK != mesh->get_ip_address(&sockAddr)) {//local ip address
+        ThisThread::sleep_for(500); //allow some time before reading the socket address
+ //   }
     printf("Connected IP : %s\n",sockAddr.get_ip_address());
 }
 
@@ -156,6 +177,7 @@ uint16_t panid_value(char *str) {
 
 // Call this function to get detailed information about the network parameters
 void scan_network_details(void) {
+    link_configuration *link;
     link = thread_management_configuration_get(id);
     printf("Panid :0x%04x\nNetwork Name :%s\nChanne1 : %d\n", link->panId, link->name,link->rfChannel);
     printf("Masterkey : ");
@@ -164,13 +186,13 @@ void scan_network_details(void) {
     printf("Ext Panid : ");
     for (int i=0;i< 8;i++) 
         printf("%02x", link->extented_pan_id[i]); printf("\n");
-    printf("Channel Mask : ");
-    for (int i=0;i< 8;i++) {
+    printf("Channel Mask : 07fff800");
+/*    for (int i=0;i< 8;i++) {
         if (link->channel_mask[i] >= channel_mask[i])
             printf("%c",link->channel_mask[i]);
         else
             printf("%c",channel_mask[i]);
-    }
+    }*/
     printf("\n");
     printf("PSKc : ");
     for (int i=0;i< 16;i++) 
@@ -183,31 +205,46 @@ void scan_network_details(void) {
     printf("%02x", link->mesh_local_ula_prefix[i]);
     } 
     printf("/64\n");
+ /*   printf("key_sequence:%d\n", link->key_sequence);
+    printf("key_rotate:%d\n", link->key_rotation);
+    printf("%" PRId64 "\n", link->timestamp);
+    printf("version:%d\n", link->version);*/
 }
 
 // This function called whenever user enters the dataset commit active command.
+
 void datasetcommit_active(void) {
-    mesh = MeshInterface::get_default_instance();  //returns pointer to the mesh interface
-    thread_device_type_e devicetype = THREAD_DEVICE_REED;
-    thread_management_device_type_set(id, devicetype);
-    thread_management_set_request_full_nwk_data(id, true);           
-    link->rfChannel = channel;
-    for (int i=0;i<sizeof(Network_name);i++)
-        link->name[i]= Network_name[i];
-    link->panId = panid;
-    for (int i=0;i<16;i++)
-        link->master_key[i] = masterkey[i];
-    for (int i=0;i<8;i++)
-       link->extented_pan_id[i] = extpanid[i];
-    for (int i=0;i<8;i++)
-       link->channel_mask[i] = channel_mask[i];
-    for (int i=0;i<8;i++)
-       link->mesh_local_ula_prefix[i] = meshprefix[i];
-    for (int i=0;i<16;i++)
-        link->PSKc[i] = psk[i];
-    link->securityPolicy = securitypolicy;
-    thread_management_link_configuration_store(id,link);         
-    thread_management_device_type_set(id, devicetype);     
+    int ret=2;
+    link_configuration *locallink = new link_configuration;
+    memset(locallink, 0, sizeof(link_configuration_s));
+    if( (keeping_nw_default_details == 1 ) || (nwparams_change_identification == 1) )
+    {
+        nwparams_change_identification = 0;
+        locallink->rfChannel = channel;
+        memcpy(locallink->name, Network_name, 16);
+        memcpy(locallink->PSKc, psk, 16);
+        memcpy(locallink->master_key, masterkey, 16);
+        memcpy(locallink->mesh_local_ula_prefix, meshprefix, 8);
+        memcpy(locallink->extented_pan_id,extpanid, 8);
+        memcpy(locallink->channel_mask, "07fff800", 8);
+        locallink->panId = panid;
+        locallink->securityPolicy = securitypolicy;        // Set all default values ('1') for security policy flags
+        locallink->securityPolicyExt = SECURITY_POLICY_ALL_SECURITY;     // Set all default values
+        locallink->key_sequence = local_key_sequence + 1;  //check this later
+        locallink->key_rotation = local_key_rotation;
+        locallink->channel_page = local_channel_page;
+        locallink->timestamp = 0x10000; //test purpose
+        locallink->version = 0;
+        keeping_nw_default_details = 1;
+    } else {
+    //   if(keeping_nw_default_details != 1)
+        {
+            memcpy(locallink->master_key, masterkey, 16);
+        //  memcpy(locallink->mesh_local_ula_prefix, meshprefix, 8);
+            locallink->panId = panid;
+        }
+    }
+    ret = thread_management_link_configuration_store(id,locallink);       
 }
 
 // This function called when user entered command follows with get * command 
@@ -281,6 +318,7 @@ uint8_t values_to_set(char *networkparameter, char *value) {
     } else if (!strcmp(networkparameter,"networkname")) {
        if(len > 1) {
             strcpy((char *)Network_name,value);
+            nwparams_change_identification = 1;
             out = 1;
        }
     } else if (!strcmp(networkparameter,"extpanid")) { //giving hardfault
@@ -291,25 +329,31 @@ uint8_t values_to_set(char *networkparameter, char *value) {
     } else if (!strcmp(networkparameter,"channel")) {
         uint8_t ch = atol(value);
         if ((ch >= 11) && (ch <= 26)) {
+            nwparams_change_identification = 1;
             channel = ch;
             out = 1;
         }
     } else if (!strcmp(networkparameter,"channelmask")) {
        strcpy((char *)channel_mask,value);
+       nwparams_change_identification = 1;
+       out = 1;
     } else if (!strcmp(networkparameter,"psk")) {
         if(len == 32) {
             string_to_hex(value,psk,len);
+            nwparams_change_identification = 1;
             out = 1;
         }
     } else if (!strcmp(networkparameter,"securitypolicy")) {//not updating value
         uint8_t val = atol(value);
         if ((val>=0) && (val<=255)) {
             securitypolicy = val;
+            nwparams_change_identification = 1;
             out = 1;
         }
     } else if (!strcmp(networkparameter,"prefix")) {
         if (len == 16) {
             string_to_hex(value,meshprefix,len);
+            nwparams_change_identification = 1;
             out = 1;
          }
     }
@@ -378,8 +422,8 @@ void dataset_keyword_cmds(char *networkparameter, char *value, uint8_t netwrkpar
         if (value_len > 0) {//if some data there in 2rd place of the command
             if (strcmp(networkparameter,"commit") == 0) { // this to commit the dataset as active
                 if (strncmp(value,"active",value_len-1) == 0) {     
-                    printf("Done\n");
                     datasetcommit_active(); //commit dataset as active
+                    printf("Done\n");
                     getcmd_count = 1;
                 }
             } else {  
