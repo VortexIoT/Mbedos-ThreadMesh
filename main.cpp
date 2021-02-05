@@ -5,6 +5,7 @@
 #include "NanostackInterface.h"
 #include "mbed-trace/mbed_trace.h"
 #include "mesh_nvm.h"
+#include <cstdint>
 #include <cstring>
 #include "string.h"
 #include "cli_cmd.h"
@@ -24,19 +25,28 @@ static Mutex SerialOutMutex;
 mbed::RawSerial pc(USBTX, USBRX,115200);
 //DigitalOut vcom_enable(PA5, 1); //added newly to enable usart
 //DigitalOut led0(LED0);
+//SocketAddress sockAddr;
 Thread coapserver_thread;
 Thread temp_hum_sensor_thread;
 Thread coapclient_thread;
+Thread externalflash_rdwr;
 extern EventQueue coapserver_eventqueue; 
 extern EventQueue sensor_eventqueue;
 extern EventQueue coapclient_eventqueue;
-
+extern EventQueue externalflash_rdwr_eventqueue;
 extern volatile uint8_t flag;
-extern volatile char Rx_buff[256];
+extern char Rx_buff[1024];
+extern char hexfile_buff[1024];
 extern char *coap_server_ipaddr; //check whether its needed or not
-//SocketAddress sockAddr;
-extern uint8_t Receive_buff_length;
-
+extern uint32_t Receive_buff_length;
+extern uint32_t payload_length;
+extern nwk_interface_id id;
+extern uint8_t keeping_nw_default_details;
+uint8_t parameter_test_byte = 2;
+extern uint8_t flash_handler_flag;
+extern uint16_t total_written_flashpages_count;
+extern uint8_t flashhandle;
+extern uint16_t bytecount; 
 
 /********************************************  END of I2C Declarations   **********************/
 void trace_printer(const char* str) {
@@ -50,11 +60,11 @@ void serial_out_mutex_wait() {
 void serial_out_mutex_release() {
     SerialOutMutex.unlock();
 }
-extern nwk_interface_id id;
-extern uint8_t keeping_nw_default_details;
-uint8_t parameter_test_byte = 2;
+
 int main() {
     uint8_t addr[16];
+    uint8_t local_write_buffer [] ={'a'};
+    int sector_Erase_increment = 0;
     mbed_trace_init();
     mbed_trace_print_function_set(trace_printer);
     mbed_trace_mutex_wait_function_set(serial_out_mutex_wait);
@@ -65,21 +75,31 @@ int main() {
     coapserver_thread.start(callback(&coapserver_eventqueue, &EventQueue::dispatch_forever)); //coap server
     temp_hum_sensor_thread.start(callback(&sensor_eventqueue, &EventQueue::dispatch_forever)); //sensor data
     coapclient_thread.start(callback(&coapclient_eventqueue, &EventQueue::dispatch_forever)); //coapclient
+    externalflash_rdwr.start(callback(&externalflash_rdwr_eventqueue, &EventQueue::dispatch_forever));//(hexfile_format, Rx_buff));//
     printf("Start Thread - Mesh application\n");
     start_blinking();   //led
- //   temp_hum_sensor_read_every_5min(); //reading every 5min
+    temp_hum_sensor_read_every_5min(); //reading every 5min
     pc.attach(&isr_rx); //receive interrupt
     i2cinit();  //i2c frequency init
     mx25r8035f_init(); //external flash init
+    total_written_flashpages_count = 0;
+    int pagesize = 0;
+    uint32_t pageaddress=0;
     while (1) {
         if (flag) {
             flag = 0;
-            printf("> %s\n", Rx_buff);
-            if (Receive_buff_length > 1) {
+           // printf("> %s\n", Rx_buff);
+        //   printf("%d\n",Receive_buff_length);
+            if (Receive_buff_length > 2) {
                 //This function conatains set of commands to establish mesh network connection,
                 //to update parameters also to get network details.
                 //Please first start with thread start command, it will establishes the network connection.
                 cli_cmds_Handler((char *)Rx_buff);
+                 if(flash_handler_flag == 1)
+                 {
+                    flash_handler_flag = 0;
+                    hexfile_format((char *)Rx_buff);
+                 }
             }
             if (Rx_buff[0] == '2') {
                 printf("coap server\n");
@@ -87,7 +107,6 @@ int main() {
             }
             if(Rx_buff[0] == '1') {
               parameter_test_byte = thread_management_link_configuration_delete(id); //delete the already existed parameters
-           //   printf("del %d",parameter_test_byte);// = 5;
               keeping_nw_default_details = 0;
             }
             if(Rx_buff[0] == '3') {
@@ -156,15 +175,34 @@ int main() {
                 printf("\n\n");
             }
             if(Rx_buff[0] == 'w')  {
-                flash_write();
+                //flash_pagewrite();
+              //  pages_write(local_write_buffer, 4);
+              //  pages_write(local_write_buffer, sizeof(local_write_buffer),4);
+                coap_payload_write(8194);
             }
             if(Rx_buff[0] == 'r')  {
-                flash_read();
+                //flash_read();
+              //  pages_read(4,256);
+              coap_payload_read(8194 , payload_length);
             }
             if(Rx_buff[0] == 'e')  {
-                flash_sector_erase();
+                flash_sector_erase(sector_Erase_increment++);
+              //  sector_read(sector_Erase_increment++);
             }
 
+            if(Rx_buff[0] == 's')
+            {
+                mx25r8035f_read();
+            }
+            if(Rx_buff[0] == 'b')
+            {
+                block64_erase(sector_Erase_increment++);
+                if(sector_Erase_increment >= 120)
+                sector_Erase_increment = 0;
+           //     block64_read(sector_Erase_increment++);
+            }
+            if(Rx_buff[0] == 'c')
+                chip_erase();
          /*  if(Rx_buff[0] == 'a')
             {
                 uint8_t index;

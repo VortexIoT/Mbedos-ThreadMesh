@@ -13,7 +13,7 @@
     {
         "module": "[lib]\\fz_wm.l",
         "size": {
-            ".text": 1822,
+            ".text": 2302,
             ".data": 0,
             ".bss": 0,
             ".text-delta": 0,
@@ -79,9 +79,9 @@
     {
         "module": "cli_cmd.o",
         "size": {
-            ".text": 4296,
+            ".text": 4754,
             ".data": 83,
-            ".bss": 300,
+            ".bss": 2102,
             ".text-delta": 0,
             ".data-delta": 0,
             ".bss-delta": 0
@@ -90,9 +90,9 @@
     {
         "module": "main.o",
         "size": {
-            ".text": 1451,
+            ".text": 1575,
             ".data": 1,
-            ".bss": 844,
+            ".bss": 1036,
             ".text-delta": 0,
             ".data-delta": 0,
             ".bss-delta": 0
@@ -112,7 +112,7 @@
     {
         "module": "mbed-os\\drivers",
         "size": {
-            ".text": 3643,
+            ".text": 3849,
             ".data": 0,
             ".bss": 372,
             ".text-delta": 0,
@@ -134,7 +134,7 @@
     {
         "module": "mbed-os\\features",
         "size": {
-            ".text": 414535,
+            ".text": 414555,
             ".data": 1039,
             ".bss": 11017,
             ".text-delta": 0,
@@ -178,7 +178,7 @@
     {
         "module": "mbed-os\\targets",
         "size": {
-            ".text": 22252,
+            ".text": 22670,
             ".data": 12,
             ".bss": 289,
             ".text-delta": 0,
@@ -211,9 +211,9 @@
     {
         "module": "mx25r8035f.o",
         "size": {
-            ".text": 664,
+            ".text": 1201,
             ".data": 0,
-            ".bss": 112,
+            ".bss": 208,
             ".text-delta": 0,
             ".data-delta": 0,
             ".bss-delta": 0
@@ -222,10 +222,10 @@
     {
         "module": "temp_humidity_sensor.o",
         "size": {
-            ".text": 186,
+            ".text": 506,
             ".data": 0,
-            ".bss": 218,
-            ".text-delta": 0,
+            ".bss": 219,
+            ".text-delta": 4,
             ".data-delta": 0,
             ".bss-delta": 0
         }
@@ -233,9 +233,9 @@
     {
         "module": "vmn_coap_client.o",
         "size": {
-            ".text": 1727,
+            ".text": 1755,
             ".data": 1,
-            ".bss": 256,
+            ".bss": 264,
             ".text-delta": 0,
             ".data-delta": 0,
             ".bss-delta": 0
@@ -244,9 +244,9 @@
     {
         "module": "vmn_coap_server.o",
         "size": {
-            ".text": 2321,
-            ".data": 4,
-            ".bss": 252,
+            ".text": 3749,
+            ".data": 5,
+            ".bss": 463,
             ".text-delta": 0,
             ".data-delta": 0,
             ".bss-delta": 0
@@ -254,10 +254,10 @@
     },
     {
         "summary": {
-            "static_ram": 26434,
+            "static_ram": 28745,
             "static_ram_delta": 0,
-            "total_flash": 532607,
-            "total_flash_delta": 0
+            "total_flash": 536627,
+            "total_flash_delta": 4
         }
     }
 ]

@@ -2,14 +2,26 @@
 #include "vmn_coap_client.h"
 #include "ip6string.h"
 #include <cstdint>
+#include <cstdio>
 #include <cstdlib>
 #include <string>
+#include "cli_cmd.h"
+#include "ThreadInterface.h"
+
+
+
 
 UDPSocket coap_client_udpsock;           // Socket to talk CoAP over
 struct coap_s* coaphandle;//=sn_coap_protocol_init(&coap_client_malloc, &coap_client_free, &coap_client_tx_cb, &coap_client_rx_cb);
 coap_version_e coap_version = COAP_VERSION_1;
 uint8_t ipdestbuffer[16] = {0};
 EventQueue coapclient_eventqueue;
+uint32_t payload_length = 0;
+extern nwk_interface_id id;
+uint8_t *coap_payload = 0;
+
+static uint16_t coap_msg_payload_len;
+static uint8_t coap_msg_payload[200];
 
 void* coap_client_malloc(uint16_t size) {
     return malloc(size);
@@ -83,8 +95,7 @@ void client_requestpacket_build( char *host_address, uint8_t *uri_path, uint8_t 
     coapclient_eventqueue.cancel(handle);
 }
 
-void client_responsepacket_parse(SocketAddress receive_addr, uint8_t requestmethod)
-{
+void client_responsepacket_parse(SocketAddress receive_addr, uint8_t requestmethod) {
     uint8_t* recv_buffer = (uint8_t*)malloc(1280); // Suggested is to keep packet size under 1280 bytes
     nsapi_size_or_error_t return_packet_len = coap_client_udpsock.recvfrom(&receive_addr, recv_buffer, 1280); //reading back from server
     if (return_packet_len > 0) {
@@ -107,7 +118,9 @@ void client_responsepacket_parse(SocketAddress receive_addr, uint8_t requestmeth
                 printf("Humidity : %d\n",payload_value); 
             }
             else {
-            printf("payload: %s\n", payload.c_str());
+                coap_payload = (uint8_t *)payload.c_str();
+                payload_length = strlen((char *)coap_payload);
+                printf("payload: %s\n", coap_payload);
             }        
         }
         if (parsed->msg_type == 0x20) {   // coap msg type ack
@@ -129,8 +142,7 @@ void client_responsepacket_parse(SocketAddress receive_addr, uint8_t requestmeth
 }
 
 //This function to identify the type response message code
-void response_message_code(uint8_t msg_code)
-{
+void response_message_code(uint8_t msg_code) {
     int decimal=0, fraction=0;
     if (msg_code) {// to print 2.xx,4.xx format responses
         decimal = msg_code/32;
@@ -153,3 +165,11 @@ void response_message_code(uint8_t msg_code)
         break;
     }
 }
+
+//dpd is the payload of the coap message packet
+
+//the Header includes 2 SYNC bytes, 1 Class byte, 2 ID bytes and 2 Packet Length bytes
+//payload of length bytes and check sum
+//now I am not handling payload at the moment so this function checks for other information present in coap payload
+
+

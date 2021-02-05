@@ -9,6 +9,9 @@
 #include "vmn_coap_client.h"
 #include "thread_bootstrap.h"
 #include "thread_management_if.h"
+#include "ip6string.h"
+#include <cstdlib>
+#include "mx25r8035f.h"
 //#include "6LoWPAN/Thread/thread_bootstrap.h"
 extern mbed::RawSerial pc;
 MeshInterface *mesh = MeshInterface::get_default_instance();
@@ -36,13 +39,15 @@ link_configuration *link;
 nwk_interface_id id = IF_IPV6;
 thread_device_type_e devicetype = THREAD_DEVICE_REED;
 volatile uint8_t flag=0;
-volatile char Rx_buff[256];
-uint8_t Receive_buff_length=0;
+char Rx_buff[1024];
+char hexfile_buff[1024];
+uint32_t Receive_buff_length=0;
 uint8_t getcmd_count=1;
 SocketAddress sockAddr;
-
+uint8_t flash_handler_flag =0;
 /*********************  Variable Decalrations END **************************/
-
+extern uint16_t coap_msg_payload_len;
+extern uint8_t coap_msg_payload[200];
 //This function generates the EUI64
 void thread_eui64_trace() {
     #define LOWPAN 1
@@ -50,27 +55,161 @@ void thread_eui64_trace() {
     #if MBED_CONF_NSAPI_DEFAULT_MESH_TYPE == THREAD && (MBED_VERSION >= MBED_ENCODE_VERSION(5,10,0))
     uint8_t eui64[8] = {0};
     static_cast<ThreadInterface*>(mesh)->device_eui64_get(eui64);
+    strcpy((char *)coap_msg_payload,(char *)eui64);
+    coap_msg_payload[8] = 'x';
+    coap_msg_payload[9] = 'y';
+    coap_msg_payload_len = 10;
     printf("Device EUI64 address = %02x%02x%02x%02x%02x%02x%02x%02x\n", eui64[0], eui64[1], eui64[2], eui64[3], eui64[4], eui64[5], eui64[6], eui64[7]);
     #endif
 }
 
-int j=0;
+uint32_t j=0;
 /* Receive interrupt function.This function will be automatically called when data entered through the serial terminal*/
 void isr_rx() {
     char databyte=pc.getc();
-    if (databyte != '\n') {
-        if(databyte == 0x08)
-         j = j-1;
-        else
-            Rx_buff[j++] = databyte;
-    } else {
+  //  if(j <=30000)
+    {
+        if (databyte != '\n') {
+            if(databyte == 0x08)
+            j = j-1;
+            else
+            {
+                if(Rx_buff[0] == ':')
+                    flash_handler_flag = 1;
+                Rx_buff[j++] = databyte;
+            }
+        } else {
+          /*  if(Rx_buff[0] != ':')
+            {*/
+           
+                Receive_buff_length = j;
+                Rx_buff[j] = '\0';
+                flag = 1;
+                j=0;
+                
+            } /*else {
+                j = j-1;
+            }   */       
+        }
+  /*  else {
+        flash_handler_flag += 1;
         Receive_buff_length = j;
         Rx_buff[j] = '\0';
         flag = 1;
-        j=0;    
+        j=0;
+    }*/
+}
+/*
+void isr_rx() {
+    char databyte=pc.getc();
+
+        if (databyte != '\n') {
+            if(databyte == 0x08)
+            j = j-1;
+            else
+                Rx_buff[j++] = databyte;
+        } else {
+         //   if(Rx_buff[0] != ':')
+            {
+                Receive_buff_length = j;
+                Rx_buff[j] = '\0';
+                flag = 1;
+                j=0;
+            }       
+        }
+    else {
+        flash_handler_flag = 1;
+        Receive_buff_length = j;
+        Rx_buff[j] = '\0';
+     //   flag = 1;
+        j=0;
     }
+}*/
+/***************** Impemeting for hex file to write into flash ********/
+
+uint16_t strtohex16(char str[4]) {
+    uint16_t hexvalue;
+    char hex1,hex2,hex3,hex4;
+    hex1 = chartohex(str[0]);
+    hex2 = chartohex(str[1]);
+    hex3 = chartohex(str[2]);
+    hex4 = chartohex(str[3]);
+    hexvalue =  ((hex1 << 12) | (hex2 << 8) | (hex3 << 4) | hex4);
+    return hexvalue;
+}
+uint8_t strtohex8(char str[2])
+{
+    uint16_t hexvalue;
+    char hex1,hex2;
+    hex1 = chartohex(str[0]);
+    hex2 = chartohex(str[1]);
+    hexvalue =  ((hex1 << 4) | hex2);
+    return hexvalue;
+} 
+int16_t hextoint(uint8_t hex)
+{
+    int16_t res = (hex & 0x0f) + ((hex &0xf0) >> 4)*16;
+    return res;
 }
 
+uint8_t inttohex(uint8_t intvalue)
+{
+ uint8_t hexres = ( (( intvalue/16 ) & 0xf0 ) || ( ( intvalue %16 ) & 0x0f ) );
+ return hexres;
+}
+uint16_t pageaddress2 = 0;
+
+//uint32_t linescount = 0;
+extern EventQueue externalflash_rdwr_eventqueue;
+extern uint8_t flashhandle;
+uint16_t bytecount = 0;
+uint16_t written_pages_count = 0;
+void hexfile_format(char ascii_formof_hexfile[])
+{
+    int i=0;
+    char startofline = ascii_formof_hexfile[0]; //':'
+    char noof_databytes[2] = {ascii_formof_hexfile[1],ascii_formof_hexfile[2]};
+    char addressof_databytes[4] = {ascii_formof_hexfile[3],ascii_formof_hexfile[4],ascii_formof_hexfile[5],ascii_formof_hexfile[6]}; 
+    char asciidatatype[2] = {ascii_formof_hexfile[7],ascii_formof_hexfile[8]};
+    uint8_t data = strtohex8(noof_databytes);
+    int8_t datalength = hextoint(data);  //datalength first byte
+    int ascilldata_length = datalength*2;
+    uint16_t address = strtohex16(addressof_databytes); //address
+    uint8_t datatype = atoi(asciidatatype);   //data type
+  //  uint8_t actualhexdata[datalength];  //data
+ //   uint8_t actualdata_ascii[ascilldata_length];
+     char checksum_buff[2] = {ascii_formof_hexfile[9 + ascilldata_length],ascii_formof_hexfile[10 + ascilldata_length]};
+    uint8_t checksum = strtohex8(checksum_buff); //checksum
+   // printf("%d :",datalength);
+  /*  for( int i = 0; i < ascilldata_length; i++ )
+    {
+        actualdata_ascii[i] = ascii_formof_hexfile[9+i];
+    }*/
+ //   printf("%d", linescount);
+    for(i=0; i < datalength; i++)
+    {
+        
+        char tempdata[2] = {ascii_formof_hexfile[9+(i*2)],ascii_formof_hexfile[10+(i*2)]};
+            hexfile_buff[bytecount++] = strtohex8(tempdata);
+            
+           if(bytecount == 256)
+           {
+               bytecount = 0;
+               flashhandle = externalflash_rdwr_eventqueue.call(pages_write, (uint8_t *)hexfile_buff, 256, pageaddress2++);//((uint8_t*)hexfile_buff, 256, pageaddress++);
+               written_pages_count++;
+          //     externalflash_rdwr_eventqueue.cancel(flashhandle);
+           // pages_write((uint8_t *)hexfile_buff, 256, pageaddress2++);
+           }
+    }if(datalength == 0)
+        externalflash_rdwr_eventqueue.cancel(flashhandle);
+     //   flashhandle = externalflash_rdwr_eventqueue.call(pages_write,(uint8_t *)hexfile_buff, 16, 0);
+      //  event_handlerflash();
+    //    mx25r8035f_write((uint8_t *)hexfile_buff); 
+ //   return datalength;
+}
+
+
+/***************  END **************/
 //Transmit interrupt function
 void  transmit_interrupt(char *Data_buff) {
   pc.puts(Data_buff);
@@ -153,7 +292,7 @@ len = length of data
 void string_to_hex(char *str, uint8_t *output, uint8_t len) {
     int j=0;
     uint8_t hex1,hex2;
-    for (uint8_t i=0;i<len;) {
+    for (uint8_t i = 0; i < len; ) {
         hex1 = chartohex(str[i]);
         hex2 = chartohex(str[i+1]);
         output[j] = (hex2 & 0xff) + ((hex1 & 0xff) << 4);
@@ -244,7 +383,9 @@ void datasetcommit_active(void) {
             locallink->panId = panid;
         }
     }
-    ret = thread_management_link_configuration_store(id,locallink);       
+    ret = thread_management_link_configuration_store(id,locallink);   
+  //  if(ret == 0)
+  //  ack_frm_server_to_client();    
 }
 
 // This function called when user entered command follows with get * command 

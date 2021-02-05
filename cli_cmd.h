@@ -29,5 +29,12 @@ void dataset_keyword_cmds(char *networkparameter, char *value,uint8_t netwrkpara
 void threadkeyword_cmds(char *cmd,uint8_t len);
 void coap_request_cmds(char *str);
 void thread_eui64_trace();
+uint8_t chartohex(char ch);
+void string_to_hex(char *str, uint8_t *output, uint8_t len);
+void hexfile_format(char ascii_formof_hexfile[]);
 
+uint8_t strtohex8(char str[2]);
+uint16_t strtohex16(char str[4]);
+int16_t hextoint(uint8_t hex);
+uint8_t inttohex(uint8_t intvalue);
 /*-------------------  Function declarations END -----------------------*/

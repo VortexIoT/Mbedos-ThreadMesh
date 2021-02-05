@@ -11,6 +11,7 @@ mbed::I2C i2c(I2C0_SDA,I2C0_SCL);  //i2c init
 uint8_t RH_percentage;
 uint8_t Temp_centigrade;
 EventQueue sensor_eventqueue;
+uint8_t si7021eventhanlder;
 /*#########################################  I2C Functions Body ###################***********/
 // Call this function to set i2c frequency
 void i2cinit(void) {
@@ -18,7 +19,15 @@ void i2cinit(void) {
 }
 
 void temp_hum_sensor_read_every_5min(void) {
-    sensor_eventqueue.call_every(60*500, humidity_temp_read);  //calls every minute can change in future,test purpose 1min
+    si7021eventhanlder = sensor_eventqueue.call_every(60*5000, humidity_temp_read);  //calls every minute can change in future,test purpose 1min
+}
+
+void set_si7021_datacapture_intervel(int ms) {
+    stop_si7021_datacapture();
+    si7021eventhanlder = sensor_eventqueue.call_every(ms, humidity_temp_read);  //calls every minute can change in future,test purpose 1min
+}
+void stop_si7021_datacapture(void) {
+    sensor_eventqueue.cancel(si7021eventhanlder);
 }
 
   // Calling this function Reads indoor Rh %  and respective temperature
