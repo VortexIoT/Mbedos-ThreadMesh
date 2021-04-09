@@ -18,7 +18,7 @@ Last two characters  =  Checksum (i.e., sum of all bytes + checksum = 00)
 #include <cstdint>
 SPI spi(FLASH_MOSI, FLASH_MISO, FLASH_SCLK); // mosi, miso, sclk
 DigitalOut cs(FLASH_CS);
-extern volatile char Rx_buff[30000];
+//extern volatile char Rx_buff[1024 * 175];
 
 uint8_t current_bytecount_lessthan_pagesize = 0;
 int16_t previous_bytecount_lessthan_pagesize = 0;
@@ -27,7 +27,7 @@ uint16_t noof_pages_towrite_frmthisblock = 0;
 uint16_t total_written_flashpages_count = 0;
 uint16_t previous_written_pages_count = 0; 
 int8_t block_entry=0;
-extern char hexfile_buff[30000];
+extern char hexfile_buff[256];
 EventQueue externalflash_rdwr_eventqueue;
 uint8_t erase=0;
 
@@ -40,13 +40,13 @@ uint8_t flashhandle;
 uint32_t pageaddress1=0;
 void event_handlerflash(void) {
 
-        flashhandle = externalflash_rdwr_eventqueue.call(pages_write,(uint8_t *)hexfile_buff, 16 ,pageaddress1++);
+        flashhandle = externalflash_rdwr_eventqueue.call(mx25r8035f_pages_write,(uint8_t *)hexfile_buff, 16 ,pageaddress1++);
         externalflash_rdwr_eventqueue.cancel(flashhandle);    
 }
 
 /*------------------------ Device information --------------------------- */
 
-void read_device_id(void) {
+void mx25r8035f_get_device_id(void) {
    cs = 0;
    spi.write(0x90); //Manufacturer & device ID code
    spi.write(0x00); //dummy byte
@@ -57,15 +57,16 @@ void read_device_id(void) {
   // printf("%x\n", spi.write(0x00));
    cs= 1;
 }
-void read_identification(void) {
+/*
+void mx25r8035f_get_identification(void) {
     cs = 0;
    spi.write(0x9F); //RDID code
    printf ("manufacturer-id : %x\n" ,spi.write(0x00));
    printf ("device-id : %x", spi.write(0x00));
    printf("%x\n", spi.write(0x00));
    cs= 1;
-}
-uint8_t read_status_register(void) {
+}*/
+uint8_t mx25r8035f_get_status(void) {
     uint8_t status_reg = 0;
     cs = 0;
     spi.write(0x05); //Read status code
@@ -76,7 +77,7 @@ uint8_t read_status_register(void) {
     return status_reg;
 }
 
-void read_config_register(void) {
+void mx25r8035f_get_config(void) {
     cs = 0;
    spi.write(0x15); //Read config code
    printf ("config reg1 : %x\n" ,spi.write(0x00));
@@ -85,18 +86,18 @@ void read_config_register(void) {
 }
 /*----------------------------------------------------------------------------*/
 
-void flash_wr_enable(void) {
+void mx25r8035f_wr_enable(void) {
     cs = 0;
     spi.write(0x06); //write enable command
     cs = 1;
 }
 
-void flash_wr_disable(void) {
+void mx25r8035f_wr_disable(void) {
     cs = 0;
     spi.write(0x04); //write disable
     cs = 1;
 }
-
+/* commented on 18/02/21 to reduce the .hex size while testing bootloader uncomment later
 void flash_pagewrite(void) {
     flash_wr_enable();
     cs = 0;
@@ -117,9 +118,30 @@ void flash_pagewrite(void) {
     flash_wr_disable();
 }
 
+*/
 
+int mx25r8035f_page_read(uint8_t *buffer, uint16_t pagecnt, uint16_t readsize)  //this now testing per a block check it later for blocks
+{
+    int bytecnt=0;
+    cs = 0;
+    //page address starts from 000000 to 0fffff hex total 4095 pages in 1MB
+    //001000 -secto1, 020000-sector 2 ---1f000 -sector 31, 02f000 sector 47
+    spi.write(0x03); //page read code
+    spi.write(((pagecnt & 0xff00) >> 8)); // sector address (pageaddress & 0xff00) >> 8
+    spi.write((pagecnt & 0xff)); //page 16 (pageaddress & 0xff)
+    spi.write(0x00); // start address 20 in page 16 address
+    //write in page 16 start address from location 20 in that page  of sector 0
+  //  for(uint8_t cnt = 0; cnt< pagecnt;cnt++) {
+        for ( int i = 0; i < 2048; i++ ) {
+            buffer[bytecnt++] = spi.write(0x00);
+         //   printf("%02x ", buffer[bytecnt++]);
+        }
+ //  }
+    cs = 1;
+    return bytecnt;
+}
 
-void pages_read(uint16_t pageaddress, uint16_t readsize)  //this now testing per a block check it later for blocks
+void mx25r8035f_pages_read(uint16_t pageaddress, uint16_t readsize)  //this now testing per a block check it later for blocks
 {
     int addr1, addr2;
     cs = 0;
@@ -131,14 +153,14 @@ void pages_read(uint16_t pageaddress, uint16_t readsize)  //this now testing per
     spi.write(0x00); // start address 20 in page 16 address
     //write in page 16 start address from location 20 in that page  of sector 0
     for ( int i = 0; i < readsize; i++ ) {
-        printf("%x", spi.write(0x00));
+        printf("%02x ", spi.write(0x00));
     }
     //  printf("\n");
-    printf("pageaddr %d\n",pageaddress);
+    printf("page:%d\n",pageaddress);
     cs = 1;
 }
-
-void flash_sector_erase(uint8_t sectornumber) {
+/* commented on 18/02/21 to reduce the .hex size while testing bootloader uncomment later
+void mx25r8035f_sector_erase(uint8_t sectornumber) {
     int64_t address = sectornumber * 4 * 1024;
     flash_wr_enable();
     cs = 0;
@@ -151,7 +173,7 @@ void flash_sector_erase(uint8_t sectornumber) {
     erase = 1;
 }
 
-void block32_erase(uint8_t blocknumber) {
+void mx25r8035f_block32_erase(uint8_t blocknumber) {
     int64_t address = blocknumber * 32 * 1024;
     flash_wr_enable();
     cs = 0;
@@ -162,10 +184,10 @@ void block32_erase(uint8_t blocknumber) {
     cs= 1;
     flash_wr_disable();
 }
-
-void block64_erase(uint8_t blocknumber) {
+*/
+void mx25r8035f_block64_erase(uint8_t blocknumber) {
     uint64_t address = blocknumber * 64 * 1024;
-    flash_wr_enable();
+    mx25r8035f_wr_enable();
     cs = 0;
     spi.write(0xD8);
     spi.write((address & 0xff0000) >> 16);
@@ -181,16 +203,18 @@ void block64_erase(uint8_t blocknumber) {
      previous_bytecount_lessthan_pagesize = 0;
      }
      erase = 1;*/
-     flash_wr_disable();
+    mx25r8035f_wr_disable();
 }
-void chip_erase(void) {
-    flash_wr_enable();
+void mx25r8035f_chip_erase(void) {
+    mx25r8035f_wr_enable();
     cs = 0;
     spi.write(0xc7);
     cs = 1;
-    flash_wr_disable();
+    mx25r8035f_wr_disable();
 }
-void Page_read(uint16_t pagenumber) {
+
+/* commented on 18/02/21 to reduce the .hex size while testing bootloader uncomment later
+void mx25r8035f_page_read(uint16_t pagenumber) {
     spi.lock();
     cs = 0;
     spi.write(0x03); //Read code
@@ -205,7 +229,7 @@ void Page_read(uint16_t pagenumber) {
     cs = 1;
     spi.unlock();
 }
-void block64_read(uint8_t blocknumber) {
+void mx25r8035f_block64_read(uint8_t blocknumber) {
     uint64_t address = blocknumber * 64 * 1024;
     spi.lock();
     cs = 0;
@@ -225,7 +249,7 @@ void block64_read(uint8_t blocknumber) {
     spi.unlock();
 }
 
-void block32_read(uint8_t blocknumber) {
+void mx25r8035f_block32_read(uint8_t blocknumber) {
     uint64_t address = blocknumber * 32 * 1024;
     spi.lock();
     cs = 0;
@@ -241,7 +265,7 @@ void block32_read(uint8_t blocknumber) {
     cs = 1;
     spi.unlock();
 }
-void sector_read(uint16_t sectornumber) {
+void mx25r8035f_sector_read(uint16_t sectornumber) {
     uint64_t address = sectornumber * 64 * 1024;
     spi.lock();
     cs = 0;
@@ -257,9 +281,9 @@ void sector_read(uint16_t sectornumber) {
     spi.unlock();
     printf("\n");
 }
+*/
 
-
-void pages_write(uint8_t *data, int bytes_towrite, uint16_t pageaddress)  //this now testing per a block check it later for blocks
+void mx25r8035f_pages_write(uint8_t *data, int bytes_towrite, uint16_t pageaddress)  //this now testing per a block check it later for blocks
 {
  int addr = 0;
  //uint8_t *local_buff;
@@ -281,7 +305,7 @@ void pages_write(uint8_t *data, int bytes_towrite, uint16_t pageaddress)  //this
         pageaddress +=1;
     }*/
   //  pageaddress += 1;
-  flash_wr_enable();
+  mx25r8035f_wr_enable();
     spi.lock();
     cs = 0;
 
@@ -295,14 +319,24 @@ void pages_write(uint8_t *data, int bytes_towrite, uint16_t pageaddress)  //this
  //   if(bytes_towrite == 0)
  //       bytes_towrite = 256; //to write complete page
     //write in page 16 start address from location 20 in that page  of sector 0
+ /*   if((read_status_register() & 0x01) == 0x01) 
+    {
+                wait_us(5000);
     for(int i = 0; i < bytes_towrite; i++) {
         spi.write(*data++);
-   //     printf("%x ",*data++);
+     //   printf("%02x ",*data++);
+    }
+    }
+    else {*/
+     for(int i = 0; i < bytes_towrite; i++) {
+        spi.write(*data++);
+     //   printf("%02x",*data++);
+  //  }
     }
   //  printf(" :addr %d\n",pageaddress);
     cs = 1;
     spi.unlock();
-    flash_wr_disable();
+    mx25r8035f_wr_disable();
     printf("done\n");
 }
     
@@ -325,7 +359,7 @@ void mx25r8035f_write(uint8_t *inputfile) //data received from terminal
         current_bytecount_lessthan_pagesize = file_length % 256;
         noof_pages_towrite_frmthisblock = file_length / 256; //to check no.of pages
     //    printf(" pages : %d mod : %d\n", noof_pages_towrite_frmthisblock, current_bytecount_lessthan_pagesize);
-        pages_write(inputfile, diff, total_written_flashpages_count);
+        mx25r8035f_pages_write(inputfile, diff, total_written_flashpages_count);
         inputfile += diff;
      //   printf("leftover %d\n",diff);
         total_written_flashpages_count +=1;
@@ -355,18 +389,18 @@ void mx25r8035f_write(uint8_t *inputfile) //data received from terminal
   //  else { //if size is more than 256bytes
         while(counter < noof_pages_towrite_frmthisblock) {
             current_page_position = total_written_flashpages_count + counter;
-            if((read_status_register() & 0x01) == 0x01) {
+            if((mx25r8035f_get_status() & 0x01) == 0x01) {
             //    wait_us(5000);
-                pages_write( inputfile+(256 * counter), 256, current_page_position);//counter );
+                mx25r8035f_pages_write( inputfile+(256 * counter), 256, current_page_position);//counter );
             }
             else
-                pages_write( inputfile+(256 * counter), 256, current_page_position);//counter );
+                mx25r8035f_pages_write( inputfile+(256 * counter), 256, current_page_position);//counter );
             counter++;
         }
         if(current_bytecount_lessthan_pagesize)
         {
         //    wait_us(5000);
-            pages_write( inputfile+(256 * (counter)), current_bytecount_lessthan_pagesize, current_page_position + 1);
+            mx25r8035f_pages_write( inputfile+(256 * (counter)), current_bytecount_lessthan_pagesize, current_page_position + 1);
         }
             
  //   }
@@ -377,35 +411,37 @@ void mx25r8035f_write(uint8_t *inputfile) //data received from terminal
   //  printf("totalpages : %d\n",total_written_flashpages_count);
 }
 extern uint16_t written_pages_count;
-void mx25r8035f_read(void) {
+void mx25r8035f_read(void) { //commented 09/03/21 test purpose
     int counter=0;
 
     printf("data :"); 
  
     //first page reading has problem look for this problem
         while (counter < written_pages_count) {//total_written_flashpages_count) {//noof_pages_towrite_frmthisblock) {
-            if((read_status_register() & 0x01) == 0x01) {
+            if((mx25r8035f_get_status() & 0x01) == 0x01) {
                 wait_us(5000);
-                pages_read(counter, 256);
+                mx25r8035f_pages_read(counter, 256);
             } else
-                pages_read(counter, 256); 
+                mx25r8035f_pages_read(counter, 256); 
                 counter++;
         }
+   //     written_pages_count = 0;
     //    printf("pvs count %d\n", previous_bytecount_lessthan_pagesize);
     //    if(previous_bytecount_lessthan_pagesize)
-    //        pages_read(counter, previous_bytecount_lessthan_pagesize);
+    //        mx25r8035f_pages_read(counter, previous_bytecount_lessthan_pagesize);
  //   }
 }
-void flash_write256(uint8_t *data)
+/* commented on 18/02/21 to reduce the .hex size while testing bootloader uncomment later
+void mx25r8035f__write256(uint8_t *data)
 {
     uint8_t datalen = strlen ((char *)data);
     current_bytecount_lessthan_pagesize = datalen % 256;
-    pages_write( data, current_bytecount_lessthan_pagesize, 0);
-}
+    mx25r8035f_pages_write( data, current_bytecount_lessthan_pagesize, 0);
+}*/
 /*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*/
-
+/*commented on 18/02/21 to reduce the .hex size while testing bootloader uncomment later
 void coap_payload_write(uint16_t pagenumber) { 
-    pages_write(coap_payload, strlen((char *)coap_payload), pagenumber);
+    mx25r8035f_pages_write(coap_payload, strlen((char *)coap_payload), pagenumber);
 }
 void coap_payload_read(uint16_t pagenumber, uint32_t payloadlength) {
     spi.lock();
@@ -425,17 +461,17 @@ void coap_payload_read(uint16_t pagenumber, uint32_t payloadlength) {
 void beforemodifiedpages_write(uint8_t *data, uint16_t pageaddress)  //this now testing per a block check it later for blocks
 {
     int addr1, addr2;
-  /*  if(pageaddress <= 127)
-    {
-        addr1 = 0x00;
-        addr2 = pageaddress & 0xff;
+  //  if(pageaddress <= 127)
+ //   {
+  //      addr1 = 0x00;
+   //     addr2 = pageaddress & 0xff;
         
         
-    }
-    else {
-        addr1 = 0X00;// pageaddress / 127;
-        addr2 = (pageaddress - 128) & 0xff;
-    }*/
+   // }
+   // else {
+    //    addr1 = 0X00;// pageaddress / 127;
+    //    addr2 = (pageaddress - 128) & 0xff;
+    //}
 
     if( (bytecount_lessthan_pagesize_flag) && (block_entry == 2))
     {
@@ -460,6 +496,7 @@ void beforemodifiedpages_write(uint8_t *data, uint16_t pageaddress)  //this now 
     cs = 1;
     flash_wr_disable();
 }
+*/
 /*
 
 

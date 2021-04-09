@@ -17,7 +17,7 @@ extern mbed::RawSerial pc;
 MeshInterface *mesh = MeshInterface::get_default_instance();
 /*********************  Variable Decalrations START **************************/
 /*  Network Parameters */
-uint8_t extpanid[8] = {0xf1, 0xb5, 0xa1, 0xb2,0xc4, 0xd5, 0xa1, 0xbd };
+/*uint8_t extpanid[8] = {0xf1, 0xb5, 0xa1, 0xb2,0xc4, 0xd5, 0xa1, 0xbd };
 uint8_t masterkey[16] ={0x10, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0x99, 0xaa, 0xbb, 0xcc, 0xdd, 0xee, 0xff};//{ 0x00, 0xeb, 0x64, 0x37, 0x02, 0x4c, 0x86, 0x8d, 0xdd, 0x2b, 0x18, 0xde, 0x62, 0xc7, 0x98, 0x68};
 uint16_t panid= 0x0700;;
 uint8_t Network_name[16] = "Thread Network";
@@ -26,7 +26,7 @@ uint8_t meshprefix[8] = {0xfd, 0x0, 0x0d, 0xb8, 0x0, 0x0, 0x0, 0x0};
 uint8_t channel_mask[9] = "07fff800";
 uint8_t psk[16] = MBED_CONF_MBED_MESH_API_THREAD_CONFIG_PSKC;
 uint8_t securitypolicy = 255; 
-uint64_t local_timestamp = 0x10000;
+uint64_t local_timestamp = 0x10000;*/
 uint8_t local_channel_page = 0;/**< channel page supported pages 0*/
 uint16_t local_key_rotation = 3600; /**< Key rotation time in hours*/
 uint32_t local_key_sequence = 0;
@@ -39,8 +39,8 @@ link_configuration *link;
 nwk_interface_id id = IF_IPV6;
 thread_device_type_e devicetype = THREAD_DEVICE_REED;
 volatile uint8_t flag=0;
-char Rx_buff[1024];
-char hexfile_buff[1024];
+char Rx_buff[1024 * 180];
+char hexfile_buff[106];
 uint32_t Receive_buff_length=0;
 uint8_t getcmd_count=1;
 SocketAddress sockAddr;
@@ -63,6 +63,13 @@ void thread_eui64_trace() {
     #endif
 }
 
+uint16_t pageaddress2 = 0;
+
+//uint32_t linescount = 0;
+extern EventQueue externalflash_rdwr_eventqueue;
+extern uint8_t flashhandle;
+uint16_t bytecount = 0;
+uint16_t written_pages_count = 0;
 uint32_t j=0;
 /* Receive interrupt function.This function will be automatically called when data entered through the serial terminal*/
 void isr_rx() {
@@ -74,18 +81,28 @@ void isr_rx() {
             j = j-1;
             else
             {
-                if(Rx_buff[0] == ':')
-                    flash_handler_flag = 1;
+            //    if(Rx_buff[0] == ':')
+            //        flash_handler_flag = 1;
                 Rx_buff[j++] = databyte;
             }
         } else {
           /*  if(Rx_buff[0] != ':')
             {*/
-           
+            //    Rx_buff[0] = 'E';
+            //    Rx_buff[1] = 'B';
                 Receive_buff_length = j;
                 Rx_buff[j] = '\0';
+                if(Rx_buff[0] == ':')
+                    flash_handler_flag = 1;
                 flag = 1;
                 j=0;
+             /*   if(j == 256)
+                {
+                     j=0;// = 0;
+                    flashhandle = externalflash_rdwr_eventqueue.call(pages_write, (uint8_t *)Rx_buff, 256, pageaddress2++);
+                //    externalflash_rdwr_eventqueue.cancel(flashhandle);
+                }*/
+
                 
             } /*else {
                 j = j-1;
@@ -157,29 +174,25 @@ uint8_t inttohex(uint8_t intvalue)
  uint8_t hexres = ( (( intvalue/16 ) & 0xf0 ) || ( ( intvalue %16 ) & 0x0f ) );
  return hexres;
 }
-uint16_t pageaddress2 = 0;
 
-//uint32_t linescount = 0;
-extern EventQueue externalflash_rdwr_eventqueue;
-extern uint8_t flashhandle;
-uint16_t bytecount = 0;
-uint16_t written_pages_count = 0;
+char temp_flash_Buff[1024];
+uint16_t temp_Buff_cnt = 0;
 void hexfile_format(char ascii_formof_hexfile[])
 {
     int i=0;
-    char startofline = ascii_formof_hexfile[0]; //':'
+  //  char startofline = ascii_formof_hexfile[0]; //':'
     char noof_databytes[2] = {ascii_formof_hexfile[1],ascii_formof_hexfile[2]};
-    char addressof_databytes[4] = {ascii_formof_hexfile[3],ascii_formof_hexfile[4],ascii_formof_hexfile[5],ascii_formof_hexfile[6]}; 
-    char asciidatatype[2] = {ascii_formof_hexfile[7],ascii_formof_hexfile[8]};
+  //  char addressof_databytes[4] = {ascii_formof_hexfile[3],ascii_formof_hexfile[4],ascii_formof_hexfile[5],ascii_formof_hexfile[6]}; 
+ //   char asciidatatype[2] = {ascii_formof_hexfile[7],ascii_formof_hexfile[8]};
     uint8_t data = strtohex8(noof_databytes);
     int8_t datalength = hextoint(data);  //datalength first byte
     int ascilldata_length = datalength*2;
-    uint16_t address = strtohex16(addressof_databytes); //address
-    uint8_t datatype = atoi(asciidatatype);   //data type
+  //  uint16_t address = strtohex16(addressof_databytes); //address
+ //   uint8_t datatype = atoi(asciidatatype);   //data type
   //  uint8_t actualhexdata[datalength];  //data
  //   uint8_t actualdata_ascii[ascilldata_length];
-     char checksum_buff[2] = {ascii_formof_hexfile[9 + ascilldata_length],ascii_formof_hexfile[10 + ascilldata_length]};
-    uint8_t checksum = strtohex8(checksum_buff); //checksum
+ //    char checksum_buff[2] = {ascii_formof_hexfile[9 + ascilldata_length],ascii_formof_hexfile[10 + ascilldata_length]};
+ //   uint8_t checksum = strtohex8(checksum_buff); //checksum
    // printf("%d :",datalength);
   /*  for( int i = 0; i < ascilldata_length; i++ )
     {
@@ -190,18 +203,36 @@ void hexfile_format(char ascii_formof_hexfile[])
     {
         
         char tempdata[2] = {ascii_formof_hexfile[9+(i*2)],ascii_formof_hexfile[10+(i*2)]};
-            hexfile_buff[bytecount++] = strtohex8(tempdata);
-            
-           if(bytecount == 256)
+         //   if(bytecount < 256)
+                hexfile_buff[bytecount] = strtohex8(tempdata);
+                printf(" %x",hexfile_buff[bytecount++]);
+       //     else
+          //      temp_flash_Buff[temp_Buff_cnt++] = strtohex8(tempdata);
+            if(bytecount == 256)
+             bytecount = 0;
+       /*    if(bytecount == 256)
            {
                bytecount = 0;
+           //    strncpy( temp_flash_Buff, hexfile_buff, 256 );
                flashhandle = externalflash_rdwr_eventqueue.call(pages_write, (uint8_t *)hexfile_buff, 256, pageaddress2++);//((uint8_t*)hexfile_buff, 256, pageaddress++);
+               externalflash_rdwr_eventqueue.cancel(flashhandle);
                written_pages_count++;
+           //    hexfile_buff[256] = {0xff};
           //     externalflash_rdwr_eventqueue.cancel(flashhandle);
            // pages_write((uint8_t *)hexfile_buff, 256, pageaddress2++);
-           }
+           }*/
+        /*   if (temp_Buff_cnt == 256)
+           {
+               temp_Buff_cnt = 257;
+               flashhandle = externalflash_rdwr_eventqueue.call(pages_write, (uint8_t *)temp_flash_Buff, 256, pageaddress2++);//((uint8_t*)hexfile_buff, 256, pageaddress++);
+               externalflash_rdwr_eventqueue.cancel(flashhandle);
+           }*/
     }if(datalength == 0)
+    {
         externalflash_rdwr_eventqueue.cancel(flashhandle);
+        pageaddress2 = 0;
+       // written_pages_count = 0;
+    }
      //   flashhandle = externalflash_rdwr_eventqueue.call(pages_write,(uint8_t *)hexfile_buff, 16, 0);
       //  event_handlerflash();
     //    mx25r8035f_write((uint8_t *)hexfile_buff); 

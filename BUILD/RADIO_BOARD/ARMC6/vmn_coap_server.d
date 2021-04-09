@@ -1,5 +1,5 @@
 BUILD\RADIO_BOARD\ARMC6\vmn_coap_server.o: vmn_coap_server.cpp \
-  BUILD\RADIO_BOARD\ARMC6\mbed_config.h mbed-os\mbed.h \
+  BUILD\RADIO_BOARD\ARMC6\mbed_config.h mbed-os\cmsis\mbed.h \
   mbed-os\platform\mbed_version.h mbed-os\rtos\rtos.h \
   mbed-os\rtos\mbed_rtos_storage.h \
   mbed-os\rtos\source\TARGET_CORTEX\mbed_rtx_storage.h \
@@ -175,15 +175,11 @@ BUILD\RADIO_BOARD\ARMC6\vmn_coap_server.o: vmn_coap_server.cpp \
   mbed-os\features\storage\blockdevice\BlockDevice.h \
   mbed-os\features\storage\blockdevice\SlicingBlockDevice.h \
   mbed-os\features\storage\blockdevice\HeapBlockDevice.h \
-  mbed-os\platform\mbed_toolchain.h mbed-os\platform\platform.h \
-  mbed-os\platform\mbed_application.h mbed-os\platform\mbed_error.h \
-  mbed-os\platform\mbed_interface.h mbed-os\platform\mbed_assert.h \
-  mbed-os\platform\mbed_debug.h mbed-os\drivers\DigitalIn.h \
-  mbed-os\hal\gpio_api.h mbed-os\hal\pinmap.h \
-  mbed-os\drivers\DigitalOut.h mbed-os\drivers\DigitalInOut.h \
-  mbed-os\drivers\BusIn.h mbed-os\drivers\DigitalIn.h \
-  mbed-os\drivers\BusOut.h mbed-os\drivers\DigitalOut.h \
-  mbed-os\drivers\BusInOut.h mbed-os\drivers\DigitalInOut.h \
+  mbed-os\platform\mbed_application.h mbed-os\platform\mbed_interface.h \
+  mbed-os\drivers\DigitalIn.h mbed-os\hal\gpio_api.h \
+  mbed-os\hal\pinmap.h mbed-os\drivers\DigitalOut.h \
+  mbed-os\drivers\DigitalInOut.h mbed-os\drivers\BusIn.h \
+  mbed-os\drivers\BusOut.h mbed-os\drivers\BusInOut.h \
   mbed-os\drivers\PortIn.h mbed-os\hal\port_api.h \
   mbed-os\drivers\PortInOut.h mbed-os\drivers\PortOut.h \
   mbed-os\drivers\AnalogIn.h mbed-os\hal\analogin_api.h \
@@ -207,25 +203,45 @@ BUILD\RADIO_BOARD\ARMC6\vmn_coap_server.o: vmn_coap_server.cpp \
   mbed-os\hal\reset_reason_api.h mbed-os\drivers\Timer.h \
   mbed-os\drivers\Ticker.h mbed-os\platform\cxxsupport\mstd_utility \
   mbed-os\drivers\TimerEvent.h mbed-os\hal\lp_ticker_api.h \
-  mbed-os\drivers\Timeout.h mbed-os\drivers\Ticker.h \
-  mbed-os\drivers\LowPowerTimeout.h mbed-os\drivers\LowPowerTicker.h \
+  mbed-os\drivers\Timeout.h mbed-os\drivers\LowPowerTimeout.h \
   mbed-os\drivers\LowPowerTicker.h mbed-os\drivers\LowPowerTimer.h \
-  mbed-os\drivers\Timer.h mbed-os\platform\LocalFileSystem.h \
-  mbed-os\drivers\InterruptIn.h mbed-os\platform\mbed_wait_api.h \
+  mbed-os\platform\LocalFileSystem.h mbed-os\platform\mbed_wait_api.h \
   mbed-os\platform\mbed_thread.h mbed-os\hal\sleep_api.h \
-  mbed-os\platform\mbed_atomic.h mbed-os\platform\mbed_power_mgmt.h \
-  mbed-os\platform\mbed_rtc_time.h mbed-os\platform\mbed_poll.h \
-  mbed-os\platform\ATCmdParser.h mbed-os\platform\FileSystemHandle.h \
-  mbed-os\platform\FileHandle.h mbed-os\platform\DirHandle.h \
-  mbed-os\platform\CriticalSectionLock.h \
+  mbed-os\platform\mbed_power_mgmt.h mbed-os\platform\mbed_rtc_time.h \
+  mbed-os\platform\ATCmdParser.h mbed-os\platform\CriticalSectionLock.h \
   mbed-os\platform\DeepSleepLock.h mbed-os\platform\ScopedRomWriteLock.h \
   mbed-os\platform\mbed_mpu_mgmt.h mbed-os\hal\mpu_api.h \
   mbed-os\platform\ScopedRamExecutionLock.h \
-  mbed-os\platform\mbed_stats.h mbed-os\platform\Callback.h \
-  mbed-os\platform\FunctionPointer.h mbed-os\platform\ScopedLock.h \
+  mbed-os\platform\mbed_stats.h mbed-os\platform\FunctionPointer.h \
   mbed-os\features\frameworks\nanostack-libservice\mbed-client-libservice\ip6string.h \
   mbed-os\features\frameworks\nanostack-libservice\mbed-client-libservice\ns_types.h \
   vmn_coap_server.h mbed-os\features\netsocket\UDPSocket.h \
   mbed-os\features\frameworks\mbed-coap\mbed-coap\sn_coap_protocol.h \
   mbed-os\features\frameworks\mbed-coap\mbed-coap\sn_coap_header.h \
-  mbed-os\features\frameworks\mbed-coap\mbed-coap\sn_coap_header.h
+  mbed-os\features\frameworks\mbed-coap\mbed-coap\sn_coap_header.h \
+  mbed-os\features\nanostack\mbed-mesh-api\mbed-mesh-api\ThreadInterface.h \
+  mbed-os\features\nanostack\mbed-mesh-api\mbed-mesh-api\MeshInterfaceNanostack.h \
+  mbed-os\rtos\Semaphore.h mbed-os\features\netsocket\MeshInterface.h \
+  mbed-os\features\nanostack\nanostack-interface\NanostackRfPhy.h \
+  mbed-os\features\nanostack\nanostack-interface\NanostackMACPhy.h \
+  mbed-os\features\nanostack\nanostack-interface\NanostackPhy.h \
+  mbed-os\features\nanostack\nanostack-interface\Nanostack.h \
+  mbed-os\features\netsocket\OnboardNetworkStack.h \
+  mbed-os\features\netsocket\nsapi.h mbed-os\features\netsocket\EMAC.h \
+  mbed-os\features\netsocket\EMACMemoryManager.h \
+  mbed-os\features\netsocket\NetStackMemoryManager.h \
+  mbed-os\features\netsocket\L3IP.h mbed-os\features\netsocket\PPP.h \
+  mbed-os\features\nanostack\mbed-mesh-api\source\include\NanostackMemoryManager.h \
+  mbed-os\features\netsocket\EMACMemoryManager.h \
+  mbed-os\features\nanostack\mbed-mesh-api\mbed-mesh-api\mesh_interface_types.h \
+  mbed-os\features\nanostack\sal-stack-nanostack-eventloop\nanostack-event-loop\eventOS_event.h \
+  mbed-os\features\frameworks\nanostack-libservice\mbed-client-libservice\ns_types.h \
+  mbed-os\features\frameworks\nanostack-libservice\mbed-client-libservice\ns_list.h \
+  mbed-os\features\nanostack\mbed-mesh-api\mbed-mesh-api\mesh_interface_types.h \
+  cli_cmd.h \
+  mbed-os\features\nanostack\sal-stack-nanostack\nanostack\thread_management_if.h \
+  mbed-os\features\nanostack\sal-stack-nanostack\nanostack\net_interface.h \
+  mbed-os\features\nanostack\sal-stack-nanostack\nanostack\platform\arm_hal_phy.h \
+  mbed-os\features\netsocket\InternetSocket.h \
+  mbed-os\features\nanostack\sal-stack-nanostack\source\NWK_INTERFACE\Include\protocol_abstract.h \
+  mbed-os\drivers\RawSerial.h temp_humidity_sensor.h

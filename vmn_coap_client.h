@@ -3,14 +3,14 @@
 #include "stdio.h"
 #include "mbed.h"
 #include <cstdint>
-
+/*
 extern uint8_t masterkey[16];
 extern uint16_t panid;
 extern uint8_t extpanid[8];
 extern uint8_t Network_name[16];
 extern uint8_t meshprefix[8];
 extern uint16_t channel;
-
+*/
 void* coap_client_malloc(uint16_t size);
 void coap_client_free(void* addr);
 uint8_t coap_client_tx_cb(uint8_t *a, uint16_t b, sn_nsdl_addr_s *c, void *d);

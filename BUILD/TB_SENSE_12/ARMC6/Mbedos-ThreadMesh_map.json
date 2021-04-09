@@ -2,21 +2,21 @@
     {
         "module": "[lib]\\c_w.l",
         "size": {
-            ".text": 14233,
+            ".text": 13763,
             ".data": 16,
             ".bss": 348,
-            ".text-delta": 0,
-            ".data-delta": 0,
-            ".bss-delta": 0
+            ".text-delta": 13763,
+            ".data-delta": 16,
+            ".bss-delta": 348
         }
     },
     {
         "module": "[lib]\\fz_wm.l",
         "size": {
-            ".text": 2302,
+            ".text": 2208,
             ".data": 0,
             ".bss": 0,
-            ".text-delta": 0,
+            ".text-delta": 2208,
             ".data-delta": 0,
             ".bss-delta": 0
         }
@@ -27,7 +27,7 @@
             ".text": 1,
             ".data": 0,
             ".bss": 0,
-            ".text-delta": 0,
+            ".text-delta": 1,
             ".data-delta": 0,
             ".bss-delta": 0
         }
@@ -38,7 +38,7 @@
             ".text": 44,
             ".data": 0,
             ".bss": 0,
-            ".text-delta": 0,
+            ".text-delta": 44,
             ".data-delta": 0,
             ".bss-delta": 0
         }
@@ -49,9 +49,9 @@
             ".text": 38218,
             ".data": 150,
             ".bss": 836,
-            ".text-delta": 0,
-            ".data-delta": 0,
-            ".bss-delta": 0
+            ".text-delta": 38218,
+            ".data-delta": 150,
+            ".bss-delta": 836
         }
     },
     {
@@ -60,7 +60,7 @@
             ".text": 48,
             ".data": 0,
             ".bss": 0,
-            ".text-delta": 0,
+            ".text-delta": 48,
             ".data-delta": 0,
             ".bss-delta": 0
         }
@@ -71,40 +71,40 @@
             ".text": 32,
             ".data": 0,
             ".bss": 1024,
-            ".text-delta": 0,
+            ".text-delta": 32,
             ".data-delta": 0,
-            ".bss-delta": 0
+            ".bss-delta": 1024
         }
     },
     {
         "module": "cli_cmd.o",
         "size": {
-            ".text": 4754,
-            ".data": 83,
-            ".bss": 2102,
-            ".text-delta": 0,
+            ".text": 292,
+            ".data": 0,
+            ".bss": 184362,
+            ".text-delta": 292,
             ".data-delta": 0,
-            ".bss-delta": 0
+            ".bss-delta": 184362
         }
     },
     {
         "module": "main.o",
         "size": {
-            ".text": 1575,
-            ".data": 1,
-            ".bss": 1036,
-            ".text-delta": 0,
+            ".text": 1470,
+            ".data": 0,
+            ".bss": 1038,
+            ".text-delta": 1470,
             ".data-delta": 0,
-            ".bss-delta": 0
+            ".bss-delta": 1038
         }
     },
     {
         "module": "mbed-os\\components",
         "size": {
-            ".text": 228,
+            ".text": 1043,
             ".data": 0,
             ".bss": 0,
-            ".text-delta": 0,
+            ".text-delta": 1043,
             ".data-delta": 0,
             ".bss-delta": 0
         }
@@ -112,152 +112,141 @@
     {
         "module": "mbed-os\\drivers",
         "size": {
-            ".text": 3849,
+            ".text": 4059,
             ".data": 0,
             ".bss": 372,
-            ".text-delta": 0,
+            ".text-delta": 4059,
             ".data-delta": 0,
-            ".bss-delta": 0
+            ".bss-delta": 372
         }
     },
     {
         "module": "mbed-os\\events",
         "size": {
-            ".text": 2002,
+            ".text": 2324,
             ".data": 0,
-            ".bss": 1572,
-            ".text-delta": 0,
+            ".bss": 4680,
+            ".text-delta": 2324,
             ".data-delta": 0,
-            ".bss-delta": 0
+            ".bss-delta": 4680
         }
     },
     {
         "module": "mbed-os\\features",
         "size": {
-            ".text": 414555,
+            ".text": 430845,
             ".data": 1039,
-            ".bss": 11017,
-            ".text-delta": 0,
-            ".data-delta": 0,
-            ".bss-delta": 0
+            ".bss": 11025,
+            ".text-delta": 430845,
+            ".data-delta": 1039,
+            ".bss-delta": 11025
         }
     },
     {
         "module": "mbed-os\\hal",
         "size": {
-            ".text": 2160,
+            ".text": 2336,
             ".data": 8,
             ".bss": 131,
-            ".text-delta": 0,
-            ".data-delta": 0,
-            ".bss-delta": 0
+            ".text-delta": 2336,
+            ".data-delta": 8,
+            ".bss-delta": 131
         }
     },
     {
         "module": "mbed-os\\platform",
         "size": {
-            ".text": 7341,
+            ".text": 8057,
             ".data": 80,
             ".bss": 444,
-            ".text-delta": 0,
-            ".data-delta": 0,
-            ".bss-delta": 0
+            ".text-delta": 8057,
+            ".data-delta": 80,
+            ".bss-delta": 444
         }
     },
     {
         "module": "mbed-os\\rtos",
         "size": {
-            ".text": 13581,
+            ".text": 14893,
             ".data": 168,
             ".bss": 6633,
-            ".text-delta": 0,
-            ".data-delta": 0,
-            ".bss-delta": 0
+            ".text-delta": 14893,
+            ".data-delta": 168,
+            ".bss-delta": 6633
         }
     },
     {
         "module": "mbed-os\\targets",
         "size": {
-            ".text": 22670,
+            ".text": 22026,
             ".data": 12,
-            ".bss": 289,
-            ".text-delta": 0,
-            ".data-delta": 0,
-            ".bss-delta": 0
+            ".bss": 283,
+            ".text-delta": 22026,
+            ".data-delta": 12,
+            ".bss-delta": 283
         }
     },
     {
         "module": "mesh_led_control_example.o",
         "size": {
-            ".text": 258,
+            ".text": 288,
             ".data": 0,
             ".bss": 224,
-            ".text-delta": 0,
+            ".text-delta": 288,
             ".data-delta": 0,
-            ".bss-delta": 0
-        }
-    },
-    {
-        "module": "mesh_nvm.o",
-        "size": {
-            ".text": 2,
-            ".data": 0,
-            ".bss": 0,
-            ".text-delta": 0,
-            ".data-delta": 0,
-            ".bss-delta": 0
+            ".bss-delta": 224
         }
     },
     {
         "module": "mx25r8035f.o",
         "size": {
-            ".text": 1201,
+            ".text": 930,
             ".data": 0,
-            ".bss": 208,
-            ".text-delta": 0,
+            ".bss": 206,
+            ".text-delta": 930,
             ".data-delta": 0,
-            ".bss-delta": 0
+            ".bss-delta": 206
         }
     },
     {
         "module": "temp_humidity_sensor.o",
         "size": {
-            ".text": 506,
+            ".text": 106,
             ".data": 0,
-            ".bss": 219,
-            ".text-delta": 4,
+            ".bss": 216,
+            ".text-delta": 106,
             ".data-delta": 0,
-            ".bss-delta": 0
+            ".bss-delta": 216
         }
     },
     {
         "module": "vmn_coap_client.o",
         "size": {
-            ".text": 1755,
-            ".data": 1,
-            ".bss": 264,
-            ".text-delta": 0,
+            ".text": 102,
+            ".data": 0,
+            ".bss": 236,
+            ".text-delta": 102,
             ".data-delta": 0,
-            ".bss-delta": 0
+            ".bss-delta": 236
         }
     },
     {
         "module": "vmn_coap_server.o",
         "size": {
-            ".text": 3749,
-            ".data": 5,
-            ".bss": 463,
-            ".text-delta": 0,
+            ".text": 124,
+            ".data": 0,
+            ".bss": 244,
+            ".text-delta": 124,
             ".data-delta": 0,
-            ".bss-delta": 0
+            ".bss-delta": 244
         }
     },
     {
         "summary": {
-            "static_ram": 28745,
-            "static_ram_delta": 0,
-            "total_flash": 536627,
-            "total_flash_delta": 4
+            "static_ram": 213775,
+            "static_ram_delta": 213775,
+            "total_flash": 544682,
+            "total_flash_delta": 544682
         }
     }
 ]

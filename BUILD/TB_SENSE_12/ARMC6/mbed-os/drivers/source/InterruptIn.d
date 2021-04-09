@@ -75,5 +75,4 @@ BUILD\TB_SENSE_12\ARMC6\mbed-os\drivers\source\InterruptIn.o: \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\TARGET_EFR32MG12\TARGET_TB_SENSE_12\device_peripherals.h \
   mbed-os\hal\gpio_api.h mbed-os\hal\pinmap.h mbed-os\hal\gpio_irq_api.h \
   mbed-os\platform\Callback.h mbed-os\platform\mbed_assert.h \
-  mbed-os\platform\mbed_critical.h mbed-os\platform\NonCopyable.h \
-  mbed-os\platform\mbed_debug.h
+  mbed-os\platform\mbed_critical.h mbed-os\platform\NonCopyable.h

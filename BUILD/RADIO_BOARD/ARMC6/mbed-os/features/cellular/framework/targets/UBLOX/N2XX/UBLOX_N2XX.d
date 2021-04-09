@@ -2,8 +2,8 @@ BUILD\RADIO_BOARD\ARMC6\mbed-os\features\cellular\framework\targets\UBLOX\N2XX\U
   mbed-os\features\cellular\framework\targets\UBLOX\N2XX\UBLOX_N2XX.cpp \
   BUILD\RADIO_BOARD\ARMC6\mbed_config.h \
   mbed-os\features\cellular\framework\targets\UBLOX\N2XX\UBLOX_N2XX.h \
-  mbed-os\mbed.h mbed-os\platform\mbed_version.h mbed-os\rtos\rtos.h \
-  mbed-os\rtos\mbed_rtos_storage.h \
+  mbed-os\cmsis\mbed.h mbed-os\platform\mbed_version.h \
+  mbed-os\rtos\rtos.h mbed-os\rtos\mbed_rtos_storage.h \
   mbed-os\rtos\source\TARGET_CORTEX\mbed_rtx_storage.h \
   mbed-os\rtos\source\TARGET_CORTEX\rtx5\RTX\Include\rtx_os.h \
   mbed-os\rtos\source\TARGET_CORTEX\rtx5\Include\cmsis_os2.h \
@@ -177,15 +177,11 @@ BUILD\RADIO_BOARD\ARMC6\mbed-os\features\cellular\framework\targets\UBLOX\N2XX\U
   mbed-os\features\storage\blockdevice\BlockDevice.h \
   mbed-os\features\storage\blockdevice\SlicingBlockDevice.h \
   mbed-os\features\storage\blockdevice\HeapBlockDevice.h \
-  mbed-os\platform\mbed_toolchain.h mbed-os\platform\platform.h \
-  mbed-os\platform\mbed_application.h mbed-os\platform\mbed_error.h \
-  mbed-os\platform\mbed_interface.h mbed-os\platform\mbed_assert.h \
-  mbed-os\platform\mbed_debug.h mbed-os\drivers\DigitalIn.h \
-  mbed-os\hal\gpio_api.h mbed-os\hal\pinmap.h \
-  mbed-os\drivers\DigitalOut.h mbed-os\drivers\DigitalInOut.h \
-  mbed-os\drivers\BusIn.h mbed-os\drivers\DigitalIn.h \
-  mbed-os\drivers\BusOut.h mbed-os\drivers\DigitalOut.h \
-  mbed-os\drivers\BusInOut.h mbed-os\drivers\DigitalInOut.h \
+  mbed-os\platform\mbed_application.h mbed-os\platform\mbed_interface.h \
+  mbed-os\drivers\DigitalIn.h mbed-os\hal\gpio_api.h \
+  mbed-os\hal\pinmap.h mbed-os\drivers\DigitalOut.h \
+  mbed-os\drivers\DigitalInOut.h mbed-os\drivers\BusIn.h \
+  mbed-os\drivers\BusOut.h mbed-os\drivers\BusInOut.h \
   mbed-os\drivers\PortIn.h mbed-os\hal\port_api.h \
   mbed-os\drivers\PortInOut.h mbed-os\drivers\PortOut.h \
   mbed-os\drivers\AnalogIn.h mbed-os\hal\analogin_api.h \
@@ -209,22 +205,16 @@ BUILD\RADIO_BOARD\ARMC6\mbed-os\features\cellular\framework\targets\UBLOX\N2XX\U
   mbed-os\hal\reset_reason_api.h mbed-os\drivers\Timer.h \
   mbed-os\drivers\Ticker.h mbed-os\platform\cxxsupport\mstd_utility \
   mbed-os\drivers\TimerEvent.h mbed-os\hal\lp_ticker_api.h \
-  mbed-os\drivers\Timeout.h mbed-os\drivers\Ticker.h \
-  mbed-os\drivers\LowPowerTimeout.h mbed-os\drivers\LowPowerTicker.h \
+  mbed-os\drivers\Timeout.h mbed-os\drivers\LowPowerTimeout.h \
   mbed-os\drivers\LowPowerTicker.h mbed-os\drivers\LowPowerTimer.h \
-  mbed-os\drivers\Timer.h mbed-os\platform\LocalFileSystem.h \
-  mbed-os\drivers\InterruptIn.h mbed-os\platform\mbed_wait_api.h \
+  mbed-os\platform\LocalFileSystem.h mbed-os\platform\mbed_wait_api.h \
   mbed-os\platform\mbed_thread.h mbed-os\hal\sleep_api.h \
-  mbed-os\platform\mbed_atomic.h mbed-os\platform\mbed_power_mgmt.h \
-  mbed-os\platform\mbed_rtc_time.h mbed-os\platform\mbed_poll.h \
-  mbed-os\platform\ATCmdParser.h mbed-os\platform\FileSystemHandle.h \
-  mbed-os\platform\FileHandle.h mbed-os\platform\DirHandle.h \
-  mbed-os\platform\CriticalSectionLock.h \
+  mbed-os\platform\mbed_power_mgmt.h mbed-os\platform\mbed_rtc_time.h \
+  mbed-os\platform\ATCmdParser.h mbed-os\platform\CriticalSectionLock.h \
   mbed-os\platform\DeepSleepLock.h mbed-os\platform\ScopedRomWriteLock.h \
   mbed-os\platform\mbed_mpu_mgmt.h mbed-os\hal\mpu_api.h \
   mbed-os\platform\ScopedRamExecutionLock.h \
-  mbed-os\platform\mbed_stats.h mbed-os\platform\Callback.h \
-  mbed-os\platform\FunctionPointer.h mbed-os\platform\ScopedLock.h \
+  mbed-os\platform\mbed_stats.h mbed-os\platform\FunctionPointer.h \
   mbed-os\features\cellular\framework\common\CellularLog.h \
   mbed-os\features\frameworks\mbed-trace\mbed-trace\mbed_trace.h \
   mbed-os\features\cellular\framework\AT\AT_CellularDevice.h \

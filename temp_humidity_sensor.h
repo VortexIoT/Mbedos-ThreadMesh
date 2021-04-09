@@ -9,6 +9,9 @@
 #define TEMPERATURE_READ            0xE3
 #define SENSOR_INTERVAL             60
 
+
+static mbed::I2C i2c(I2C0_SDA,I2C0_SCL);  //i2c init
+
 //uint8_t Rh_Temp_sensor_cmdset[] = {0xE5,0xF5,0xE3,0xF3,0xE0,0xFE, 0xE6,0xE7,0x51,0x11,0xFA,0x0F,0xFC,0xC9,0x84,0xB8};
 void i2cinit(void);
 void humidity_temp_read(void);
@@ -18,3 +21,11 @@ void temp_hum_sensor_read_every_5min(void);
 void stop_si7021_datacapture(void);
 void temp_hum_sensor_read_every_5min(void);
 void set_si7021_datacapture_intervel(int ms);
+//void gas_sensor(int addr,char config);
+//void channelwrite(int addr,char config);
+//void channelread(int addr,char config,uint8_t sensordata_count);
+
+//void mcp23017_config(void);
+//void soleniod_on();
+//void soleniod_off();
+//void fanoff();

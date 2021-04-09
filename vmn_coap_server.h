@@ -10,13 +10,13 @@
 
 extern uint8_t RH_percentage;
 extern uint8_t Temp_centigrade;
-
+/*
 extern uint8_t masterkey[16];
 extern uint16_t panid;
 extern uint8_t extpanid[8];
 extern uint8_t Network_name[16];
 extern uint8_t meshprefix[8];
-extern uint16_t channel;
+extern uint16_t channel;*/
 //extern SocketAddress sockAddr;
 extern MeshInterface *mesh;
 

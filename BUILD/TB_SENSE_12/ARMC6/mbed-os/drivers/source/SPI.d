@@ -74,8 +74,7 @@ BUILD\TB_SENSE_12\ARMC6\mbed-os\drivers\source\SPI.o: \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\emlib\inc\em_ldma.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\TARGET_EFR32MG12\TARGET_TB_SENSE_12\device_peripherals.h \
   mbed-os\platform\PlatformMutex.h mbed-os\platform\NonCopyable.h \
-  mbed-os\platform\mbed_debug.h mbed-os\rtos\Mutex.h \
-  mbed-os\rtos\mbed_rtos_types.h \
+  mbed-os\rtos\Mutex.h mbed-os\rtos\mbed_rtos_types.h \
   mbed-os\rtos\source\TARGET_CORTEX\rtx5\Include\cmsis_os2.h \
   mbed-os\rtos\mbed_rtos1_types.h \
   mbed-os\rtos\source\TARGET_CORTEX\rtx4\cmsis_os.h \

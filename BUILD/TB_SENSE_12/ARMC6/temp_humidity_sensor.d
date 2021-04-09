@@ -83,8 +83,8 @@ BUILD\TB_SENSE_12\ARMC6\temp_humidity_sensor.o: temp_humidity_sensor.cpp \
   mbed-os\platform\internal\mbed_atomic_impl.h \
   mbed-os\rtos\source\TARGET_CORTEX\rtx5\Include\cmsis_os2.h \
   mbed-os\platform\PlatformMutex.h mbed-os\platform\NonCopyable.h \
-  mbed-os\platform\mbed_debug.h mbed-os\rtos\Mutex.h \
-  mbed-os\rtos\mbed_rtos_types.h mbed-os\rtos\mbed_rtos1_types.h \
+  mbed-os\rtos\Mutex.h mbed-os\rtos\mbed_rtos_types.h \
+  mbed-os\rtos\mbed_rtos1_types.h \
   mbed-os\rtos\source\TARGET_CORTEX\rtx4\cmsis_os.h \
   mbed-os\rtos\source\TARGET_CORTEX\rtx5\RTX\Include\rtx_os.h \
   mbed-os\rtos\mbed_rtos_storage.h \
@@ -180,16 +180,17 @@ BUILD\TB_SENSE_12\ARMC6\temp_humidity_sensor.o: temp_humidity_sensor.cpp \
   mbed-os\features\storage\blockdevice\SlicingBlockDevice.h \
   mbed-os\features\storage\blockdevice\HeapBlockDevice.h \
   mbed-os\platform\mbed_application.h mbed-os\platform\mbed_interface.h \
-  mbed-os\drivers\DigitalIn.h mbed-os\drivers\DigitalInOut.h \
-  mbed-os\drivers\BusIn.h mbed-os\drivers\BusOut.h \
-  mbed-os\drivers\BusInOut.h mbed-os\drivers\PortIn.h \
-  mbed-os\hal\port_api.h mbed-os\drivers\PortInOut.h \
-  mbed-os\drivers\PortOut.h mbed-os\drivers\AnalogIn.h \
-  mbed-os\hal\analogin_api.h mbed-os\drivers\AnalogOut.h \
-  mbed-os\drivers\PwmOut.h mbed-os\hal\pwmout_api.h \
-  mbed-os\drivers\Serial.h mbed-os\platform\Stream.h \
-  mbed-os\platform\FileLike.h mbed-os\drivers\SerialBase.h \
-  mbed-os\hal\serial_api.h mbed-os\drivers\SPI.h mbed-os\hal\spi_api.h \
+  mbed-os\platform\mbed_debug.h mbed-os\drivers\DigitalIn.h \
+  mbed-os\drivers\DigitalInOut.h mbed-os\drivers\BusIn.h \
+  mbed-os\drivers\BusOut.h mbed-os\drivers\BusInOut.h \
+  mbed-os\drivers\PortIn.h mbed-os\hal\port_api.h \
+  mbed-os\drivers\PortInOut.h mbed-os\drivers\PortOut.h \
+  mbed-os\drivers\AnalogIn.h mbed-os\hal\analogin_api.h \
+  mbed-os\drivers\AnalogOut.h mbed-os\drivers\PwmOut.h \
+  mbed-os\hal\pwmout_api.h mbed-os\drivers\Serial.h \
+  mbed-os\platform\Stream.h mbed-os\platform\FileLike.h \
+  mbed-os\drivers\SerialBase.h mbed-os\hal\serial_api.h \
+  mbed-os\drivers\SPI.h mbed-os\hal\spi_api.h \
   mbed-os\platform\CircularBuffer.h mbed-os\platform\mbed_critical.h \
   mbed-os\platform\Transaction.h mbed-os\drivers\SPISlave.h \
   mbed-os\drivers\I2CSlave.h mbed-os\drivers\Ethernet.h \
