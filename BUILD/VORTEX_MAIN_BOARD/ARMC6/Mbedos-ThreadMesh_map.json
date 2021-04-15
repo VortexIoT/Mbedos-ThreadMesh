@@ -2,9 +2,9 @@
     {
         "module": "[lib]\\c_w.l",
         "size": {
-            ".text": 13763,
+            ".text": 15917,
             ".data": 16,
-            ".bss": 348,
+            ".bss": 460,
             ".text-delta": 0,
             ".data-delta": 0,
             ".bss-delta": 0
@@ -79,9 +79,9 @@
     {
         "module": "cli_cmd.o",
         "size": {
-            ".text": 302,
-            ".data": 0,
-            ".bss": 184362,
+            ".text": 3105,
+            ".data": 2,
+            ".bss": 1117,
             ".text-delta": 0,
             ".data-delta": 0,
             ".bss-delta": 0
@@ -101,7 +101,7 @@
     {
         "module": "gas_sensor.o",
         "size": {
-            ".text": 457,
+            ".text": 499,
             ".data": 0,
             ".bss": 128,
             ".text-delta": 0,
@@ -112,10 +112,10 @@
     {
         "module": "main.o",
         "size": {
-            ".text": 1922,
+            ".text": 2451,
             ".data": 17,
-            ".bss": 1460,
-            ".text-delta": 72,
+            ".bss": 1464,
+            ".text-delta": 0,
             ".data-delta": 0,
             ".bss-delta": 0
         }
@@ -134,7 +134,7 @@
     {
         "module": "mbed-os\\drivers",
         "size": {
-            ".text": 3905,
+            ".text": 3849,
             ".data": 0,
             ".bss": 372,
             ".text-delta": 0,
@@ -145,7 +145,7 @@
     {
         "module": "mbed-os\\events",
         "size": {
-            ".text": 1756,
+            ".text": 2002,
             ".data": 0,
             ".bss": 1572,
             ".text-delta": 0,
@@ -156,7 +156,7 @@
     {
         "module": "mbed-os\\features",
         "size": {
-            ".text": 413992,
+            ".text": 414551,
             ".data": 1039,
             ".bss": 11017,
             ".text-delta": 0,
@@ -178,7 +178,7 @@
     {
         "module": "mbed-os\\platform",
         "size": {
-            ".text": 7503,
+            ".text": 8047,
             ".data": 80,
             ".bss": 444,
             ".text-delta": 0,
@@ -189,7 +189,7 @@
     {
         "module": "mbed-os\\rtos",
         "size": {
-            ".text": 13581,
+            ".text": 13761,
             ".data": 168,
             ".bss": 6633,
             ".text-delta": 0,
@@ -209,6 +209,17 @@
         }
     },
     {
+        "module": "mesh_config.o",
+        "size": {
+            ".text": 1249,
+            ".data": 78,
+            ".bss": 0,
+            ".text-delta": 0,
+            ".data-delta": 0,
+            ".bss-delta": 0
+        }
+    },
+    {
         "module": "mesh_led_control_example.o",
         "size": {
             ".text": 260,
@@ -220,9 +231,20 @@
         }
     },
     {
+        "module": "mesh_nvm.o",
+        "size": {
+            ".text": 2,
+            ".data": 0,
+            ".bss": 0,
+            ".text-delta": 0,
+            ".data-delta": 0,
+            ".bss-delta": 0
+        }
+    },
+    {
         "module": "mx25r8035f.o",
         "size": {
-            ".text": 902,
+            ".text": 798,
             ".data": 0,
             ".bss": 206,
             ".text-delta": 0,
@@ -242,6 +264,17 @@
         }
     },
     {
+        "module": "realtimeclock.o",
+        "size": {
+            ".text": 256,
+            ".data": 52,
+            ".bss": 1,
+            ".text-delta": 0,
+            ".data-delta": 0,
+            ".bss-delta": 0
+        }
+    },
+    {
         "module": "solenoid.o",
         "size": {
             ".text": 124,
@@ -255,9 +288,9 @@
     {
         "module": "temp_humidity_sensor.o",
         "size": {
-            ".text": 386,
+            ".text": 506,
             ".data": 0,
-            ".bss": 218,
+            ".bss": 219,
             ".text-delta": 0,
             ".data-delta": 0,
             ".bss-delta": 0
@@ -266,9 +299,9 @@
     {
         "module": "vmn_coap_client.o",
         "size": {
-            ".text": 84,
-            ".data": 0,
-            ".bss": 236,
+            ".text": 1755,
+            ".data": 1,
+            ".bss": 264,
             ".text-delta": 0,
             ".data-delta": 0,
             ".bss-delta": 0
@@ -277,9 +310,9 @@
     {
         "module": "vmn_coap_server.o",
         "size": {
-            ".text": 138,
-            ".data": 0,
-            ".bss": 368,
+            ".text": 3687,
+            ".data": 5,
+            ".bss": 587,
             ".text-delta": 0,
             ".data-delta": 0,
             ".bss-delta": 0
@@ -287,10 +320,10 @@
     },
     {
         "summary": {
-            "static_ram": 211738,
+            "static_ram": 28996,
             "static_ram_delta": 0,
-            "total_flash": 526538,
-            "total_flash_delta": 72
+            "total_flash": 540420,
+            "total_flash_delta": 0
         }
     }
 ]

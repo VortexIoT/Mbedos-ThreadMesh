@@ -244,4 +244,5 @@ BUILD\VORTEX_MAIN_BOARD\ARMC6\vmn_coap_server.o: vmn_coap_server.cpp \
   mbed-os\features\nanostack\sal-stack-nanostack\nanostack\platform\arm_hal_phy.h \
   mbed-os\features\netsocket\InternetSocket.h \
   mbed-os\features\nanostack\sal-stack-nanostack\source\NWK_INTERFACE\Include\protocol_abstract.h \
-  mbed-os\drivers\RawSerial.h temp_humidity_sensor.h
+  mbed-os\drivers\RawSerial.h temp_humidity_sensor.h mesh_config.h \
+  vmn_coap_client.h

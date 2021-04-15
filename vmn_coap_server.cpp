@@ -18,39 +18,31 @@
 #include "ThreadInterface.h"
 #include "cli_cmd.h"
 #include "temp_humidity_sensor.h"
+#include "mesh_config.h"
+#include "vmn_coap_client.h"
 
-#define MAX_COAP_PAYLOAD_SIZE  65535
-#define HEXSYNC1  56
-#define HEXSYNC2  0xd7
-#define ASCIISYNC1 'V'
-#define DECSYNC1  86
-#define DECSYNC2  215
-
-
-//#define IPADDRESS2    "fd00:db8:0:0:0:ff:fe00:2000"
-//#define IPADDRESS1    "fd00:db8:0:0:2e5e:ccdc:af4:87e3"//"fd00:db8:0:0:92cf:7276:ce01:3271" dongle cli
-//#define IPADDRESS     "fd00:db8:0:0:a58a:2805:667e:9cef" //gateway
 DigitalOut led(LED1); //for green led
 EventQueue coapserver_eventqueue;
 UDPSocket udpsock;           // Socket to talk CoAP over
 struct coap_s* coapHandle;//=sn_coap_protocol_init(&coap_malloc, &coap_free, &coap_tx_cb, &coap_rx_cb);
 coap_version_e coapVersion = COAP_VERSION_1;
+extern nwk_interface_id id;
 uint8_t ipaddress_buffer[16] = {0};
 uint16_t coapserver_eventqueue_handle=0;
 uint16_t portnumber;
-static uint8_t requested_temp_scaling = 1;
-static uint8_t requested_hum_scaling = 1;
-static uint8_t coapserver_state_control = 1;
+uint8_t requested_temp_scaling = 1;
+uint8_t requested_hum_scaling = 1;
+uint8_t coapserver_state_control = 1;
 uint8_t requested_msg_type = 0;
 uint8_t *server_recv_coappayload;
 uint8_t  server_recv_coappayload_length;
-extern nwk_interface_id id;
-uint16_t coap_msg_payload_len;
-uint8_t coap_msg_payload[200];
+//uint16_t coap_msg_payload_len;
+//uint8_t coap_msg_payload[200];
 //4-bit MSB of this byte is the Class Version and the 4-bit LSB defines the Class type
 uint8_t classid = 0; //MSB version and LSB for class type
 uint16_t messageid = 0;
-
+extern uint8_t RH_percentage;
+extern uint8_t Temp_centigrade;
 
 void* coap_server_malloc(uint16_t size) {
     return malloc(size);
@@ -96,7 +88,7 @@ void receive_msg(void){
     coapHandle = sn_coap_protocol_init(&coap_server_malloc, &coap_server_free, &coap_server_tx_cb, &coap_server_rx_cb);
     portnumber = addr.get_port();
     printf("IP : %s    Port: %d\n", addr.get_ip_address(), portnumber);
-     udpsock.bind(portnumber);
+    udpsock.bind(portnumber);
     if (recv_return_data_len > 0) {
         parsed = sn_coap_parser(coapHandle, recv_return_data_len, recv_buffer, &coapVersion);
         if(parsed->msg_code != COAP_MSG_CODE_EMPTY) {
@@ -116,20 +108,20 @@ void receive_msg(void){
                 printf("location_path_len: %d\n", parsed->options_list_ptr->location_path_len);
                 printf("uri_host_ptr: %p\n", parsed->options_list_ptr->uri_host_ptr);
             }
-            //hadnling request from here
+            //handling request from here
             if (parsed->msg_code == COAP_MSG_CODE_REQUEST_POST) {
                 uint8_t posted_payload = atoi(payload.c_str());
                 printf("payload_len: %d\n", parsed->payload_len);
                 printf("payload: %d\n", posted_payload);
                 if (strncmp(uri_path.c_str(), "sensor/temp/scaling", parsed->uri_path_len) == 0) { //checking for uri path
-                //here handling only upto 255 if it is more than after scaling res would rollback to value - 256 ,so scaling must be 1 to 5 if possible
+                //here handling only upto 255 if it is more than 255 scaling res would rollback to value - 256 ,so scaling must be 1 to 5 if possible
                     if(posted_payload > 0 && posted_payload <= 5) //setting the range of scaling factor
                         requested_temp_scaling = posted_payload;
                 } else if (strncmp(uri_path.c_str(), "sensor/hum/scaling", parsed->uri_path_len) == 0) {  //checking for uri path
                 //here handling only upto 255 if it is more than after scaling res would rollback to value - 256 
                     if(posted_payload > 0 && posted_payload <= 5)
                         requested_hum_scaling = posted_payload;
-                } else if (strncmp(uri_path.c_str(), "control/state", parsed->uri_path_len) == 0) {           //this to control the state of led as well as server responses   
+                } else if (strncmp(uri_path.c_str(), "control/state", parsed->uri_path_len) == 0) {           //This controls the state of led as well as server responses   
                     if((posted_payload == 0) || (posted_payload == 1)) {
                         coapserver_state_control = posted_payload;  //changing the state byte here this will be handle on server side
                         led = posted_payload;
@@ -217,6 +209,7 @@ void coapserver_response_build( SocketAddress addr, sn_coap_hdr_s* coap_res_ptr 
     switch(msg_code) {
         case COAP_MSG_CODE_REQUEST_GET:           
             uint8_t Temp_hum_data;
+          //  printf("get method temp''''\n");
             if ( coapserver_state_control == 1 ) {
                 if (strncmp(uri_path.c_str(), "sensor/temp/value", strlen(uri_path.c_str())) == 0) {//this for temperature
                     coap_res_ptr->msg_code = COAP_MSG_CODE_RESPONSE_CONTENT;

@@ -14,15 +14,17 @@
 
 //extern mbed::I2C i2c;
 
+//Direction set as output 
 void mcp23017_config(void) {
   //  i2c.write(MCP23017_ADDR_GND << 1, mcp23_config_reg,2);
-    i2c.write(MCP23017_ADDR_VCC << 1, mcp23_IODIRA, 2);
+    i2c.write( MCP23017_ADDR << 1, mcp23_IODIRA, 2);
 }
+//controls the position of the valve either open/close
 void soleniod_valve_control(char *valveposition) {
-    i2c.write(MCP23017_ADDR_VCC << 1, valveposition, 2);
+    i2c.write( MCP23017_ADDR << 1, valveposition, 2);
 }
 /*
 void soleniod_valve_close(char *valveposition) {
-//   i2c.write(MCP23017_ADDR_VCC << 1, mcp23_IODIRA, 2);
-    i2c.write(MCP23017_ADDR_VCC << 1, valveposition, 2); //reverse
+//   i2c.write(MCP23017_ADDR << 1, mcp23_IODIRA, 2);
+    i2c.write(MCP23017_ADDR << 1, valveposition, 2); //reverse
 }*/

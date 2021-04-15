@@ -11,6 +11,9 @@ extern uint8_t Network_name[16];
 extern uint8_t meshprefix[8];
 extern uint16_t channel;
 */
+static uint16_t coap_msg_payload_len;
+static uint8_t coap_msg_payload[200];
+
 void* coap_client_malloc(uint16_t size);
 void coap_client_free(void* addr);
 uint8_t coap_client_tx_cb(uint8_t *a, uint16_t b, sn_nsdl_addr_s *c, void *d);

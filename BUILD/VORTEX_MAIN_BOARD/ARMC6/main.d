@@ -265,5 +265,6 @@ BUILD\VORTEX_MAIN_BOARD\ARMC6\main.o: main.cpp \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\emlib\inc\em_core.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\emlib\inc\em_common.h \
   solenoid.h gas_sensor.h fan_control.h pm_sensor_sds011.h \
+  realtimeclock.h mbed-os\platform\mbed_mktime.h mesh_config.h \
   mesh_led_control_example.h \
   mbed-os\features\netsocket\NetworkInterface.h

@@ -7,9 +7,17 @@
 #define IPADDRESS2    "fd00:db8:0:0:0:ff:fe00:2000"
 #define IPADDRESS1    "fd00:db8:0:0:92cf:7276:ce01:3271" 
 #define IPADDRESS     "fd00:db8:0:0:a58a:2805:667e:9cef"
+//#define IPADDRESS2    "fd00:db8:0:0:0:ff:fe00:2000"
+//#define IPADDRESS1    "fd00:db8:0:0:2e5e:ccdc:af4:87e3"//"fd00:db8:0:0:92cf:7276:ce01:3271" dongle cli
+//#define IPADDRESS     "fd00:db8:0:0:a58a:2805:667e:9cef" //gateway
 
-extern uint8_t RH_percentage;
-extern uint8_t Temp_centigrade;
+#define MAX_COAP_PAYLOAD_SIZE  65535
+#define HEXSYNC1  56
+#define HEXSYNC2  0xd7
+#define ASCIISYNC1 'V'
+#define DECSYNC1  86
+#define DECSYNC2  215
+
 /*
 extern uint8_t masterkey[16];
 extern uint16_t panid;
@@ -43,7 +51,6 @@ void devicedata_monitor_commands(uint16_t messageid);
 void errorcode_commands(uint16_t messageid);
 void firmwareupdate_commands(uint16_t messageid);
 void vmn_dpd_extract(void) ;
-
 void nonack_frm_server_to_client(void);
 void ack_frm_server_to_client(void);
 void ack_si7021_response(uint8_t actualdata);

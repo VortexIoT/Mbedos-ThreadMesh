@@ -22,6 +22,5 @@ static uint8_t sensor_buffer_MCP1[15];
 static uint8_t sensor_buffer_MCP2[15];
 static uint8_t sensor_buffer_MCP3[15];
 
-void gas_sensor(int addr,char config);
 void channelwrite(int addr,char config);
 void channelread(int addr,char config, uint8_t sensordata_count);

@@ -20,8 +20,7 @@ uint32_t payload_length = 0;
 extern nwk_interface_id id;
 uint8_t *coap_payload = 0;
 
-static uint16_t coap_msg_payload_len;
-static uint8_t coap_msg_payload[200];
+
 
 void* coap_client_malloc(uint16_t size) {
     return malloc(size);

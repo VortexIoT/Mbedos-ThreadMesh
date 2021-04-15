@@ -253,4 +253,4 @@ BUILD\VORTEX_MAIN_BOARD\ARMC6\cli_cmd.o: cli_cmd.cpp \
   mbed-os\features\nanostack\sal-stack-nanostack\nanostack\ccmLIB.h \
   mbed-os\features\nanostack\sal-stack-nanostack\nanostack\platform\arm_hal_aes.h \
   mbed-os\features\frameworks\nanostack-libservice\mbed-client-libservice\ip6string.h \
-  mx25r8035f.h
+  mx25r8035f.h realtimeclock.h mesh_config.h
