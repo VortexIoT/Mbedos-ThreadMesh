@@ -101,7 +101,7 @@
     {
         "module": "VORTEX_AQM\\vmn_coap_client.o",
         "size": {
-            ".text": 2136,
+            ".text": 2116,
             ".data": 2,
             ".bss": 272,
             ".text-delta": 0,
@@ -244,7 +244,7 @@
     {
         "module": "mbed-os\\features",
         "size": {
-            ".text": 414521,
+            ".text": 414491,
             ".data": 1039,
             ".bss": 11017,
             ".text-delta": 0,
@@ -322,7 +322,7 @@
         "summary": {
             "static_ram": 29233,
             "static_ram_delta": 0,
-            "total_flash": 540948,
+            "total_flash": 540898,
             "total_flash_delta": 0
         }
     }

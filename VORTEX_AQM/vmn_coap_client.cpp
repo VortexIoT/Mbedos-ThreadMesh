@@ -145,11 +145,11 @@ void client_responsepacket_parse(SocketAddress receive_addr, uint8_t requestmeth
         }
        // printf("uri-path : %s\n", uri.c_str());
     } else {
-        sn_coap_protocol_set_retransmission_parameters(coaphandle, 5, 10);  //resending count 5 and intervel for every 5sec
+        sn_coap_protocol_set_retransmission_parameters(coaphandle, 5, udp_socketopen_timeout);  //resending count 5 and intervel for every 5sec
         
         if(retransmit_count < 3) {
 
-            sn_coap_protocol_set_retransmission_buffer(coaphandle, 6, packet_len);
+         //   sn_coap_protocol_set_retransmission_buffer(coaphandle, 6, packet_len); //changes default message retransmission queue size
             int scount = coap_client_udpsock.sendto(receive_addr, sendpacket, packet_len); //sending through UDP to the server
             printf("Sent %d bytes on UDP\n", scount); //for user information
             event_cancelhandle = coapclient_eventqueue.call(client_responsepacket_parse, receive_addr, requestmethod);
@@ -194,8 +194,7 @@ void response_message_code(uint8_t msg_code) {
 
 //dpd is the payload of the coap message packet
 
-//the Header includes 2 SYNC bytes, 1 Class byte, 2 ID bytes and 2 Packet Length bytes
-//payload of length bytes and check sum
+//the Header includes 2 SYNC bytes, 1 Class byte, 2 ID bytes and 2 Length of the payload, payload of payload length bytes and check sum
 //now I am not handling payload at the moment so this function checks for other information present in coap payload
 
 

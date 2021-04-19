@@ -173,11 +173,11 @@ int main() {
     uint32_t pageaddress=0;
     uint8_t addr[16];
     int8_t childcount = 0;
-    intial_rtc_calender_set(); 
+    intial_rtc_calender_set(); //rtc clock set to default time
     mbed_trace_init();
     mbed_trace_print_function_set(trace_printer);
-    mbed_trace_mutex_wait_function_set(serial_out_mutex_wait);
-    mbed_trace_mutex_release_function_set(serial_out_mutex_release);
+    mbed_trace_mutex_wait_function_set(serial_out_mutex_wait); //to synchronize threads
+    mbed_trace_mutex_release_function_set(serial_out_mutex_release); //to synchronize threads
     mesh = MeshInterface::get_default_instance();  //returns pointer to the mesh interface
     thread_eui64_trace();  //This function generates the EUI64
     mesh_nvm_initialize();  //initializes the non-volatile memory
@@ -190,7 +190,7 @@ int main() {
  //   externalflash_rdwr.set_priority(osPriorityHigh);
     printf("Start of the application\n"); 
     start_blinking();   //led
-    temp_hum_sensor_read_every_5min(); //reading for every 5min
+    temp_hum_sensor_read_every_5min(); //reads for every 5min
     pc.attach(&isr_receive); //receive interrupt
     i2cinit();  //i2c frequency init
     mx25r8035f_init(); //external flash init
@@ -255,7 +255,7 @@ int main() {
                     //  wait(1);
                         soleniod_valve_control(solenoid_rightvalve_close);
                         soleniod_valve_control(solenoid_leftvalve_close);
-                        delay_ms(3000);    //test purpose to allow some time before reopen the valve
+                        delay_ms(3000);    //allow some time before reopen the valve
                         soleniod_valve_control(solenoid_rightvalve_open);
                         pm_sensor_control(pm_sensor_on);
                         for(char i = 0; i < 5; i++) {
@@ -267,8 +267,8 @@ int main() {
                         pm_sensor_control(pm_sensor_off);
                         delay_ms(5000);
                         soleniod_valve_control(solenoid_rightvalve_close);
-                        aqmpayload[0] = 4;
-                        aqmpayload[1] = 18;
+                        aqmpayload[0] = 4;      //gain
+                        aqmpayload[1] = 18;     //sample rate
                         for(int8_t i = 0; i < 5; i++) {
                             aqmpayload[i+2] = pmsensor_output[i];
                         }
@@ -320,7 +320,7 @@ int main() {
                     case '8': //This case prepares AQM payload
                         soleniod_valve_control(solenoid_leftvalve_close);
                         humidity_temp_read();
-                        for(int i=0;i<15;i++)  {
+                        for( int i = 0; i < 15; i++ )  {
                             aqmpayload[i+7] = sensor_buffer_MCP0[i];
                             aqmpayload[i+7+15] = sensor_buffer_MCP1[i];
                             aqmpayload[i+7+30] = sensor_buffer_MCP2[i];
