@@ -3,8 +3,8 @@
         "module": "VORTEX_AQM\\cli_cmd.o",
         "size": {
             ".text": 3105,
-            ".data": 2,
-            ".bss": 1117,
+            ".data": 5,
+            ".bss": 1123,
             ".text-delta": 0,
             ".data-delta": 0,
             ".bss-delta": 0
@@ -35,9 +35,9 @@
     {
         "module": "VORTEX_AQM\\mesh_config.o",
         "size": {
-            ".text": 1249,
-            ".data": 78,
-            ".bss": 0,
+            ".text": 1621,
+            ".data": 0,
+            ".bss": 90,
             ".text-delta": 0,
             ".data-delta": 0,
             ".bss-delta": 0
@@ -112,7 +112,7 @@
     {
         "module": "VORTEX_AQM\\vmn_coap_server.o",
         "size": {
-            ".text": 3741,
+            ".text": 3837,
             ".data": 5,
             ".bss": 587,
             ".text-delta": 0,
@@ -200,7 +200,7 @@
     {
         "module": "main.o",
         "size": {
-            ".text": 2451,
+            ".text": 2467,
             ".data": 17,
             ".bss": 1464,
             ".text-delta": 0,
@@ -320,9 +320,9 @@
     },
     {
         "summary": {
-            "static_ram": 29233,
+            "static_ram": 29254,
             "static_ram_delta": 0,
-            "total_flash": 540898,
+            "total_flash": 541307,
             "total_flash_delta": 0
         }
     }

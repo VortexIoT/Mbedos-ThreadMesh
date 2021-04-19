@@ -72,7 +72,7 @@ BUILD\VORTEX_MAIN_BOARD\ARMC6\mbed-os\features\nanostack\nanostack-hal-mbed-cmsi
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\common\device.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\common\cmsis.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\common\objects.h \
-  mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\TARGET_EFR32MG12\TARGET_VORTEX_MAIN_BOARD\PinNames.h \
+  TARGET_VORTEX_MAIN_BOARD\PinNames.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\common\CommonPinNames.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\emlib\inc\em_gpio.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\emlib\inc\em_bus.h \
@@ -87,10 +87,9 @@ BUILD\VORTEX_MAIN_BOARD\ARMC6\mbed-os\features\nanostack\nanostack-hal-mbed-cmsi
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\dma_api_HAL.h \
   mbed-os\hal\dma_api.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\emlib\inc\em_ldma.h \
-  mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\TARGET_EFR32MG12\TARGET_VORTEX_MAIN_BOARD\device_peripherals.h \
-  mbed-os\hal\ticker_api.h mbed-os\platform\NonCopyable.h \
-  mbed-os\platform\mbed_debug.h mbed-os\events\equeue.h \
-  mbed-os\events\internal\equeue_platform.h \
+  TARGET_VORTEX_MAIN_BOARD\device_peripherals.h mbed-os\hal\ticker_api.h \
+  mbed-os\platform\NonCopyable.h mbed-os\platform\mbed_debug.h \
+  mbed-os\events\equeue.h mbed-os\events\internal\equeue_platform.h \
   mbed-os\rtos\mbed_rtos_storage.h \
   mbed-os\rtos\source\TARGET_CORTEX\mbed_rtx_storage.h \
   mbed-os\rtos\source\TARGET_CORTEX\rtx5\RTX\Include\rtx_os.h \

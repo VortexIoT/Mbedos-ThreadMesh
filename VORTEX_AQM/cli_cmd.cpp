@@ -43,6 +43,11 @@ extern uint8_t flashhandle;
 uint16_t bytecount = 0;
 uint16_t written_pages_count = 0;
 uint32_t j=0;
+uint8_t local_channel_page = 0;/**< channel page supported pages 0*/
+uint16_t local_key_rotation = 3600; /**< Key rotation time in hours*/
+uint32_t local_key_sequence = 0;
+uint8_t nwparams_change_identification = 0; //using for test purpose has to think again
+uint8_t keeping_nw_default_details = 1;
 /*********************  Variable Decalrations END **************************/
 
 /* Receive interrupt function.This function will be automatically called when data entered through the serial terminal*/

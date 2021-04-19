@@ -2,8 +2,7 @@ BUILD\VORTEX_MAIN_BOARD\ARMC6\mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\T
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\TARGET_EFR32MG12\PeripheralPins.c \
   BUILD\VORTEX_MAIN_BOARD\ARMC6\mbed_config.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\PeripheralPins.h \
-  mbed-os\hal\pinmap.h \
-  mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\TARGET_EFR32MG12\TARGET_VORTEX_MAIN_BOARD\PinNames.h \
+  mbed-os\hal\pinmap.h TARGET_VORTEX_MAIN_BOARD\PinNames.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\common\CommonPinNames.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\emlib\inc\em_gpio.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\TARGET_EFR32MG12\device\em_device.h \

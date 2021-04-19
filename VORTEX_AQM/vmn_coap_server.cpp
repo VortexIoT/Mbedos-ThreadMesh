@@ -65,8 +65,8 @@ int8_t coap_server_rx_cb(sn_coap_hdr_s *a, sn_nsdl_addr_s *b, void *c) {
 
 //This method initializes mbed board as a server
 void coap_server_init(void) { 
-    uint8_t *packet;
-    uint8_t packet_len;
+    uint8_t *packet = nullptr;
+    uint8_t packet_len = 0;
     SocketAddress addr;
     NetworkInterface * interface = (NetworkInterface *)mesh;
     interface->get_ip_address(&addr);

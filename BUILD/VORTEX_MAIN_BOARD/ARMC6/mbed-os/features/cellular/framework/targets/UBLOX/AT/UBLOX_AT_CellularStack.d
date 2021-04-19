@@ -76,7 +76,7 @@ BUILD\VORTEX_MAIN_BOARD\ARMC6\mbed-os\features\cellular\framework\targets\UBLOX\
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\common\cmsis.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\common\cmsis_nvic.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\common\objects.h \
-  mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\TARGET_EFR32MG12\TARGET_VORTEX_MAIN_BOARD\PinNames.h \
+  TARGET_VORTEX_MAIN_BOARD\PinNames.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\common\CommonPinNames.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\emlib\inc\em_gpio.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\PeripheralNames.h \
@@ -88,7 +88,7 @@ BUILD\VORTEX_MAIN_BOARD\ARMC6\mbed-os\features\cellular\framework\targets\UBLOX\
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\dma_api_HAL.h \
   mbed-os\hal\dma_api.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\emlib\inc\em_ldma.h \
-  mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\TARGET_EFR32MG12\TARGET_VORTEX_MAIN_BOARD\device_peripherals.h \
+  TARGET_VORTEX_MAIN_BOARD\device_peripherals.h \
   mbed-os\platform\FileHandle.h mbed-os\platform\mbed_poll.h \
   mbed-os\drivers\SerialBase.h mbed-os\hal\serial_api.h \
   mbed-os\hal\pinmap.h mbed-os\hal\buffer.h mbed-os\hal\dma_api.h \

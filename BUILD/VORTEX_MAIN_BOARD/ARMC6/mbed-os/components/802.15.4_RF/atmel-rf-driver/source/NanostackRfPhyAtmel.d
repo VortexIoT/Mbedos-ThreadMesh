@@ -6,7 +6,7 @@ BUILD\VORTEX_MAIN_BOARD\ARMC6\mbed-os\components\802.15.4_RF\atmel-rf-driver\sou
   mbed-os\features\frameworks\nanostack-libservice\mbed-client-libservice\ns_types.h \
   mbed-os\components\802.15.4_RF\atmel-rf-driver\atmel-rf-driver\NanostackRfPhyAtmel.h \
   mbed-os\components\802.15.4_RF\atmel-rf-driver\source\at24mac.h \
-  mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\TARGET_EFR32MG12\TARGET_VORTEX_MAIN_BOARD\PinNames.h \
+  TARGET_VORTEX_MAIN_BOARD\PinNames.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\common\CommonPinNames.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\emlib\inc\em_gpio.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\TARGET_EFR32MG12\device\em_device.h \
@@ -78,11 +78,10 @@ BUILD\VORTEX_MAIN_BOARD\ARMC6\mbed-os\components\802.15.4_RF\atmel-rf-driver\sou
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\dma_api_HAL.h \
   mbed-os\hal\dma_api.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\emlib\inc\em_ldma.h \
-  mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\TARGET_EFR32MG12\TARGET_VORTEX_MAIN_BOARD\device_peripherals.h \
-  mbed-os\hal\gpio_api.h mbed-os\hal\pinmap.h mbed-os\hal\i2c_api.h \
-  mbed-os\hal\buffer.h mbed-os\hal\dma_api.h \
-  mbed-os\platform\SingletonPtr.h mbed-os\platform\mbed_assert.h \
-  mbed-os\platform\mbed_atomic.h \
+  TARGET_VORTEX_MAIN_BOARD\device_peripherals.h mbed-os\hal\gpio_api.h \
+  mbed-os\hal\pinmap.h mbed-os\hal\i2c_api.h mbed-os\hal\buffer.h \
+  mbed-os\hal\dma_api.h mbed-os\platform\SingletonPtr.h \
+  mbed-os\platform\mbed_assert.h mbed-os\platform\mbed_atomic.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\common\cmsis.h \
   mbed-os\platform\cxxsupport\mstd_type_traits \
   mbed-os\platform\cxxsupport\mstd_cstddef \

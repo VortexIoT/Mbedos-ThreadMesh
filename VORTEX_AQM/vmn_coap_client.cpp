@@ -102,10 +102,10 @@ void client_requestpacket_build( char *host_address, uint8_t *uri_path, uint8_t 
     coapclient_eventqueue.cancel(event_cancelhandle);
 }
 
-uint8_t udp_socketopen_timeout=10;
+uint8_t udp_socketopen_timeout=30000;
 void client_responsepacket_parse(SocketAddress receive_addr, uint8_t requestmethod) {
     uint8_t* recv_buffer = (uint8_t*)malloc(1280); // Suggested is to keep packet size under 1280 bytes
-    coap_client_udpsock.set_timeout(10);
+    coap_client_udpsock.set_timeout(udp_socketopen_timeout);
     nsapi_size_or_error_t return_packet_len = coap_client_udpsock.recvfrom(&receive_addr, recv_buffer, 1280); //reading back from server
     if (return_packet_len > 0) {
         printf("Received a message of length '%d'\n", return_packet_len);
@@ -156,7 +156,7 @@ void client_responsepacket_parse(SocketAddress receive_addr, uint8_t requestmeth
           //  coapclient_eventqueue.cancel(event_cancelhandle);
          //   printf("Failed to receive message (%d)\n", return_packet_len);
             retransmit_count++;
-            udp_socketopen_timeout += 15;
+            udp_socketopen_timeout *= 2;
         } else {
             retransmit_count = 0;
             udp_socketopen_timeout = 10;

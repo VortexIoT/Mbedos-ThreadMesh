@@ -68,7 +68,7 @@ BUILD\VORTEX_MAIN_BOARD\ARMC6\mbed-os\rtos\source\ThisThread.o: \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\common\device.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\common\cmsis.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\common\objects.h \
-  mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\TARGET_EFR32MG12\TARGET_VORTEX_MAIN_BOARD\PinNames.h \
+  TARGET_VORTEX_MAIN_BOARD\PinNames.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\common\CommonPinNames.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\emlib\inc\em_gpio.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\emlib\inc\em_bus.h \
@@ -83,7 +83,7 @@ BUILD\VORTEX_MAIN_BOARD\ARMC6\mbed-os\rtos\source\ThisThread.o: \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\dma_api_HAL.h \
   mbed-os\hal\dma_api.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\emlib\inc\em_ldma.h \
-  mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\TARGET_EFR32MG12\TARGET_VORTEX_MAIN_BOARD\device_peripherals.h \
+  TARGET_VORTEX_MAIN_BOARD\device_peripherals.h \
   mbed-os\rtos\source\TARGET_CORTEX\rtx5\RTX\Source\rtx_lib.h \
   mbed-os\rtos\source\TARGET_CORTEX\rtx5\RTX\Source\rtx_core_c.h \
   mbed-os\cmsis\RTE_Components.h \

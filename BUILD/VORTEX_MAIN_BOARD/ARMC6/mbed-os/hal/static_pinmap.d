@@ -3,8 +3,7 @@ BUILD\VORTEX_MAIN_BOARD\ARMC6\mbed-os\hal\static_pinmap.o: \
   BUILD\VORTEX_MAIN_BOARD\ARMC6\mbed_config.h \
   mbed-os\platform\mbed_error.h mbed-os\platform\mbed_retarget.h \
   mbed-os\platform\mbed_toolchain.h mbed-os\platform\mbed_preprocessor.h \
-  mbed-os\hal\static_pinmap.h \
-  mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\TARGET_EFR32MG12\TARGET_VORTEX_MAIN_BOARD\PinNames.h \
+  mbed-os\hal\static_pinmap.h TARGET_VORTEX_MAIN_BOARD\PinNames.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\common\CommonPinNames.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\emlib\inc\em_gpio.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\TARGET_EFR32MG12\device\em_device.h \
@@ -74,9 +73,8 @@ BUILD\VORTEX_MAIN_BOARD\ARMC6\mbed-os\hal\static_pinmap.o: \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\dma_api_HAL.h \
   mbed-os\hal\dma_api.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\emlib\inc\em_ldma.h \
-  mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\TARGET_EFR32MG12\TARGET_VORTEX_MAIN_BOARD\device_peripherals.h \
-  mbed-os\hal\pinmap.h mbed-os\hal\dma_api.h mbed-os\hal\buffer.h \
-  mbed-os\hal\pwmout_api.h mbed-os\hal\analogin_api.h \
-  mbed-os\hal\analogout_api.h mbed-os\hal\i2c_api.h \
-  mbed-os\hal\serial_api.h mbed-os\hal\qspi_api.h mbed-os\hal\can_api.h \
-  mbed-os\platform\cxxsupport\mstd_cstddef
+  TARGET_VORTEX_MAIN_BOARD\device_peripherals.h mbed-os\hal\pinmap.h \
+  mbed-os\hal\dma_api.h mbed-os\hal\buffer.h mbed-os\hal\pwmout_api.h \
+  mbed-os\hal\analogin_api.h mbed-os\hal\analogout_api.h \
+  mbed-os\hal\i2c_api.h mbed-os\hal\serial_api.h mbed-os\hal\qspi_api.h \
+  mbed-os\hal\can_api.h mbed-os\platform\cxxsupport\mstd_cstddef

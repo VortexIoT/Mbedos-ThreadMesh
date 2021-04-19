@@ -5,6 +5,18 @@
 #include "ThreadInterface.h"
 #include "cli_cmd.h"
 
+/*  Network Parameters */
+uint8_t extpanid[8];// = {0xf1, 0xb5, 0xa1, 0xb2,0xc4, 0xd5, 0xa1, 0xbd };
+uint8_t masterkey[16];// ={0x10, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0x99, 0xaa, 0xbb, 0xcc, 0xdd, 0xee, 0xff};//{ 0x00, 0xeb, 0x64, 0x37, 0x02, 0x4c, 0x86, 0x8d, 0xdd, 0x2b, 0x18, 0xde, 0x62, 0xc7, 0x98, 0x68};
+uint16_t panid;//= 0x0700;
+uint8_t Network_name[16];// = "Thread Network";
+uint16_t channel;// = 22;
+uint8_t meshprefix[8];// = {0xfd, 0x0, 0x0d, 0xb8, 0x0, 0x0, 0x0, 0x0};
+uint8_t channel_mask[9];// = "07fff800";
+uint8_t psk[16];// = MBED_CONF_MBED_MESH_API_THREAD_CONFIG_PSKC;
+uint8_t securitypolicy;// = 255; 
+uint64_t local_timestamp;// = 0x10000;
+uint32_t timeinseconds = 0;
 extern nwk_interface_id id;// = IF_IPV6;
 //This function generates the EUI64
 void thread_eui64_trace()
@@ -21,32 +33,43 @@ void thread_eui64_trace()
 // This function connects the device into the network and also it return the device Connected IP address
 uint8_t mesh_connect(void)
 {
-     uint8_t error;
+    uint8_t error;
     mesh = MeshInterface::get_default_instance();  //returns pointer to the mesh interface
     if (!mesh) {
         printf("Error! MeshInterface not found!\n");
         return -1;
     }
     thread_eui64_trace();  //This function generates the EUI64
-  //  mesh_nvm_initialize();  //initializes the non-volatile memory
+//  mesh_nvm_initialize();  //initializes the non-volatile memory
     printf("Connecting...\n");
     error = mesh->connect();  
-       if (error) {
+    if (error) {
         printf("Connection failed! %d\n", error);
-       return error;
+    return error;
+    } 
+    SocketAddress sockAddr;
+    while (NSAPI_ERROR_OK != mesh->get_ip_address(&sockAddr)) {//local ip address
+            ThisThread::sleep_for(500); //keep this loop on until get the IP address with offering 500ms for each turn  
     }
-    //ThisThread::sleep_for(100); //
-  
-   SocketAddress sockAddr;
-   while (NSAPI_ERROR_OK != mesh->get_ip_address(&sockAddr)) //local ip address
-   {
-        ThisThread::sleep_for(500); //keep this loop on until get the IP address with offering 500ms for each turn  
-   }
-   printf("Connected IP : %s\n",sockAddr.get_ip_address());
-   link = thread_management_configuration_get(id);
-   thread_management_set_link_timeout(id,80);
-   getcmd_count = 1;
-  return 1;
+    printf("Connected IP : %s\n",sockAddr.get_ip_address());
+    link = thread_management_configuration_get(id);
+    strncpy( (char *)masterkey, (char *)link->master_key, 16);
+    strncpy( (char *)extpanid, (char *)link->extented_pan_id,8);//{0xf1, 0xb5, 0xa1, 0xb2,0xc4, 0xd5, 0xa1, 0xbd };
+    strncpy( (char *)psk, (char *)link->PSKc, 16);
+    strncpy( (char *)meshprefix, (char *)link->mesh_local_ula_prefix, 8);
+    strncpy( (char *)channel_mask, "07fff800", 8);
+    strncpy( (char *)Network_name, (char *)link->name, 16);
+    securitypolicy = link->securityPolicy;        // Set all default values ('1') for security policy flags
+//  locallink->securityPolicyExt = SECURITY_POLICY_ALL_SECURITY;     // Set all default values
+    local_key_sequence = link->key_sequence;  //check this later
+    local_key_rotation = link->key_rotation;
+    local_channel_page = link->channel_page;
+    channel = link->rfChannel;
+    panid = link->panId;
+    local_timestamp = link->timestamp;
+    thread_management_set_link_timeout(id,80);
+    getcmd_count = 1;
+    return 1;
 
 }
 

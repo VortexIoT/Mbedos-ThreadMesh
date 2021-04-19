@@ -76,7 +76,7 @@ BUILD\VORTEX_MAIN_BOARD\ARMC6\mbed-os\features\nfc\source\nfc\NFCController.o: \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\common\device.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\common\cmsis.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\common\objects.h \
-  mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\TARGET_EFR32MG12\TARGET_VORTEX_MAIN_BOARD\PinNames.h \
+  TARGET_VORTEX_MAIN_BOARD\PinNames.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\common\CommonPinNames.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\emlib\inc\em_gpio.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\PeripheralNames.h \
@@ -88,11 +88,10 @@ BUILD\VORTEX_MAIN_BOARD\ARMC6\mbed-os\features\nfc\source\nfc\NFCController.o: \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\dma_api_HAL.h \
   mbed-os\hal\dma_api.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\emlib\inc\em_ldma.h \
-  mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\TARGET_EFR32MG12\TARGET_VORTEX_MAIN_BOARD\device_peripherals.h \
-  mbed-os\hal\ticker_api.h mbed-os\drivers\Timeout.h \
-  mbed-os\drivers\Ticker.h mbed-os\platform\cxxsupport\mstd_utility \
-  mbed-os\drivers\TimerEvent.h mbed-os\hal\lp_ticker_api.h \
-  mbed-os\features\nfc\nfc\NFCDefinitions.h \
+  TARGET_VORTEX_MAIN_BOARD\device_peripherals.h mbed-os\hal\ticker_api.h \
+  mbed-os\drivers\Timeout.h mbed-os\drivers\Ticker.h \
+  mbed-os\platform\cxxsupport\mstd_utility mbed-os\drivers\TimerEvent.h \
+  mbed-os\hal\lp_ticker_api.h mbed-os\features\nfc\nfc\NFCDefinitions.h \
   mbed-os\features\nfc\stack\nfc_errors.h \
   mbed-os\features\nfc\acore\acore\ac_buffer.h \
   mbed-os\features\nfc\nfc\NFCControllerDriver.h \

@@ -190,6 +190,7 @@ int main() {
  //   externalflash_rdwr.set_priority(osPriorityHigh);
     printf("Start of the application\n"); 
     start_blinking();   //led
+    humidity_temp_read(); //below function reads for 5min, if someone try to read sensor reading before 5min it will return zero, so doing one extra read.
     temp_hum_sensor_read_every_5min(); //reads for every 5min
     pc.attach(&isr_receive); //receive interrupt
     i2cinit();  //i2c frequency init

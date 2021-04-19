@@ -72,7 +72,7 @@ BUILD\VORTEX_MAIN_BOARD\ARMC6\mbed-os\features\lorawan\lorastack\phy\LoRaPHYKR92
   mbed-os\features\lorawan\system\lorawan_data_structures.h \
   mbed-os\features\lorawan\lorawan_types.h \
   mbed-os\features\lorawan\LoRaRadio.h \
-  mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\TARGET_EFR32MG12\TARGET_VORTEX_MAIN_BOARD\PinNames.h \
+  TARGET_VORTEX_MAIN_BOARD\PinNames.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\common\CommonPinNames.h \
   mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\emlib\inc\em_gpio.h \
   mbed-os\features\lorawan\lorastack\phy\lora_phy_ds.h \
