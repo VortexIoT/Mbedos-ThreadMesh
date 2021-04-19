@@ -1,5 +1,5 @@
-BUILD\VORTEX_MAIN_BOARD\ARMC6\solenoid.o: solenoid.cpp \
-  BUILD\VORTEX_MAIN_BOARD\ARMC6\mbed_config.h solenoid.h \
+BUILD\VORTEX_MAIN_BOARD\ARMC6\VMN\solenoid.o: VMN\solenoid.cpp \
+  BUILD\VORTEX_MAIN_BOARD\ARMC6\mbed_config.h VMN\solenoid.h \
   mbed-os\cmsis\mbed.h mbed-os\platform\mbed_version.h \
   mbed-os\rtos\rtos.h mbed-os\rtos\mbed_rtos_storage.h \
   mbed-os\rtos\source\TARGET_CORTEX\mbed_rtx_storage.h \
@@ -213,4 +213,4 @@ BUILD\VORTEX_MAIN_BOARD\ARMC6\solenoid.o: solenoid.cpp \
   mbed-os\platform\mbed_mpu_mgmt.h mbed-os\hal\mpu_api.h \
   mbed-os\platform\ScopedRamExecutionLock.h \
   mbed-os\platform\mbed_stats.h mbed-os\platform\FunctionPointer.h \
-  temp_humidity_sensor.h
+  VMN\temp_humidity_sensor.h

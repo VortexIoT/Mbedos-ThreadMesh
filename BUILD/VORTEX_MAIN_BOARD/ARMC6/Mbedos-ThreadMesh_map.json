@@ -1,10 +1,131 @@
 [
     {
+        "module": "VORTEX_AQM\\cli_cmd.o",
+        "size": {
+            ".text": 3105,
+            ".data": 2,
+            ".bss": 1117,
+            ".text-delta": 0,
+            ".data-delta": 0,
+            ".bss-delta": 0
+        }
+    },
+    {
+        "module": "VORTEX_AQM\\fan_control.o",
+        "size": {
+            ".text": 184,
+            ".data": 2,
+            ".bss": 126,
+            ".text-delta": 0,
+            ".data-delta": 0,
+            ".bss-delta": 0
+        }
+    },
+    {
+        "module": "VORTEX_AQM\\gas_sensor.o",
+        "size": {
+            ".text": 499,
+            ".data": 0,
+            ".bss": 128,
+            ".text-delta": 0,
+            ".data-delta": 0,
+            ".bss-delta": 0
+        }
+    },
+    {
+        "module": "VORTEX_AQM\\mesh_config.o",
+        "size": {
+            ".text": 1249,
+            ".data": 78,
+            ".bss": 0,
+            ".text-delta": 0,
+            ".data-delta": 0,
+            ".bss-delta": 0
+        }
+    },
+    {
+        "module": "VORTEX_AQM\\mx25r8035f.o",
+        "size": {
+            ".text": 798,
+            ".data": 0,
+            ".bss": 206,
+            ".text-delta": 0,
+            ".data-delta": 0,
+            ".bss-delta": 0
+        }
+    },
+    {
+        "module": "VORTEX_AQM\\pm_sensor_sds011.o",
+        "size": {
+            ".text": 124,
+            ".data": 2,
+            ".bss": 124,
+            ".text-delta": 0,
+            ".data-delta": 0,
+            ".bss-delta": 0
+        }
+    },
+    {
+        "module": "VORTEX_AQM\\realtimeclock.o",
+        "size": {
+            ".text": 256,
+            ".data": 52,
+            ".bss": 1,
+            ".text-delta": 0,
+            ".data-delta": 0,
+            ".bss-delta": 0
+        }
+    },
+    {
+        "module": "VORTEX_AQM\\solenoid.o",
+        "size": {
+            ".text": 124,
+            ".data": 0,
+            ".bss": 126,
+            ".text-delta": 0,
+            ".data-delta": 0,
+            ".bss-delta": 0
+        }
+    },
+    {
+        "module": "VORTEX_AQM\\temp_humidity_sensor.o",
+        "size": {
+            ".text": 512,
+            ".data": 0,
+            ".bss": 219,
+            ".text-delta": 0,
+            ".data-delta": 0,
+            ".bss-delta": 0
+        }
+    },
+    {
+        "module": "VORTEX_AQM\\vmn_coap_client.o",
+        "size": {
+            ".text": 2136,
+            ".data": 2,
+            ".bss": 272,
+            ".text-delta": 0,
+            ".data-delta": 0,
+            ".bss-delta": 0
+        }
+    },
+    {
+        "module": "VORTEX_AQM\\vmn_coap_server.o",
+        "size": {
+            ".text": 3741,
+            ".data": 5,
+            ".bss": 587,
+            ".text-delta": 0,
+            ".data-delta": 0,
+            ".bss-delta": 0
+        }
+    },
+    {
         "module": "[lib]\\c_w.l",
         "size": {
-            ".text": 15917,
+            ".text": 16033,
             ".data": 16,
-            ".bss": 460,
+            ".bss": 688,
             ".text-delta": 0,
             ".data-delta": 0,
             ".bss-delta": 0
@@ -77,39 +198,6 @@
         }
     },
     {
-        "module": "cli_cmd.o",
-        "size": {
-            ".text": 3105,
-            ".data": 2,
-            ".bss": 1117,
-            ".text-delta": 0,
-            ".data-delta": 0,
-            ".bss-delta": 0
-        }
-    },
-    {
-        "module": "fan_control.o",
-        "size": {
-            ".text": 184,
-            ".data": 2,
-            ".bss": 126,
-            ".text-delta": 0,
-            ".data-delta": 0,
-            ".bss-delta": 0
-        }
-    },
-    {
-        "module": "gas_sensor.o",
-        "size": {
-            ".text": 499,
-            ".data": 0,
-            ".bss": 128,
-            ".text-delta": 0,
-            ".data-delta": 0,
-            ".bss-delta": 0
-        }
-    },
-    {
         "module": "main.o",
         "size": {
             ".text": 2451,
@@ -156,7 +244,7 @@
     {
         "module": "mbed-os\\features",
         "size": {
-            ".text": 414551,
+            ".text": 414521,
             ".data": 1039,
             ".bss": 11017,
             ".text-delta": 0,
@@ -209,17 +297,6 @@
         }
     },
     {
-        "module": "mesh_config.o",
-        "size": {
-            ".text": 1249,
-            ".data": 78,
-            ".bss": 0,
-            ".text-delta": 0,
-            ".data-delta": 0,
-            ".bss-delta": 0
-        }
-    },
-    {
         "module": "mesh_led_control_example.o",
         "size": {
             ".text": 260,
@@ -242,87 +319,10 @@
         }
     },
     {
-        "module": "mx25r8035f.o",
-        "size": {
-            ".text": 798,
-            ".data": 0,
-            ".bss": 206,
-            ".text-delta": 0,
-            ".data-delta": 0,
-            ".bss-delta": 0
-        }
-    },
-    {
-        "module": "pm_sensor_sds011.o",
-        "size": {
-            ".text": 124,
-            ".data": 2,
-            ".bss": 124,
-            ".text-delta": 0,
-            ".data-delta": 0,
-            ".bss-delta": 0
-        }
-    },
-    {
-        "module": "realtimeclock.o",
-        "size": {
-            ".text": 256,
-            ".data": 52,
-            ".bss": 1,
-            ".text-delta": 0,
-            ".data-delta": 0,
-            ".bss-delta": 0
-        }
-    },
-    {
-        "module": "solenoid.o",
-        "size": {
-            ".text": 124,
-            ".data": 0,
-            ".bss": 126,
-            ".text-delta": 0,
-            ".data-delta": 0,
-            ".bss-delta": 0
-        }
-    },
-    {
-        "module": "temp_humidity_sensor.o",
-        "size": {
-            ".text": 506,
-            ".data": 0,
-            ".bss": 219,
-            ".text-delta": 0,
-            ".data-delta": 0,
-            ".bss-delta": 0
-        }
-    },
-    {
-        "module": "vmn_coap_client.o",
-        "size": {
-            ".text": 1755,
-            ".data": 1,
-            ".bss": 264,
-            ".text-delta": 0,
-            ".data-delta": 0,
-            ".bss-delta": 0
-        }
-    },
-    {
-        "module": "vmn_coap_server.o",
-        "size": {
-            ".text": 3687,
-            ".data": 5,
-            ".bss": 587,
-            ".text-delta": 0,
-            ".data-delta": 0,
-            ".bss-delta": 0
-        }
-    },
-    {
         "summary": {
-            "static_ram": 28996,
+            "static_ram": 29233,
             "static_ram_delta": 0,
-            "total_flash": 540420,
+            "total_flash": 540948,
             "total_flash_delta": 0
         }
     }

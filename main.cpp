@@ -188,13 +188,13 @@ int main() {
     coapserver_thread.set_priority(osPriorityHigh);
  //   externalflash_rdwr.start(callback(&externalflash_rdwr_eventqueue, &EventQueue::dispatch_forever));//(hexfile_format, Rx_buff));//
  //   externalflash_rdwr.set_priority(osPriorityHigh);
-    printf("Start of the application\n"); //start thread mesh application red led 
+    printf("Start of the application\n"); 
     start_blinking();   //led
-    temp_hum_sensor_read_every_5min(); //reading every 5min
+    temp_hum_sensor_read_every_5min(); //reading for every 5min
     pc.attach(&isr_receive); //receive interrupt
     i2cinit();  //i2c frequency init
     mx25r8035f_init(); //external flash init
-    mcp23017_config();  //I/O expander
+    mcp23017_config();  //I/O expander for solenoids
     fan_config();   
     pm_sensor_config();
     fan_control(fan_fulloff); 
@@ -214,7 +214,7 @@ int main() {
                     flash_handler_flag = 0;
                     hexfile_format((char *)Rx_buff);
                  }*/
-            } else if (Receive_buff_length > 100) {
+            } else if (Receive_buff_length > 100) { //just for test to test external flash read and write
                 write_recvfileinto_mx25r8035f(Rx_buff);
             }
             else {
@@ -281,16 +281,16 @@ int main() {
                         adc_write_flag++;
                         switch(adc_write_flag) {
                             case 1: case 5:case 9: case 13: case 17:
-                            channelwrite(MCP3423_0_ADDR, MCP3423_CH0_CONFIG_G8);
+                            adcchannelwrite(MCP3423_0_ADDR, MCP3423_CH0_CONFIG_G8);
                             break;
                             case 2: case 6:case 10: case 14: case 18:
-                            channelwrite(MCP3423_0_ADDR, MCP3423_CH1_CONFIG_G8);
+                            adcchannelwrite(MCP3423_0_ADDR, MCP3423_CH1_CONFIG_G8);
                             break;
                             case 3: case 7:case 11: case 15: case 19:
-                            channelwrite(MCP3423_1_ADDR, MCP3423_CH0_CONFIG_G8);
+                            adcchannelwrite(MCP3423_1_ADDR, MCP3423_CH0_CONFIG_G8);
                             break;
                             case 4: case 8:case 12: case 16: case 20:
-                            channelwrite(MCP3423_1_ADDR, MCP3423_CH1_CONFIG_G8);
+                            adcchannelwrite(MCP3423_1_ADDR, MCP3423_CH1_CONFIG_G8);
                             break;
                             default: adc_write_flag=0;break;
                         }
@@ -301,16 +301,16 @@ int main() {
                         adc_read_flag++;
                         switch(adc_read_flag) {
                             case 1: case 5:case 9: case 13: case 17:
-                            channelread(MCP3423_0_ADDR, MCP3423_CH0_CONFIG_G8,sensordata_count_mcp0);
+                            adcchannelread(MCP3423_0_ADDR, MCP3423_CH0_CONFIG_G8,sensordata_count_mcp0);
                             break;
                             case 2: case 6:case 10: case 14: case 18:
-                            channelread(MCP3423_0_ADDR, MCP3423_CH1_CONFIG_G8,sensordata_count_mcp1);
+                            adcchannelread(MCP3423_0_ADDR, MCP3423_CH1_CONFIG_G8,sensordata_count_mcp1);
                             break;
                             case 3: case 7:case 11: case 15: case 19:
-                            channelread(MCP3423_1_ADDR, MCP3423_CH0_CONFIG_G8,sensordata_count_mcp2);
+                            adcchannelread(MCP3423_1_ADDR, MCP3423_CH0_CONFIG_G8,sensordata_count_mcp2);
                             break;
                             case 4: case 8:case 12: case 16: case 20:
-                            channelread(MCP3423_1_ADDR, MCP3423_CH1_CONFIG_G8,sensordata_count_mcp3);
+                            adcchannelread(MCP3423_1_ADDR, MCP3423_CH1_CONFIG_G8,sensordata_count_mcp3);
                             break;
                             default: adc_read_flag=0;break;
                         }
@@ -328,6 +328,7 @@ int main() {
                         }
                         aqmpayload[61] = Temp_centigrade;
                         aqmpayload[62] = RH_percentage;
+                        
                     break;
                     case '9': //RTC read
                         char buffer[32];

@@ -1,7 +1,8 @@
-BUILD\VORTEX_MAIN_BOARD\ARMC6\fan_control.o: fan_control.cpp \
-  BUILD\VORTEX_MAIN_BOARD\ARMC6\mbed_config.h solenoid.h \
-  mbed-os\cmsis\mbed.h mbed-os\platform\mbed_version.h \
-  mbed-os\rtos\rtos.h mbed-os\rtos\mbed_rtos_storage.h \
+BUILD\VORTEX_MAIN_BOARD\ARMC6\VORTEX_AQM\gas_sensor.o: \
+  VORTEX_AQM\gas_sensor.cpp BUILD\VORTEX_MAIN_BOARD\ARMC6\mbed_config.h \
+  VORTEX_AQM\gas_sensor.h mbed-os\cmsis\mbed.h \
+  mbed-os\platform\mbed_version.h mbed-os\rtos\rtos.h \
+  mbed-os\rtos\mbed_rtos_storage.h \
   mbed-os\rtos\source\TARGET_CORTEX\mbed_rtx_storage.h \
   mbed-os\rtos\source\TARGET_CORTEX\rtx5\RTX\Include\rtx_os.h \
   mbed-os\rtos\source\TARGET_CORTEX\rtx5\Include\cmsis_os2.h \
@@ -213,4 +214,4 @@ BUILD\VORTEX_MAIN_BOARD\ARMC6\fan_control.o: fan_control.cpp \
   mbed-os\platform\mbed_mpu_mgmt.h mbed-os\hal\mpu_api.h \
   mbed-os\platform\ScopedRamExecutionLock.h \
   mbed-os\platform\mbed_stats.h mbed-os\platform\FunctionPointer.h \
-  temp_humidity_sensor.h fan_control.h
+  VORTEX_AQM\temp_humidity_sensor.h

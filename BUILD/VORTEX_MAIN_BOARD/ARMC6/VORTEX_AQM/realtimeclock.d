@@ -1,7 +1,8 @@
-BUILD\VORTEX_MAIN_BOARD\ARMC6\main.o: main.cpp \
-  BUILD\VORTEX_MAIN_BOARD\ARMC6\mbed_config.h mbed-os\cmsis\mbed.h \
-  mbed-os\platform\mbed_version.h mbed-os\rtos\rtos.h \
-  mbed-os\rtos\mbed_rtos_storage.h \
+BUILD\VORTEX_MAIN_BOARD\ARMC6\VORTEX_AQM\realtimeclock.o: \
+  VORTEX_AQM\realtimeclock.cpp \
+  BUILD\VORTEX_MAIN_BOARD\ARMC6\mbed_config.h VORTEX_AQM\realtimeclock.h \
+  mbed-os\cmsis\mbed.h mbed-os\platform\mbed_version.h \
+  mbed-os\rtos\rtos.h mbed-os\rtos\mbed_rtos_storage.h \
   mbed-os\rtos\source\TARGET_CORTEX\mbed_rtx_storage.h \
   mbed-os\rtos\source\TARGET_CORTEX\rtx5\RTX\Include\rtx_os.h \
   mbed-os\rtos\source\TARGET_CORTEX\rtx5\Include\cmsis_os2.h \
@@ -213,43 +214,9 @@ BUILD\VORTEX_MAIN_BOARD\ARMC6\main.o: main.cpp \
   mbed-os\platform\mbed_mpu_mgmt.h mbed-os\hal\mpu_api.h \
   mbed-os\platform\ScopedRamExecutionLock.h \
   mbed-os\platform\mbed_stats.h mbed-os\platform\FunctionPointer.h \
-  mbed-os\rtos\rtos.h \
-  mbed-os\features\nanostack\nanostack-interface\NanostackInterface.h \
-  mbed-os\features\netsocket\MeshInterface.h \
-  mbed-os\features\nanostack\mbed-mesh-api\mbed-mesh-api\LoWPANNDInterface.h \
-  mbed-os\features\nanostack\mbed-mesh-api\mbed-mesh-api\MeshInterfaceNanostack.h \
-  mbed-os\rtos\Semaphore.h \
-  mbed-os\features\nanostack\nanostack-interface\NanostackRfPhy.h \
-  mbed-os\features\nanostack\nanostack-interface\NanostackMACPhy.h \
-  mbed-os\features\nanostack\nanostack-interface\NanostackPhy.h \
-  mbed-os\features\nanostack\nanostack-interface\Nanostack.h \
-  mbed-os\features\netsocket\OnboardNetworkStack.h \
-  mbed-os\features\netsocket\nsapi.h mbed-os\features\netsocket\EMAC.h \
-  mbed-os\features\netsocket\EMACMemoryManager.h \
-  mbed-os\features\netsocket\NetStackMemoryManager.h \
-  mbed-os\features\netsocket\L3IP.h mbed-os\features\netsocket\PPP.h \
-  mbed-os\features\nanostack\mbed-mesh-api\source\include\NanostackMemoryManager.h \
-  mbed-os\features\netsocket\EMACMemoryManager.h \
-  mbed-os\features\nanostack\mbed-mesh-api\mbed-mesh-api\mesh_interface_types.h \
-  mbed-os\features\nanostack\sal-stack-nanostack-eventloop\nanostack-event-loop\eventOS_event.h \
-  mbed-os\features\frameworks\nanostack-libservice\mbed-client-libservice\ns_types.h \
-  mbed-os\features\frameworks\nanostack-libservice\mbed-client-libservice\ns_list.h \
-  mbed-os\features\frameworks\nanostack-libservice\mbed-client-libservice\ns_types.h \
-  mbed-os\features\nanostack\mbed-mesh-api\mbed-mesh-api\mesh_interface_types.h \
-  mbed-os\features\nanostack\mbed-mesh-api\mbed-mesh-api\ThreadInterface.h \
-  mbed-os\features\nanostack\mbed-mesh-api\mbed-mesh-api\NanostackEthernetInterface.h \
-  mbed-os\features\netsocket\EthInterface.h \
-  mbed-os\features\nanostack\nanostack-interface\NanostackEthernetPhy.h \
-  mbed-os\features\nanostack\mbed-mesh-api\mbed-mesh-api\NanostackPPPInterface.h \
-  mbed-os\features\netsocket\PPPInterface.h \
-  mbed-os\features\netsocket\OnboardNetworkStack.h \
-  mbed-os\features\netsocket\NetworkInterface.h \
-  mbed-os\features\nanostack\nanostack-interface\NanostackPPPPhy.h \
-  mbed-os\features\nanostack\mbed-mesh-api\mbed-mesh-api\MeshInterfaceNanostack.h \
-  mbed-os\features\nanostack\mbed-mesh-api\mbed-mesh-api\WisunInterface.h \
-  mbed-os\features\frameworks\mbed-trace\mbed-trace\mbed_trace.h \
-  mesh_nvm.h VORTEX_AQM\cli_cmd.h \
+  VORTEX_AQM\cli_cmd.h \
   mbed-os\features\nanostack\sal-stack-nanostack\nanostack\thread_management_if.h \
+  mbed-os\features\frameworks\nanostack-libservice\mbed-client-libservice\ns_types.h \
   mbed-os\features\nanostack\sal-stack-nanostack\nanostack\net_interface.h \
   mbed-os\features\nanostack\sal-stack-nanostack\nanostack\platform\arm_hal_phy.h \
   mbed-os\features\netsocket\InternetSocket.h \
@@ -258,15 +225,4 @@ BUILD\VORTEX_MAIN_BOARD\ARMC6\main.o: main.cpp \
   mbed-os\features\frameworks\mbed-coap\mbed-coap\sn_coap_protocol.h \
   mbed-os\features\frameworks\mbed-coap\mbed-coap\sn_coap_header.h \
   mbed-os\features\frameworks\mbed-coap\mbed-coap\sn_coap_header.h \
-  VORTEX_AQM\vmn_coap_client.h VORTEX_AQM\vmn_coap_server.h \
-  mbed-os\features\netsocket\UDPSocket.h VORTEX_AQM\vmn_coap_server.h \
-  VORTEX_AQM\temp_humidity_sensor.h \
-  mbed-os\features\nanostack\sal-stack-nanostack\nanostack\net_thread_test.h \
-  VORTEX_AQM\mx25r8035f.h \
-  mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\emlib\inc\em_core.h \
-  mbed-os\targets\TARGET_Silicon_Labs\TARGET_EFM32\emlib\inc\em_common.h \
-  VORTEX_AQM\solenoid.h VORTEX_AQM\gas_sensor.h VORTEX_AQM\fan_control.h \
-  VORTEX_AQM\pm_sensor_sds011.h VORTEX_AQM\realtimeclock.h \
-  mbed-os\platform\mbed_mktime.h VORTEX_AQM\mesh_config.h \
-  mesh_led_control_example.h \
-  mbed-os\features\netsocket\NetworkInterface.h
+  mbed-os\platform\mbed_mktime.h

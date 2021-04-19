@@ -7,9 +7,16 @@
 #include <string>
 #include "cli_cmd.h"
 #include "ThreadInterface.h"
+#include "InternetSocket.h"
+#include "InternetDatagramSocket.h"
 
 
+/*
 
+#define SN_COAP_MAX_BLOCKWISE_PAYLOAD_SIZE  --------sn_config.h
+#define DEFAULT_RESPONSE_TIMEOUT                        10  //< Default re-sending timeout as seconds /
+
+*/
 
 UDPSocket coap_client_udpsock;           // Socket to talk CoAP over
 struct coap_s* coaphandle;//=sn_coap_protocol_init(&coap_client_malloc, &coap_client_free, &coap_client_tx_cb, &coap_client_rx_cb);
@@ -19,9 +26,10 @@ EventQueue coapclient_eventqueue;
 uint32_t payload_length = 0;
 extern nwk_interface_id id;
 uint8_t *coap_payload = 0;
-
-
-
+uint8_t *sendpacket;
+uint8_t event_cancelhandle;
+uint8_t retransmit_count=0;
+uint16_t packet_len;
 void* coap_client_malloc(uint16_t size) {
     return malloc(size);
 }
@@ -41,8 +49,8 @@ int8_t coap_client_rx_cb( sn_coap_hdr_s *a, sn_nsdl_addr_s *b, void *c ) {
 }
 
 void client_requestpacket_build( char *host_address, uint8_t *uri_path, uint8_t msg_code, uint8_t msg_type, uint8_t *payload, uint16_t payload_len ) {//uint8_t *packet, this about this later
-    uint8_t handle;
     sn_coap_content_format_ msgcode;
+    sn_coap_options_list_s *options;
     SocketAddress addr;
     NetworkInterface * interface = (NetworkInterface *)mesh;
     interface->get_ip_address(&addr);
@@ -78,24 +86,26 @@ void client_requestpacket_build( char *host_address, uint8_t *uri_path, uint8_t 
     coap_res_ptr->content_format = COAP_CT_TEXT_PLAIN;          // CoAP content type
     coap_res_ptr->payload_len = payload_len;                    // Payload length
     coap_res_ptr->payload_ptr = payload;                        // Payload pointer
-    coap_res_ptr->options_list_ptr = 0;                         // Optional: options list
+    coap_res_ptr->options_list_ptr->block1 = options->block1;                         // Optional: options list
     coap_res_ptr->msg_type = COAP_MSG_TYPE_CONFIRMABLE;//sn_coap_msg_type_e(msg_type);
     // Message ID is used to track request->response patterns, because we're using UDP (so everything is unconfirmed).
     // See the receive code to verify that we get the same message ID back
-    coap_res_ptr->msg_id = 7;   
+    coap_res_ptr->msg_id = rand();
     // Calculate the CoAP message size, allocate the memory and build the message
-    uint8_t packet_len = sn_coap_builder_calc_needed_packet_data_size(coap_res_ptr);
+    packet_len = sn_coap_builder_calc_needed_packet_data_size(coap_res_ptr);
     printf("Calculated message length: %d bytes\n", packet_len);
-    uint8_t *packet = (uint8_t*)malloc(packet_len);
-    sn_coap_builder(packet, coap_res_ptr); //build structure into packets
-    int scount = coap_client_udpsock.sendto(sendaddr, packet, packet_len); //sending through UDP to the server
+    sendpacket = (uint8_t*)malloc(packet_len);
+    sn_coap_builder(sendpacket, coap_res_ptr); //build structure into packets
+    int scount = coap_client_udpsock.sendto(sendaddr, sendpacket, packet_len); //sending through UDP to the server
     printf("Sent %d bytes on UDP\n", scount); //for user information
-    handle = coapclient_eventqueue.call(client_responsepacket_parse, sendaddr, coap_res_ptr->msg_code);
-    coapclient_eventqueue.cancel(handle);
+    event_cancelhandle = coapclient_eventqueue.call(client_responsepacket_parse, sendaddr, coap_res_ptr->msg_code);
+    coapclient_eventqueue.cancel(event_cancelhandle);
 }
 
+uint8_t udp_socketopen_timeout=10;
 void client_responsepacket_parse(SocketAddress receive_addr, uint8_t requestmethod) {
     uint8_t* recv_buffer = (uint8_t*)malloc(1280); // Suggested is to keep packet size under 1280 bytes
+    coap_client_udpsock.set_timeout(10);
     nsapi_size_or_error_t return_packet_len = coap_client_udpsock.recvfrom(&receive_addr, recv_buffer, 1280); //reading back from server
     if (return_packet_len > 0) {
         printf("Received a message of length '%d'\n", return_packet_len);
@@ -129,13 +139,30 @@ void client_responsepacket_parse(SocketAddress receive_addr, uint8_t requestmeth
         }
         //check is there any options in the response packet
         if (parsed->options_list_ptr) {
-            printf("location_path_ptr: %s\n", parsed->options_list_ptr->location_path_ptr);
-            printf("location_path_len: %d\n", parsed->options_list_ptr->location_path_len);
+            printf("block1: %d\n", parsed->options_list_ptr->block1);
+            printf("block2: %d\n", parsed->options_list_ptr->block2);
             printf("uri_host_ptr: %p\n", parsed->options_list_ptr->uri_host_ptr);
         }
        // printf("uri-path : %s\n", uri.c_str());
     } else {
-        printf("Failed to receive message (%d)\n", return_packet_len);
+        sn_coap_protocol_set_retransmission_parameters(coaphandle, 5, 10);  //resending count 5 and intervel for every 5sec
+        
+        if(retransmit_count < 3) {
+
+            sn_coap_protocol_set_retransmission_buffer(coaphandle, 6, packet_len);
+            int scount = coap_client_udpsock.sendto(receive_addr, sendpacket, packet_len); //sending through UDP to the server
+            printf("Sent %d bytes on UDP\n", scount); //for user information
+            event_cancelhandle = coapclient_eventqueue.call(client_responsepacket_parse, receive_addr, requestmethod);
+          //  coapclient_eventqueue.cancel(event_cancelhandle);
+         //   printf("Failed to receive message (%d)\n", return_packet_len);
+            retransmit_count++;
+            udp_socketopen_timeout += 15;
+        } else {
+            retransmit_count = 0;
+            udp_socketopen_timeout = 10;
+            coapclient_eventqueue.cancel(event_cancelhandle);
+        printf("Response Timeout\n");
+        }
     }
     free(recv_buffer);
 }

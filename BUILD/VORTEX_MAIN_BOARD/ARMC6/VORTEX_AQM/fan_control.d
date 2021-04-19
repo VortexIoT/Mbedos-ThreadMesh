@@ -1,7 +1,8 @@
-BUILD\VORTEX_MAIN_BOARD\ARMC6\mx25r8035f.o: mx25r8035f.cpp \
-  BUILD\VORTEX_MAIN_BOARD\ARMC6\mbed_config.h mx25r8035f.h \
-  mbed-os\cmsis\mbed.h mbed-os\platform\mbed_version.h \
-  mbed-os\rtos\rtos.h mbed-os\rtos\mbed_rtos_storage.h \
+BUILD\VORTEX_MAIN_BOARD\ARMC6\VORTEX_AQM\fan_control.o: \
+  VORTEX_AQM\fan_control.cpp BUILD\VORTEX_MAIN_BOARD\ARMC6\mbed_config.h \
+  VORTEX_AQM\solenoid.h mbed-os\cmsis\mbed.h \
+  mbed-os\platform\mbed_version.h mbed-os\rtos\rtos.h \
+  mbed-os\rtos\mbed_rtos_storage.h \
   mbed-os\rtos\source\TARGET_CORTEX\mbed_rtx_storage.h \
   mbed-os\rtos\source\TARGET_CORTEX\rtx5\RTX\Include\rtx_os.h \
   mbed-os\rtos\source\TARGET_CORTEX\rtx5\Include\cmsis_os2.h \
@@ -212,4 +213,5 @@ BUILD\VORTEX_MAIN_BOARD\ARMC6\mx25r8035f.o: mx25r8035f.cpp \
   mbed-os\platform\DeepSleepLock.h mbed-os\platform\ScopedRomWriteLock.h \
   mbed-os\platform\mbed_mpu_mgmt.h mbed-os\hal\mpu_api.h \
   mbed-os\platform\ScopedRamExecutionLock.h \
-  mbed-os\platform\mbed_stats.h mbed-os\platform\FunctionPointer.h
+  mbed-os\platform\mbed_stats.h mbed-os\platform\FunctionPointer.h \
+  VORTEX_AQM\temp_humidity_sensor.h VORTEX_AQM\fan_control.h

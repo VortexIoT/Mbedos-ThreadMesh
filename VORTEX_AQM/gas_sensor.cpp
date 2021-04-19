@@ -5,12 +5,12 @@
 uint8_t count1=0,count2=0,count3=0,count4=0; //these count value for test purpose to read ADC 
 
 //Write to the ADC channel
-void channelwrite(int addr,char config) {
+void adcchannelwrite(int addr,char config) {
     i2c.write(addr << 1, &config, 1);
 }
 
 //Reads from the ADC channels
-void channelread(int addr,char config,uint8_t sensordata_count) {
+void adcchannelread(int addr,char config,uint8_t sensordata_count) {
     char readbuff[4];
   //  i2c.write(addr << 1, &config, 1);
     i2c.read(addr << 1, readbuff, 4);
